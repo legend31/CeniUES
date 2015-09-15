@@ -1,0 +1,804 @@
+{% extends "::pbase.html.twig" %}
+
+{% block tittle %} Ventana principal {% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <header class="main-header">
+            <!--Logo-->
+            <div class="logo">
+            <span class="logo-lg">
+                <b>CENIUES</b>
+            </span>
+            </div>
+            <!--Fin de Logo-->
+
+            <!--Barra de Navegacion-->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!--Boton de Notificaciones-->
+                        <!-- <li class="dropdown notifications-menu open">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                 <i class="fa fa-bell-o"></i>
+                                 <span class="label label-warning">10</span>
+                             </a>
+                         </li>
+                         <!--Fin de Boton de Notificaciones -->
+
+                        <!--Boton de opciones de usuario-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">Nombre de Usuario</span>
+                            </a>
+
+                            <!--Menu de opciones de usuario-->
+                            {% block BotonOpUsuarioSuperior %}
+
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+                                        <p>
+                                            <small>Member since Nov. 2012</small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Body -->
+                                    <li class="user-body">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="logout" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            {% endblock %}
+                            <!--Fin del menu de opciones de usuario-->
+                        </li>
+                        <!--Fin de opciones de usuario-->
+
+                        <!--Inicio de Boton de configuracion-->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar">
+                                <i class="fa fa-gears"></i>
+                            </a>
+                        </li>
+                        <!--Fin de Boton de configuracion-->
+                    </ul>
+                </div>
+            </nav>
+
+        </header>
+
+        <!--Columna Izquierda, de logo y barra de navegacion-->
+        <aside class="main-sidebar">
+            <!--Estilo de barra lateral-->
+            <section class="sidebar">
+
+                <!--Barra de navegacion seccion de usuario-->
+                {% block seccionUsuarioLateral %}
+
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="pull-left info">
+                            <p>Nombre de Usuario</p>
+                            <a href="#">
+                                <i class="fa fa-circle text-success">
+                                </i>
+                                " Online"
+                            </a>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% block opcionesMenuLateral %}
+                    <!--Opciones de menus-->
+                    <ul class="sidebar-menu">
+                        <li class="header">OPCIONES DE NAVEGACION</li>
+
+                        <!--Menu para gestion de los fechas-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-calendar"></i>
+                                <span>Gestionar Fechas</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <!--Sub-Menu de Gestion de Fechas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestionar F. Modulos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestionar F. Niveles
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Periodo Gestion de Horas
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Periodo Ingreso de Notas
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Fin de Sub-Menu de Gestion de Fechas-->
+                        </li>
+                        <!--Fin menu de gestion de fechas-->
+
+                        <!--Inicio menu de gestion de Docentes-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Gestionar Docentes</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicio Sub-Menu gestion de Docentes-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Ingresar Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Eliminar Docentes
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--Fin de Gestionar Docentes-->
+
+                        <!--Inicia Gestionar Docentes en niveles-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-list-alt"></i>
+                                <span>Gestionar Docentes en Nivel</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Doncetes en Niveles-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Asignar Docente
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Reasignar Docente
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--Finaliza Gestionar Docentes en Niveles-->
+
+                        <!--Inicia Gestionar Evaluaciones-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-check-square"></i>
+                                <span>Gestionar Evaluaciones</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Evaluaciones-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Ingresar Evaluacion
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Evaluacion
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Eliminar Evaluacion
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Actualizar Evaluacion
+                                    </a>
+                                </li>
+                                <!--Finaliza Sub-menu Gestionar Evaluaciones-->
+                            </ul>
+                        </li>
+                        <!--Finaliza Gestionar Evaluaciones-->
+
+                        <!--Inicia Gestionar Matricula-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user-plus"></i>
+                                <span>Gestionar Matricula</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Gestionar Matricula-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Matricula Antiguo Ingreso
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Matricula por Examen
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Desmatricular Alumno
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu de Gestionar Matricula-->
+                        </li>
+                        <!--Finaliza Gestionar Matricula-->
+
+                        <!--Inicia Gestionar Alumnos-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-mortar-board"></i>
+                                <span>Gestionar Alumnos</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Alumnos-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Registrar Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Eliminar Alumno
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Gestionar Alumno-->
+                        </li>
+                        <!--Finaliza Gestionar Alumnos-->
+
+                        <!--Inicia Gestionar Secciones-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-cube"></i>
+                                <span>Gestionar Secciones</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Secciones-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Crear Secciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Secciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Secciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Eliminar Secciones
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Gestionar Secciones-->
+                        </li>
+                        <!--Finaliza Gestionar Secciones-->
+
+                        <!--Inicia Gestionar Notas-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pencil-square"></i>
+                                <span>Gestionar Notas</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Notas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Ingresar Notas
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Eliminar Notas
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Notas
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar notas
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Gestionar Notas-->
+                        </li>
+                        <!--Finaliza Gestionar Notas-->
+
+                        <!--Inicia Gestionar Disponibilidad de horas-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-clock-o"></i>
+                                <span>Gestionar Horas Disponibles</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Disponiblidad de Horas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Ingresar Horas Disponibles
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Horas Disponibles
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Horas Asignadas
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Disponiblidad de Horas-->
+                        </li>
+                        <!--Finaliza Disponibilidad de horas-->
+
+                        <!--Inicia Generacion de Estadisticas-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>Estadisticas</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Generacion de Estadisticas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Notas alumnos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Alumnos aprobado/reprobado
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Alumnos activos/inactivos
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu de Generacion de Estadisticas-->
+                        </li>
+                        <!--Finaliza Generacion de Estadisticas-->
+
+                        <!--Inicia Generacion de Reportes-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-file-text"></i>
+                                <span>Reportes</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Generacion de Reportes-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Distribuciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Listado de Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Distribucion de Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Alumnos por nivel
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Record Notas por Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Notas de Evaluaciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Certificados
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Listados de Asistencia
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Notas de Alumnos
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--Finaliza Generacion de Reportes-->
+                    </ul>
+                {% endblock %}
+            </section>
+        </aside>
+        <!--Fin de la barra de navegacion lateral-->
+
+        <!--Captura de contenidos seccion que captura los contenidos de la UI (importante: permite visualizar todos los elementos)-->
+        <div class="content-wrapper" style="min-height: 1036px;">
+
+            {% block principal %}
+                <!--Cabecera de contenidos-->
+                <section class="content-header">
+                    <h1>Principal</h1>
+                    <ol class="breadcrumb"></ol>
+                </section>
+                <!--Final de la cabecera de contenidos-->
+
+                <!--Contenido pricipal-->
+                <section class="content">
+                    <!--Inicia Primera fila de opciones-->
+                    <div class="row">
+                        <!--Opcion1-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Fechas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion1-->
+
+                        <!--Opcion 2-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-fuchsia">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Docentes</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion 2-->
+
+                        <!--Opcion 3-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Docentes en niveles</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion 3-->
+
+                        <!--Opcion 4 -->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-olive">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Evaluaciones</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-check-square"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion 4-->
+
+                    </div>
+                    <!--Finaliza Primera Fila de Opciones-->
+
+                    <!--Inicia Segunda Fila de Opciones-->
+                    <div class="row">
+                        <!--Inicia Opcion 5-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-red-active">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Matricula</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 5-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-orange">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Alumnos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-mortar-board"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Inicia Opcion 6-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-purple">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Secciones</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-cube"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 6-->
+
+                        <!--Inicia la Opcion 7-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-teal-active">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Notas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pencil-square"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza la Opcion 7-->
+                    </div>
+                    <!--Finaliza Segunda Fila de Opciones-->
+
+                    <!--Inicia Tercerea Fila de Opciones-->
+                    <div class="row">
+                        <!--Inicia Opcion 8-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-lime">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>Horas Disponibles</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 8-->
+
+                        <!--Inicia Opcion 9-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-light-blue-gradient">
+                                <div class="inner">
+                                    <h3>Estadisticas</h3>
+                                    <p>obtener</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 9-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>Reportes</h3>
+                                    <p>obtener</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-file-text"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Inicia Opcion 10-->
+
+                        <!--Finaliza Opcion 10-->
+                    </div>
+                    <!--Finaliza Tercera Fila de Opciones-->
+                </section>
+                <!--Fin de contenido principal-->
+            {% endblock %}
+        </div>
+        <!--Fin de la captura de contenidos-->
+    </div>
+{% endblock %}
