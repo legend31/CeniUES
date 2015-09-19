@@ -1,0 +1,28 @@
+{% extends '::layoutbase.html.twig' %}
+{% block principal %}
+    <br>
+    <div class="container">
+        <div>
+            {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                <div class="alert alert-success fade in">
+                    <span class="close" data-dismiss="alert">
+                        &times;
+                    </span>
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <br>
+            {{ form_start(formulario,{ 'attr': {'class': 'form-inline'}}) }}
+            <div class="form-group">
+                {{ form_label(formulario.Carnet, null, { 'label_attr': {'class': 'control-label'} }) }}
+                {{ form_widget(formulario.Carnet, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(formulario.Buscar, { 'attr': {'class': 'btn btn-primary'} }) }}
+            </div>
+            {{ form_end(formulario) }}
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -80,5 +80,178 @@ class Nivel
         $this->seccionseccion = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-}
 
+    /**
+     * Get idnivel
+     *
+     * @return integer
+     */
+    public function getIdnivel()
+    {
+        return $this->idnivel;
+    }
+
+    /**
+     * Set nombrenivel
+     *
+     * @param string $nombrenivel
+     *
+     * @return Nivel
+     */
+    public function setNombrenivel($nombrenivel)
+    {
+        $this->nombrenivel = $nombrenivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nombrenivel
+     *
+     * @return string
+     */
+    public function getNombrenivel()
+    {
+        return $this->nombrenivel;
+    }
+
+    /**
+     * Set duracion
+     *
+     * @param integer $duracion
+     *
+     * @return Nivel
+     */
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return integer
+     */
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    /**
+     * Set fechainicio
+     *
+     * @param \DateTime $fechainicio
+     *
+     * @return Nivel
+     */
+    public function setFechainicio($fechainicio)
+    {
+        $this->fechainicio = $fechainicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechainicio
+     *
+     * @return \DateTime
+     */
+    public function getFechainicio()
+    {
+        return $this->fechainicio;
+    }
+
+    /**
+     * Set fechafin
+     *
+     * @param \DateTime $fechafin
+     *
+     * @return Nivel
+     */
+    public function setFechafin($fechafin)
+    {
+        $this->fechafin = $fechafin;
+
+        return $this;
+    }
+
+    /**
+     * Get fechafin
+     *
+     * @return \DateTime
+     */
+    public function getFechafin()
+    {
+        return $this->fechafin;
+    }
+
+    /**
+     * Add modulomodulo
+     *
+     * @param \AppBundle\Entity\Modulo $modulomodulo
+     *
+     * @return Nivel
+     */
+    public function addModulomodulo(\AppBundle\Entity\Modulo $modulomodulo)
+    {
+        $this->modulomodulo[] = $modulomodulo;
+
+        return $this;
+    }
+
+    /**
+     * Remove modulomodulo
+     *
+     * @param \AppBundle\Entity\Modulo $modulomodulo
+     */
+    public function removeModulomodulo(\AppBundle\Entity\Modulo $modulomodulo)
+    {
+        $this->modulomodulo->removeElement($modulomodulo);
+    }
+
+    /**
+     * Get modulomodulo
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModulomodulo()
+    {
+        return $this->modulomodulo;
+    }
+
+    /**
+     * Add seccionseccion
+     *
+     * @param \AppBundle\Entity\Seccion $seccionseccion
+     *
+     * @return Nivel
+     */
+    public function addSeccionseccion(\AppBundle\Entity\Seccion $seccionseccion)
+    {
+        $this->seccionseccion[] = $seccionseccion;
+
+        return $this;
+    }
+
+    /**
+     * Remove seccionseccion
+     *
+     * @param \AppBundle\Entity\Seccion $seccionseccion
+     */
+    public function removeSeccionseccion(\AppBundle\Entity\Seccion $seccionseccion)
+    {
+        $this->seccionseccion->removeElement($seccionseccion);
+    }
+
+    /**
+     * Get seccionseccion
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSeccionseccion()
+    {
+        return $this->seccionseccion;
+    }
+}

@@ -35,38 +35,5 @@ class TipoUsuario implements RoleInterface
     }
 
 
-
-    /**
-     * Get idtipoUsuario
-     *
-     * @return integer
-     */
-    public function getIdtipoUsuario()
-    {
-        return $this->idtipoUsuario;
-    }
-
-    /**
-     * Set nomtipousuario
-     *
-     * @param string $nomtipousuario
-     *
-     * @return TipoUsuario
-     */
-    public function setNomtipousuario($nomtipousuario)
-    {
-        $this->nomtipousuario = $nomtipousuario;
-
-        return $this;
-    }
-
-    /**
-     * Get nomtipousuario
-     *
-     * @return string
-     */
-    public function getNomtipousuario()
-    {
-        return $this->nomtipousuario;
-    }
 }
+

@@ -1,0 +1,37 @@
+{% extends 'AppBundle:matricula:desmatricularform.html.twig' %}
+{% block principal %}
+    {{ parent() }}
+{% if al %}
+    <br>
+    <div class="container">
+        <table class="table-responsive">
+            <table class="table table-bordered  ">
+                <thead>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Responsable</th>
+                <th>Activo</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                    <td>{{ al.edad }}</td>
+                    <td>{{ al.responsableresponsable.nombreresponsable }}</td>
+                    <td>
+                        {% if al.matriculamatricula.esactivo ==1 %}
+                        <a href="{{ path('des',{'d':al.matriculamatricula.idmatricula}) }}" title="Desmatricular">
+                            <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                        </a>
+                        {% else %}
+                        Inactivo
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

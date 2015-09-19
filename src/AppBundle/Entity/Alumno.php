@@ -108,5 +108,278 @@ class Alumno
     private $responsableresponsable;
 
 
-}
 
+    /**
+     * Get carnetalumno
+     *
+     * @return string
+     */
+    public function getCarnetalumno()
+    {
+        return $this->carnetalumno;
+    }
+
+    /**
+     * Set primernombrealumno
+     *
+     * @param string $primernombrealumno
+     *
+     * @return Alumno
+     */
+    public function setPrimernombrealumno($primernombrealumno)
+    {
+        $this->primernombrealumno = $primernombrealumno;
+
+        return $this;
+    }
+
+    /**
+     * Get primernombrealumno
+     *
+     * @return string
+     */
+    public function getPrimernombrealumno()
+    {
+        return $this->primernombrealumno;
+    }
+
+    /**
+     * Set segundonombrealumno
+     *
+     * @param string $segundonombrealumno
+     *
+     * @return Alumno
+     */
+    public function setSegundonombrealumno($segundonombrealumno)
+    {
+        $this->segundonombrealumno = $segundonombrealumno;
+
+        return $this;
+    }
+
+    /**
+     * Get segundonombrealumno
+     *
+     * @return string
+     */
+    public function getSegundonombrealumno()
+    {
+        return $this->segundonombrealumno;
+    }
+
+    /**
+     * Set primerapellidoalumno
+     *
+     * @param string $primerapellidoalumno
+     *
+     * @return Alumno
+     */
+    public function setPrimerapellidoalumno($primerapellidoalumno)
+    {
+        $this->primerapellidoalumno = $primerapellidoalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get primerapellidoalumno
+     *
+     * @return string
+     */
+    public function getPrimerapellidoalumno()
+    {
+        return $this->primerapellidoalumno;
+    }
+
+    /**
+     * Set segundoapellidoalumno
+     *
+     * @param string $segundoapellidoalumno
+     *
+     * @return Alumno
+     */
+    public function setSegundoapellidoalumno($segundoapellidoalumno)
+    {
+        $this->segundoapellidoalumno = $segundoapellidoalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get segundoapellidoalumno
+     *
+     * @return string
+     */
+    public function getSegundoapellidoalumno()
+    {
+        return $this->segundoapellidoalumno;
+    }
+
+    /**
+     * Set fechanacimiento
+     *
+     * @param \DateTime $fechanacimiento
+     *
+     * @return Alumno
+     */
+    public function setFechanacimiento($fechanacimiento)
+    {
+        $this->fechanacimiento = $fechanacimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get fechanacimiento
+     *
+     * @return \DateTime
+     */
+    public function getFechanacimiento()
+    {
+        return $this->fechanacimiento;
+    }
+
+    /**
+     * Set edad
+     *
+     * @param integer $edad
+     *
+     * @return Alumno
+     */
+    public function setEdad($edad)
+    {
+        $this->edad = $edad;
+
+        return $this;
+    }
+
+    /**
+     * Get edad
+     *
+     * @return integer
+     */
+    public function getEdad()
+    {
+        return $this->edad;
+    }
+
+    /**
+     * Set direccioncasa
+     *
+     * @param string $direccioncasa
+     *
+     * @return Alumno
+     */
+    public function setDireccioncasa($direccioncasa)
+    {
+        $this->direccioncasa = $direccioncasa;
+
+        return $this;
+    }
+
+    /**
+     * Get direccioncasa
+     *
+     * @return string
+     */
+    public function getDireccioncasa()
+    {
+        return $this->direccioncasa;
+    }
+
+    /**
+     * Set telefonocasa
+     *
+     * @param string $telefonocasa
+     *
+     * @return Alumno
+     */
+    public function setTelefonocasa($telefonocasa)
+    {
+        $this->telefonocasa = $telefonocasa;
+
+        return $this;
+    }
+
+    /**
+     * Get telefonocasa
+     *
+     * @return string
+     */
+    public function getTelefonocasa()
+    {
+        return $this->telefonocasa;
+    }
+
+    /**
+     * Set matriculamatricula
+     *
+     * @param \AppBundle\Entity\Matricula $matriculamatricula
+     *
+     * @return Alumno
+     */
+    public function setMatriculamatricula(\AppBundle\Entity\Matricula $matriculamatricula = null)
+    {
+        $this->matriculamatricula = $matriculamatricula;
+
+        return $this;
+    }
+
+    /**
+     * Get matriculamatricula
+     *
+     * @return \AppBundle\Entity\Matricula
+     */
+    public function getMatriculamatricula()
+    {
+        return $this->matriculamatricula;
+    }
+
+    /**
+     * Set padrepadre
+     *
+     * @param \AppBundle\Entity\Padre $padrepadre
+     *
+     * @return Alumno
+     */
+    public function setPadrepadre(\AppBundle\Entity\Padre $padrepadre = null)
+    {
+        $this->padrepadre = $padrepadre;
+
+        return $this;
+    }
+
+    /**
+     * Get padrepadre
+     *
+     * @return \AppBundle\Entity\Padre
+     */
+    public function getPadrepadre()
+    {
+        return $this->padrepadre;
+    }
+
+    /**
+     * Set responsableresponsable
+     *
+     * @param \AppBundle\Entity\Responsable $responsableresponsable
+     *
+     * @return Alumno
+     */
+    public function setResponsableresponsable(\AppBundle\Entity\Responsable $responsableresponsable = null)
+    {
+        $this->responsableresponsable = $responsableresponsable;
+
+        return $this;
+    }
+
+    /**
+     * Get responsableresponsable
+     *
+     * @return \AppBundle\Entity\Responsable
+     */
+    public function getResponsableresponsable()
+    {
+        return $this->responsableresponsable;
+    }
+}

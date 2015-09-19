@@ -53,5 +53,110 @@ class Matricula
     private $nivelnivel;
 
 
-}
 
+    /**
+     * Get idmatricula
+     *
+     * @return integer
+     */
+    public function getIdmatricula()
+    {
+        return $this->idmatricula;
+    }
+
+    /**
+     * Set fechamatricula
+     *
+     * @param \DateTime $fechamatricula
+     *
+     * @return Matricula
+     */
+    public function setFechamatricula($fechamatricula)
+    {
+        $this->fechamatricula = $fechamatricula;
+
+        return $this;
+    }
+
+    /**
+     * Get fechamatricula
+     *
+     * @return \DateTime
+     */
+    public function getFechamatricula()
+    {
+        return $this->fechamatricula;
+    }
+
+    /**
+     * Set numerorecibo
+     *
+     * @param string $numerorecibo
+     *
+     * @return Matricula
+     */
+    public function setNumerorecibo($numerorecibo)
+    {
+        $this->numerorecibo = $numerorecibo;
+
+        return $this;
+    }
+
+    /**
+     * Get numerorecibo
+     *
+     * @return string
+     */
+    public function getNumerorecibo()
+    {
+        return $this->numerorecibo;
+    }
+
+    /**
+     * Set esactivo
+     *
+     * @param integer $esactivo
+     *
+     * @return Matricula
+     */
+    public function setEsactivo($esactivo)
+    {
+        $this->esactivo = $esactivo;
+
+        return $this;
+    }
+
+    /**
+     * Get esactivo
+     *
+     * @return integer
+     */
+    public function getEsactivo()
+    {
+        return $this->esactivo;
+    }
+
+    /**
+     * Set nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Matricula
+     */
+    public function setNivelnivel(\AppBundle\Entity\Nivel $nivelnivel = null)
+    {
+        $this->nivelnivel = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \AppBundle\Entity\Nivel
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}

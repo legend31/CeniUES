@@ -63,5 +63,124 @@ class Resultadoevaluacion
     private $evaluacionevaluacion;
 
 
-}
 
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Resultadoevaluacion
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set nota
+     *
+     * @param float $nota
+     *
+     * @return Resultadoevaluacion
+     */
+    public function setNota($nota)
+    {
+        $this->nota = $nota;
+
+        return $this;
+    }
+
+    /**
+     * Get nota
+     *
+     * @return float
+     */
+    public function getNota()
+    {
+        return $this->nota;
+    }
+
+    /**
+     * Set alumnoCarnetalumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumnoCarnetalumno
+     *
+     * @return Resultadoevaluacion
+     */
+    public function setAlumnoCarnetalumno(\AppBundle\Entity\Alumno $alumnoCarnetalumno)
+    {
+        $this->alumnoCarnetalumno = $alumnoCarnetalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnoCarnetalumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumnoCarnetalumno()
+    {
+        return $this->alumnoCarnetalumno;
+    }
+
+    /**
+     * Set detalleevaluaciondetalleevaluacion
+     *
+     * @param \AppBundle\Entity\Detalleevaluacion $detalleevaluaciondetalleevaluacion
+     *
+     * @return Resultadoevaluacion
+     */
+    public function setDetalleevaluaciondetalleevaluacion(\AppBundle\Entity\Detalleevaluacion $detalleevaluaciondetalleevaluacion)
+    {
+        $this->detalleevaluaciondetalleevaluacion = $detalleevaluaciondetalleevaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get detalleevaluaciondetalleevaluacion
+     *
+     * @return \AppBundle\Entity\Detalleevaluacion
+     */
+    public function getDetalleevaluaciondetalleevaluacion()
+    {
+        return $this->detalleevaluaciondetalleevaluacion;
+    }
+
+    /**
+     * Set evaluacionevaluacion
+     *
+     * @param \AppBundle\Entity\Evaluacion $evaluacionevaluacion
+     *
+     * @return Resultadoevaluacion
+     */
+    public function setEvaluacionevaluacion(\AppBundle\Entity\Evaluacion $evaluacionevaluacion)
+    {
+        $this->evaluacionevaluacion = $evaluacionevaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get evaluacionevaluacion
+     *
+     * @return \AppBundle\Entity\Evaluacion
+     */
+    public function getEvaluacionevaluacion()
+    {
+        return $this->evaluacionevaluacion;
+    }
+}

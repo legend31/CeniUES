@@ -39,5 +39,62 @@ class Asistenciadia
     private $asistenciaalumnoasistenciaalumno;
 
 
-}
 
+    /**
+     * Get idasistenciadia
+     *
+     * @return integer
+     */
+    public function getIdasistenciadia()
+    {
+        return $this->idasistenciadia;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     *
+     * @return Asistenciadia
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    /**
+     * Set asistenciaalumnoasistenciaalumno
+     *
+     * @param \AppBundle\Entity\Asistenciaalumno $asistenciaalumnoasistenciaalumno
+     *
+     * @return Asistenciadia
+     */
+    public function setAsistenciaalumnoasistenciaalumno(\AppBundle\Entity\Asistenciaalumno $asistenciaalumnoasistenciaalumno = null)
+    {
+        $this->asistenciaalumnoasistenciaalumno = $asistenciaalumnoasistenciaalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get asistenciaalumnoasistenciaalumno
+     *
+     * @return \AppBundle\Entity\Asistenciaalumno
+     */
+    public function getAsistenciaalumnoasistenciaalumno()
+    {
+        return $this->asistenciaalumnoasistenciaalumno;
+    }
+}

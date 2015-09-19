@@ -49,5 +49,86 @@ class Record
     private $recordalumnorecordalumno;
 
 
-}
 
+    /**
+     * Get idrecord
+     *
+     * @return integer
+     */
+    public function getIdrecord()
+    {
+        return $this->idrecord;
+    }
+
+    /**
+     * Set esgraduado
+     *
+     * @param integer $esgraduado
+     *
+     * @return Record
+     */
+    public function setEsgraduado($esgraduado)
+    {
+        $this->esgraduado = $esgraduado;
+
+        return $this;
+    }
+
+    /**
+     * Get esgraduado
+     *
+     * @return integer
+     */
+    public function getEsgraduado()
+    {
+        return $this->esgraduado;
+    }
+
+    /**
+     * Set nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Record
+     */
+    public function setNivelnivel(\AppBundle\Entity\Nivel $nivelnivel = null)
+    {
+        $this->nivelnivel = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \AppBundle\Entity\Nivel
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+
+    /**
+     * Set recordalumnorecordalumno
+     *
+     * @param \AppBundle\Entity\Recordalumno $recordalumnorecordalumno
+     *
+     * @return Record
+     */
+    public function setRecordalumnorecordalumno(\AppBundle\Entity\Recordalumno $recordalumnorecordalumno = null)
+    {
+        $this->recordalumnorecordalumno = $recordalumnorecordalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get recordalumnorecordalumno
+     *
+     * @return \AppBundle\Entity\Recordalumno
+     */
+    public function getRecordalumnorecordalumno()
+    {
+        return $this->recordalumnorecordalumno;
+    }
+}
