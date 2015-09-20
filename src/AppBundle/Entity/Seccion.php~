@@ -43,5 +43,72 @@ class Seccion
         $this->nivelnivel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-}
 
+    /**
+     * Get idseccion
+     *
+     * @return integer
+     */
+    public function getIdseccion()
+    {
+        return $this->idseccion;
+    }
+
+    /**
+     * Set nombreseccion
+     *
+     * @param string $nombreseccion
+     *
+     * @return Seccion
+     */
+    public function setNombreseccion($nombreseccion)
+    {
+        $this->nombreseccion = $nombreseccion;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreseccion
+     *
+     * @return string
+     */
+    public function getNombreseccion()
+    {
+        return $this->nombreseccion;
+    }
+
+    /**
+     * Add nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Seccion
+     */
+    public function addNivelnivel(\AppBundle\Entity\Nivel $nivelnivel)
+    {
+        $this->nivelnivel[] = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Remove nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     */
+    public function removeNivelnivel(\AppBundle\Entity\Nivel $nivelnivel)
+    {
+        $this->nivelnivel->removeElement($nivelnivel);
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}

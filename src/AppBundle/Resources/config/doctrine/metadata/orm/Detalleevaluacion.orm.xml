@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Detalleevaluacion" table="detalleevaluacion">
+    <indexes>
+      <index name="fk_DetalleEvaluacion_Nivel1_idx" columns="Nivel_idNivel"/>
+      <index name="fk_DetalleEvaluacion_Modulo1_idx" columns="Modulo_idModulo"/>
+      <index name="fk_DetalleEvaluacion_Docente1_idx" columns="Docente_carnetDocente"/>
+    </indexes>
+    <id name="iddetalleevaluacion" type="integer" column="idDetalleEvaluacion">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="nivelnivel" target-entity="Nivel" fetch="LAZY">
+      <join-columns>
+        <join-column name="Nivel_idNivel" referenced-column-name="idNivel"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="modulomodulo" target-entity="Modulo" fetch="LAZY">
+      <join-columns>
+        <join-column name="Modulo_idModulo" referenced-column-name="idModulo"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="docenteCarnetdocente" target-entity="Docente" fetch="LAZY">
+      <join-columns>
+        <join-column name="Docente_carnetDocente" referenced-column-name="carnetDocente"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

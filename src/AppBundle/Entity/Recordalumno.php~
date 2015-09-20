@@ -39,5 +39,62 @@ class Recordalumno
     private $alumnoCarnetalumno;
 
 
-}
 
+    /**
+     * Get idrecordalumno
+     *
+     * @return integer
+     */
+    public function getIdrecordalumno()
+    {
+        return $this->idrecordalumno;
+    }
+
+    /**
+     * Set notafinal
+     *
+     * @param float $notafinal
+     *
+     * @return Recordalumno
+     */
+    public function setNotafinal($notafinal)
+    {
+        $this->notafinal = $notafinal;
+
+        return $this;
+    }
+
+    /**
+     * Get notafinal
+     *
+     * @return float
+     */
+    public function getNotafinal()
+    {
+        return $this->notafinal;
+    }
+
+    /**
+     * Set alumnoCarnetalumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumnoCarnetalumno
+     *
+     * @return Recordalumno
+     */
+    public function setAlumnoCarnetalumno(\AppBundle\Entity\Alumno $alumnoCarnetalumno = null)
+    {
+        $this->alumnoCarnetalumno = $alumnoCarnetalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnoCarnetalumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumnoCarnetalumno()
+    {
+        return $this->alumnoCarnetalumno;
+    }
+}

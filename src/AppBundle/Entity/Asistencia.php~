@@ -49,5 +49,86 @@ class Asistencia
     private $claseclase;
 
 
-}
 
+    /**
+     * Get idasistencia
+     *
+     * @return integer
+     */
+    public function getIdasistencia()
+    {
+        return $this->idasistencia;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Asistencia
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set asistenciadiaasistenciadia
+     *
+     * @param \AppBundle\Entity\Asistenciadia $asistenciadiaasistenciadia
+     *
+     * @return Asistencia
+     */
+    public function setAsistenciadiaasistenciadia(\AppBundle\Entity\Asistenciadia $asistenciadiaasistenciadia = null)
+    {
+        $this->asistenciadiaasistenciadia = $asistenciadiaasistenciadia;
+
+        return $this;
+    }
+
+    /**
+     * Get asistenciadiaasistenciadia
+     *
+     * @return \AppBundle\Entity\Asistenciadia
+     */
+    public function getAsistenciadiaasistenciadia()
+    {
+        return $this->asistenciadiaasistenciadia;
+    }
+
+    /**
+     * Set claseclase
+     *
+     * @param \AppBundle\Entity\Clase $claseclase
+     *
+     * @return Asistencia
+     */
+    public function setClaseclase(\AppBundle\Entity\Clase $claseclase = null)
+    {
+        $this->claseclase = $claseclase;
+
+        return $this;
+    }
+
+    /**
+     * Get claseclase
+     *
+     * @return \AppBundle\Entity\Clase
+     */
+    public function getClaseclase()
+    {
+        return $this->claseclase;
+    }
+}

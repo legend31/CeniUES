@@ -52,5 +52,86 @@ class Detalleevaluacion
     private $nivelnivel;
 
 
-}
 
+    /**
+     * Get iddetalleevaluacion
+     *
+     * @return integer
+     */
+    public function getIddetalleevaluacion()
+    {
+        return $this->iddetalleevaluacion;
+    }
+
+    /**
+     * Set docenteCarnetdocente
+     *
+     * @param \AppBundle\Entity\Docente $docenteCarnetdocente
+     *
+     * @return Detalleevaluacion
+     */
+    public function setDocenteCarnetdocente(\AppBundle\Entity\Docente $docenteCarnetdocente = null)
+    {
+        $this->docenteCarnetdocente = $docenteCarnetdocente;
+
+        return $this;
+    }
+
+    /**
+     * Get docenteCarnetdocente
+     *
+     * @return \AppBundle\Entity\Docente
+     */
+    public function getDocenteCarnetdocente()
+    {
+        return $this->docenteCarnetdocente;
+    }
+
+    /**
+     * Set modulomodulo
+     *
+     * @param \AppBundle\Entity\Modulo $modulomodulo
+     *
+     * @return Detalleevaluacion
+     */
+    public function setModulomodulo(\AppBundle\Entity\Modulo $modulomodulo = null)
+    {
+        $this->modulomodulo = $modulomodulo;
+
+        return $this;
+    }
+
+    /**
+     * Get modulomodulo
+     *
+     * @return \AppBundle\Entity\Modulo
+     */
+    public function getModulomodulo()
+    {
+        return $this->modulomodulo;
+    }
+
+    /**
+     * Set nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Detalleevaluacion
+     */
+    public function setNivelnivel(\AppBundle\Entity\Nivel $nivelnivel = null)
+    {
+        $this->nivelnivel = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \AppBundle\Entity\Nivel
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}

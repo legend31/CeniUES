@@ -64,5 +64,158 @@ class Padre
     private $telefonotrabajomadre;
 
 
-}
 
+    /**
+     * Get idpadre
+     *
+     * @return integer
+     */
+    public function getIdpadre()
+    {
+        return $this->idpadre;
+    }
+
+    /**
+     * Set nombrepadre
+     *
+     * @param string $nombrepadre
+     *
+     * @return Padre
+     */
+    public function setNombrepadre($nombrepadre)
+    {
+        $this->nombrepadre = $nombrepadre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombrepadre
+     *
+     * @return string
+     */
+    public function getNombrepadre()
+    {
+        return $this->nombrepadre;
+    }
+
+    /**
+     * Set lugartrabajop
+     *
+     * @param string $lugartrabajop
+     *
+     * @return Padre
+     */
+    public function setLugartrabajop($lugartrabajop)
+    {
+        $this->lugartrabajop = $lugartrabajop;
+
+        return $this;
+    }
+
+    /**
+     * Get lugartrabajop
+     *
+     * @return string
+     */
+    public function getLugartrabajop()
+    {
+        return $this->lugartrabajop;
+    }
+
+    /**
+     * Set telefonotrabajopadre
+     *
+     * @param string $telefonotrabajopadre
+     *
+     * @return Padre
+     */
+    public function setTelefonotrabajopadre($telefonotrabajopadre)
+    {
+        $this->telefonotrabajopadre = $telefonotrabajopadre;
+
+        return $this;
+    }
+
+    /**
+     * Get telefonotrabajopadre
+     *
+     * @return string
+     */
+    public function getTelefonotrabajopadre()
+    {
+        return $this->telefonotrabajopadre;
+    }
+
+    /**
+     * Set nombremadre
+     *
+     * @param string $nombremadre
+     *
+     * @return Padre
+     */
+    public function setNombremadre($nombremadre)
+    {
+        $this->nombremadre = $nombremadre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombremadre
+     *
+     * @return string
+     */
+    public function getNombremadre()
+    {
+        return $this->nombremadre;
+    }
+
+    /**
+     * Set lugartrabajom
+     *
+     * @param string $lugartrabajom
+     *
+     * @return Padre
+     */
+    public function setLugartrabajom($lugartrabajom)
+    {
+        $this->lugartrabajom = $lugartrabajom;
+
+        return $this;
+    }
+
+    /**
+     * Get lugartrabajom
+     *
+     * @return string
+     */
+    public function getLugartrabajom()
+    {
+        return $this->lugartrabajom;
+    }
+
+    /**
+     * Set telefonotrabajomadre
+     *
+     * @param string $telefonotrabajomadre
+     *
+     * @return Padre
+     */
+    public function setTelefonotrabajomadre($telefonotrabajomadre)
+    {
+        $this->telefonotrabajomadre = $telefonotrabajomadre;
+
+        return $this;
+    }
+
+    /**
+     * Get telefonotrabajomadre
+     *
+     * @return string
+     */
+    public function getTelefonotrabajomadre()
+    {
+        return $this->telefonotrabajomadre;
+    }
+}

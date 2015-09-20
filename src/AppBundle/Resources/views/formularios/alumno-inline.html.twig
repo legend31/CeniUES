@@ -1,0 +1,85 @@
+{% extends '::layoutbase.html.twig' %}
+{% block body %}
+    <div class="container">
+        <h2>Ingreso de Alumno</h2>
+        <form class="form-horizontal" method="post" action="{{ path('alumnoinsert') }}">
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputCarnet">Carnet</label>
+                <div class="col-lg-7">
+                    <input id="inputCarnet" class="form-control" type="text" name="carnet" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputPrimer">Primer Nombre</label>
+                <div class="col-lg-7">
+                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputSegundo">Segundo Nombre</label>
+                <div class="col-lg-7">
+                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputPrimerApe">Primer Apellido</label>
+                <div class="col-lg-7">
+                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputSegApe">Segundo Apellido</label>
+                <div class="col-lg-7">
+                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputFecha">Fecha de Nacimiento</label>
+                <div class="col-lg-7">
+                    <input id="inputFecha" class="form-control" type="date" name="fecha_nacimiento" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputEdad">Edad</label>
+                <div class="col-lg-7">
+                    <input id="inputEdad" class="form-control" type="text" name="edad">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputResponsable">Responsable</label>
+                <div class="col-lg-7">
+                    <select id="inputPadre" name="padre">
+                        {% for item in padres %}
+                            <option value="{{ item.idpadre }}">{{ item.nombrepadre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputPadre">Padre</label>
+                <div class="col-lg-7">
+                    <select id="inputPadre" name="padre">
+                        {% for item in padres %}
+                            <option value="{{ item.idpadre }}">{{ item.nombrepadre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputMatricula">Matricula</label>
+                <div class="col-lg-7">
+                    <select id="inputMatricula" name="matricula">
+                        {% for item in matriculas %}
+                            <option value="{{ item.idmatricula }}">{{ item.numerorecibo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-7">
+                    <input class="btn bg-primary" type="submit" value="Enviar">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

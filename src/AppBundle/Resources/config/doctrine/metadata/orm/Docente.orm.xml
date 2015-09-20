@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Docente" table="docente">
+    <id name="carnetdocente" type="string" column="carnetDocente" length="7">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="primernombredocente" type="string" column="primerNombreDocente" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="segundonombredocente" type="string" column="segundoNombreDocente" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="primerapellidodocente" type="string" column="primerApellidoDocente" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="segundoapellidodocente" type="string" column="segundoApellidoDocente" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="dui" type="string" column="dui" length="11" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="direcciondocente" type="string" column="direccionDocente" length="70" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="telefono" type="string" column="telefono" length="8" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechanacimiento" type="date" column="fechaNacimiento" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -36,5 +36,62 @@ class Evaluacion
     private $ponderacion;
 
 
-}
 
+    /**
+     * Get idevaluacion
+     *
+     * @return integer
+     */
+    public function getIdevaluacion()
+    {
+        return $this->idevaluacion;
+    }
+
+    /**
+     * Set nombreevaluacion
+     *
+     * @param string $nombreevaluacion
+     *
+     * @return Evaluacion
+     */
+    public function setNombreevaluacion($nombreevaluacion)
+    {
+        $this->nombreevaluacion = $nombreevaluacion;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreevaluacion
+     *
+     * @return string
+     */
+    public function getNombreevaluacion()
+    {
+        return $this->nombreevaluacion;
+    }
+
+    /**
+     * Set ponderacion
+     *
+     * @param float $ponderacion
+     *
+     * @return Evaluacion
+     */
+    public function setPonderacion($ponderacion)
+    {
+        $this->ponderacion = $ponderacion;
+
+        return $this;
+    }
+
+    /**
+     * Get ponderacion
+     *
+     * @return float
+     */
+    public function getPonderacion()
+    {
+        return $this->ponderacion;
+    }
+}

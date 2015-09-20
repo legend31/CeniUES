@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Record" table="record">
+    <indexes>
+      <index name="fk_Record_Nivel1_idx" columns="Nivel_idNivel"/>
+      <index name="fk_Record_RecordAlumno1_idx" columns="RecordAlumno_idRecordAlumno"/>
+    </indexes>
+    <id name="idrecord" type="integer" column="idRecord">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="esgraduado" type="integer" column="esGraduado" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="recordalumnorecordalumno" target-entity="Recordalumno" fetch="LAZY">
+      <join-columns>
+        <join-column name="RecordAlumno_idRecordAlumno" referenced-column-name="idRecordAlumno"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="nivelnivel" target-entity="Nivel" fetch="LAZY">
+      <join-columns>
+        <join-column name="Nivel_idNivel" referenced-column-name="idNivel"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

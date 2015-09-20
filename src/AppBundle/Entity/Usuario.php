@@ -1,10 +1,12 @@
 <?php
 
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Role\Role;
+
 
 /**
  * Usuario
@@ -49,7 +51,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="isactive", type="integer", nullable=false)
      */
-    private $isactive = '1';
+    private $isactive;
 
     /**
      * @var \TipoUsuario
@@ -61,7 +63,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     private $tipoUsuariotipoUsuario;
 
-    /*---------------------------------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------*/
 
     public function getIdusuario()
     {
@@ -254,22 +256,5 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function isEnabled()
     {
         return $this->getIsActive() === 1;
-    }
-
-
-
-
-    /**
-     * Set isactive
-     *
-     * @param integer $isactive
-     *
-     * @return Usuario
-     */
-    public function setIsactive($isactive)
-    {
-        $this->isactive = $isactive;
-
-        return $this;
     }
 }

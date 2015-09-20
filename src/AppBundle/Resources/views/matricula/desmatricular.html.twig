@@ -11,7 +11,7 @@
                 <th>Apellidos</th>
                 <th>Edad</th>
                 <th>Responsable</th>
-                <th>Activo</th>
+                <th>Estado</th>
                 </thead>
                 <tbody>
                 <tr>
@@ -20,14 +20,13 @@
                     <td>{{ al.edad }}</td>
                     <td>{{ al.responsableresponsable.nombreresponsable }}</td>
                     <td>
-                        {% if al.matriculamatricula.esactivo ==1 %}
-                        <a href="{{ path('des',{'d':al.matriculamatricula.idmatricula}) }}" title="Desmatricular">
-                            <img src="{{ asset('bundles/app/images/dislike.png') }}">
-                        </a>
+                        {% if mat.esactivo == 1 %}
+                            <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
+                                <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                            </a>
                         {% else %}
-                        Inactivo
+                            Inactivo
                         {% endif %}
-                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -66,5 +66,134 @@ class Clase
     private $nivelnivel;
 
 
-}
 
+    /**
+     * Get idclase
+     *
+     * @return integer
+     */
+    public function getIdclase()
+    {
+        return $this->idclase;
+    }
+
+    /**
+     * Set horario
+     *
+     * @param \DateTime $horario
+     *
+     * @return Clase
+     */
+    public function setHorario($horario)
+    {
+        $this->horario = $horario;
+
+        return $this;
+    }
+
+    /**
+     * Get horario
+     *
+     * @return \DateTime
+     */
+    public function getHorario()
+    {
+        return $this->horario;
+    }
+
+    /**
+     * Set turno
+     *
+     * @param string $turno
+     *
+     * @return Clase
+     */
+    public function setTurno($turno)
+    {
+        $this->turno = $turno;
+
+        return $this;
+    }
+
+    /**
+     * Get turno
+     *
+     * @return string
+     */
+    public function getTurno()
+    {
+        return $this->turno;
+    }
+
+    /**
+     * Set docenteCarnetdocente
+     *
+     * @param \AppBundle\Entity\Docente $docenteCarnetdocente
+     *
+     * @return Clase
+     */
+    public function setDocenteCarnetdocente(\AppBundle\Entity\Docente $docenteCarnetdocente = null)
+    {
+        $this->docenteCarnetdocente = $docenteCarnetdocente;
+
+        return $this;
+    }
+
+    /**
+     * Get docenteCarnetdocente
+     *
+     * @return \AppBundle\Entity\Docente
+     */
+    public function getDocenteCarnetdocente()
+    {
+        return $this->docenteCarnetdocente;
+    }
+
+    /**
+     * Set locallocal
+     *
+     * @param \AppBundle\Entity\Local $locallocal
+     *
+     * @return Clase
+     */
+    public function setLocallocal(\AppBundle\Entity\Local $locallocal = null)
+    {
+        $this->locallocal = $locallocal;
+
+        return $this;
+    }
+
+    /**
+     * Get locallocal
+     *
+     * @return \AppBundle\Entity\Local
+     */
+    public function getLocallocal()
+    {
+        return $this->locallocal;
+    }
+
+    /**
+     * Set nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Clase
+     */
+    public function setNivelnivel(\AppBundle\Entity\Nivel $nivelnivel = null)
+    {
+        $this->nivelnivel = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \AppBundle\Entity\Nivel
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}
