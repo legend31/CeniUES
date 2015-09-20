@@ -10,6 +10,7 @@
 /composer.phar
 /vendor/
 /web/bundles/
+/.idea/
 =======
 # Windows image file caches
 Thumbs.db

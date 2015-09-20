@@ -3,11 +3,16 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class PruebaController extends Controller
 {
-    public function indexAction($name)
+    /**
+     * @Route("/prubeGit")
+     */
+    public function indexAction()
     {
-        return $this->render('', array('name' => $name));
+        //Si lo ves funciona
+        return new Response('');
     }
 }
