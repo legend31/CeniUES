@@ -1,0 +1,36 @@
+{% extends '::layoutbase.html.twig' %}
+{% block title %}
+        DropDown Menu
+{% endblock %}
+{% block principal %}
+        <style type="text/css">
+            .bs-example{
+                margin: 20px;
+            }
+        </style>
+        <div class="bs-example">
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#matricula">Matricula</a></li>
+                    <li><a data-toggle="tab" href="#padre">Padre</a></li>
+                    <li><a data-toggle="tab" href="#responsable">Responable</a></li>
+                    <li><a data-toggle="tab" href="#alumno">Alumno</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="matricula" class="tab-pane fade in active">
+                        <h3>Formulario de Matricula</h3>
+                    </div>
+                    <div id="padre" class="tab-pane fade">
+                        <h3>Formulario de Padre</h3>
+                    </div>
+                    <div id="responsable" class="tab-pane fade">
+                        <h3>Formulario de Responsable</h3>
+                    </div>
+                    <div id="alumno" class="tab-pane fade">
+                        <!-- Incluyendo un controlador -->
+                        {{ render(controller('AppBundle:Matricula:alumnoInsert')) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

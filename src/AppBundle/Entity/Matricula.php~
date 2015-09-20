@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Matricula
  *
- * @ORM\Table(name="matricula", indexes={@ORM\Index(name="fk_Matricula_Nivel1_idx", columns={"Nivel_idNivel"})})
+ * @ORM\Table(name="matricula", indexes={@ORM\Index(name="fk_Matricula_Nivel1_idx", columns={"Nivel_idNivel"}), @ORM\Index(name="fk_Matricula_Alumno1_idx", columns={"Alumno_carnetAlumno"})})
  * @ORM\Entity
  */
 class Matricula
@@ -43,6 +43,16 @@ class Matricula
     private $esactivo;
 
     /**
+     * @var \Alumno
+     *
+     * @ORM\ManyToOne(targetEntity="Alumno")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Alumno_carnetAlumno", referencedColumnName="carnetAlumno")
+     * })
+     */
+    private $alumnoCarnetalumno;
+
+    /**
      * @var \Nivel
      *
      * @ORM\ManyToOne(targetEntity="Nivel")
@@ -53,5 +63,134 @@ class Matricula
     private $nivelnivel;
 
 
-}
 
+    /**
+     * Get idmatricula
+     *
+     * @return integer
+     */
+    public function getIdmatricula()
+    {
+        return $this->idmatricula;
+    }
+
+    /**
+     * Set fechamatricula
+     *
+     * @param \DateTime $fechamatricula
+     *
+     * @return Matricula
+     */
+    public function setFechamatricula($fechamatricula)
+    {
+        $this->fechamatricula = $fechamatricula;
+
+        return $this;
+    }
+
+    /**
+     * Get fechamatricula
+     *
+     * @return \DateTime
+     */
+    public function getFechamatricula()
+    {
+        return $this->fechamatricula;
+    }
+
+    /**
+     * Set numerorecibo
+     *
+     * @param string $numerorecibo
+     *
+     * @return Matricula
+     */
+    public function setNumerorecibo($numerorecibo)
+    {
+        $this->numerorecibo = $numerorecibo;
+
+        return $this;
+    }
+
+    /**
+     * Get numerorecibo
+     *
+     * @return string
+     */
+    public function getNumerorecibo()
+    {
+        return $this->numerorecibo;
+    }
+
+    /**
+     * Set esactivo
+     *
+     * @param integer $esactivo
+     *
+     * @return Matricula
+     */
+    public function setEsactivo($esactivo)
+    {
+        $this->esactivo = $esactivo;
+
+        return $this;
+    }
+
+    /**
+     * Get esactivo
+     *
+     * @return integer
+     */
+    public function getEsactivo()
+    {
+        return $this->esactivo;
+    }
+
+    /**
+     * Set alumnoCarnetalumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumnoCarnetalumno
+     *
+     * @return Matricula
+     */
+    public function setAlumnoCarnetalumno(\AppBundle\Entity\Alumno $alumnoCarnetalumno = null)
+    {
+        $this->alumnoCarnetalumno = $alumnoCarnetalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnoCarnetalumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumnoCarnetalumno()
+    {
+        return $this->alumnoCarnetalumno;
+    }
+
+    /**
+     * Set nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Matricula
+     */
+    public function setNivelnivel(\AppBundle\Entity\Nivel $nivelnivel = null)
+    {
+        $this->nivelnivel = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \AppBundle\Entity\Nivel
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}

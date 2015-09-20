@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Alumno" table="alumno">
+    <indexes>
+      <index name="fk_Alumno_Padre1_idx" columns="Padre_idPadre"/>
+      <index name="fk_Alumno_Responsable1_idx" columns="Responsable_idResponsable"/>
+    </indexes>
+    <id name="carnetalumno" type="string" column="carnetAlumno" length="7">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="primernombrealumno" type="string" column="primerNombreAlumno" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="segundonombrealumno" type="string" column="segundoNombreAlumno" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="primerapellidoalumno" type="string" column="primerApellidoAlumno" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="segundoapellidoalumno" type="string" column="segundoApellidoAlumno" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechanacimiento" type="date" column="fechaNacimiento" nullable="false"/>
+    <field name="edad" type="integer" column="edad" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="direccioncasa" type="string" column="direccionCasa" length="70" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="telefonocasa" type="string" column="telefonoCasa" length="8" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="responsableresponsable" target-entity="Responsable" fetch="LAZY">
+      <join-columns>
+        <join-column name="Responsable_idResponsable" referenced-column-name="idResponsable"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="padrepadre" target-entity="Padre" fetch="LAZY">
+      <join-columns>
+        <join-column name="Padre_idPadre" referenced-column-name="idPadre"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

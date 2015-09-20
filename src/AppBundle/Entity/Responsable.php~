@@ -43,5 +43,86 @@ class Responsable
     private $telefono;
 
 
-}
 
+    /**
+     * Get idresponsable
+     *
+     * @return integer
+     */
+    public function getIdresponsable()
+    {
+        return $this->idresponsable;
+    }
+
+    /**
+     * Set nombreresponsable
+     *
+     * @param string $nombreresponsable
+     *
+     * @return Responsable
+     */
+    public function setNombreresponsable($nombreresponsable)
+    {
+        $this->nombreresponsable = $nombreresponsable;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreresponsable
+     *
+     * @return string
+     */
+    public function getNombreresponsable()
+    {
+        return $this->nombreresponsable;
+    }
+
+    /**
+     * Set parentesco
+     *
+     * @param string $parentesco
+     *
+     * @return Responsable
+     */
+    public function setParentesco($parentesco)
+    {
+        $this->parentesco = $parentesco;
+
+        return $this;
+    }
+
+    /**
+     * Get parentesco
+     *
+     * @return string
+     */
+    public function getParentesco()
+    {
+        return $this->parentesco;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return Responsable
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+}

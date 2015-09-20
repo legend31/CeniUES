@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Recordalumno" table="recordalumno">
+    <indexes>
+      <index name="fk_RecordAlumno_Alumno1_idx" columns="Alumno_carnetAlumno"/>
+    </indexes>
+    <id name="idrecordalumno" type="integer" column="idRecordAlumno">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="notafinal" type="float" column="notaFinal" precision="10" scale="0" nullable="false"/>
+    <many-to-one field="alumnoCarnetalumno" target-entity="Alumno" fetch="LAZY">
+      <join-columns>
+        <join-column name="Alumno_carnetAlumno" referenced-column-name="carnetAlumno"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

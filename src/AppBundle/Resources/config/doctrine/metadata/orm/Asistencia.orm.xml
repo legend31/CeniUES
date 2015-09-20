@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Asistencia" table="asistencia">
+    <indexes>
+      <index name="fk_Asistencia_Clase1_idx" columns="Clase_idClase"/>
+      <index name="fk_Asistencia_AsistenciaDia1_idx" columns="AsistenciaDia_idAsistenciaDia"/>
+    </indexes>
+    <id name="idasistencia" type="integer" column="idAsistencia">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="descripcion" type="string" column="descripcion" length="60" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="claseclase" target-entity="Clase" fetch="LAZY">
+      <join-columns>
+        <join-column name="Clase_idClase" referenced-column-name="idClase"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="asistenciadiaasistenciadia" target-entity="Asistenciadia" fetch="LAZY">
+      <join-columns>
+        <join-column name="AsistenciaDia_idAsistenciaDia" referenced-column-name="idAsistenciaDia"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

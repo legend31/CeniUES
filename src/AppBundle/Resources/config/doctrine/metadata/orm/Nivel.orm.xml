@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Nivel" table="nivel">
+    <id name="idnivel" type="integer" column="idNivel">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nombrenivel" type="string" column="nombreNivel" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="duracion" type="integer" column="duracion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fechainicio" type="date" column="fechaInicio" nullable="false"/>
+    <field name="fechafin" type="date" column="fechaFin" nullable="true"/>
+    <many-to-many field="seccionseccion" target-entity="Seccion" inversed-by="nivelnivel" fetch="LAZY">
+      <join-table name="nivel_has_seccion">
+        <join-columns>
+          <join-column name="Nivel_idNivel" referenced-column-name="idNivel"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="Seccion_idSeccion" referenced-column-name="idSeccion"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="modulomodulo" target-entity="Modulo" mapped-by="nivelnivel" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

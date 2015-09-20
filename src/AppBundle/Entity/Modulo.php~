@@ -72,5 +72,144 @@ class Modulo
         $this->nivelnivel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-}
 
+    /**
+     * Get idmodulo
+     *
+     * @return integer
+     */
+    public function getIdmodulo()
+    {
+        return $this->idmodulo;
+    }
+
+    /**
+     * Set nombremodulo
+     *
+     * @param string $nombremodulo
+     *
+     * @return Modulo
+     */
+    public function setNombremodulo($nombremodulo)
+    {
+        $this->nombremodulo = $nombremodulo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombremodulo
+     *
+     * @return string
+     */
+    public function getNombremodulo()
+    {
+        return $this->nombremodulo;
+    }
+
+    /**
+     * Set duracion
+     *
+     * @param integer $duracion
+     *
+     * @return Modulo
+     */
+    public function setDuracion($duracion)
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return integer
+     */
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    /**
+     * Set fechainicio
+     *
+     * @param \DateTime $fechainicio
+     *
+     * @return Modulo
+     */
+    public function setFechainicio($fechainicio)
+    {
+        $this->fechainicio = $fechainicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechainicio
+     *
+     * @return \DateTime
+     */
+    public function getFechainicio()
+    {
+        return $this->fechainicio;
+    }
+
+    /**
+     * Set fechafin
+     *
+     * @param \DateTime $fechafin
+     *
+     * @return Modulo
+     */
+    public function setFechafin($fechafin)
+    {
+        $this->fechafin = $fechafin;
+
+        return $this;
+    }
+
+    /**
+     * Get fechafin
+     *
+     * @return \DateTime
+     */
+    public function getFechafin()
+    {
+        return $this->fechafin;
+    }
+
+    /**
+     * Add nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     *
+     * @return Modulo
+     */
+    public function addNivelnivel(\AppBundle\Entity\Nivel $nivelnivel)
+    {
+        $this->nivelnivel[] = $nivelnivel;
+
+        return $this;
+    }
+
+    /**
+     * Remove nivelnivel
+     *
+     * @param \AppBundle\Entity\Nivel $nivelnivel
+     */
+    public function removeNivelnivel(\AppBundle\Entity\Nivel $nivelnivel)
+    {
+        $this->nivelnivel->removeElement($nivelnivel);
+    }
+
+    /**
+     * Get nivelnivel
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNivelnivel()
+    {
+        return $this->nivelnivel;
+    }
+}

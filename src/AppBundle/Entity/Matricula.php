@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Matricula
  *
- * @ORM\Table(name="matricula", indexes={@ORM\Index(name="fk_Matricula_Nivel1_idx", columns={"Nivel_idNivel"})})
+ * @ORM\Table(name="matricula", indexes={@ORM\Index(name="fk_Matricula_Nivel1_idx", columns={"Nivel_idNivel"}), @ORM\Index(name="fk_Matricula_Alumno1_idx", columns={"Alumno_carnetAlumno"})})
  * @ORM\Entity
  */
 class Matricula
@@ -41,6 +41,16 @@ class Matricula
      * @ORM\Column(name="esActivo", type="integer", nullable=false)
      */
     private $esactivo;
+
+    /**
+     * @var \Alumno
+     *
+     * @ORM\ManyToOne(targetEntity="Alumno")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Alumno_carnetAlumno", referencedColumnName="carnetAlumno")
+     * })
+     */
+    private $alumnoCarnetalumno;
 
     /**
      * @var \Nivel
@@ -134,6 +144,30 @@ class Matricula
     public function getEsactivo()
     {
         return $this->esactivo;
+    }
+
+    /**
+     * Set alumnoCarnetalumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumnoCarnetalumno
+     *
+     * @return Matricula
+     */
+    public function setAlumnoCarnetalumno(\AppBundle\Entity\Alumno $alumnoCarnetalumno = null)
+    {
+        $this->alumnoCarnetalumno = $alumnoCarnetalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnoCarnetalumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumnoCarnetalumno()
+    {
+        return $this->alumnoCarnetalumno;
     }
 
     /**

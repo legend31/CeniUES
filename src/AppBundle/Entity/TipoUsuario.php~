@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * TipoUsuario
@@ -11,7 +10,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  * @ORM\Table(name="tipo_usuario")
  * @ORM\Entity
  */
-class TipoUsuario implements RoleInterface
+class TipoUsuario
 {
     /**
      * @var integer
@@ -29,11 +28,39 @@ class TipoUsuario implements RoleInterface
      */
     private $nomtipousuario;
 
-    public function getRole()
+
+
+    /**
+     * Get idtipoUsuario
+     *
+     * @return integer
+     */
+    public function getIdtipoUsuario()
     {
-        return 'ROLE_'.$this->nomtipousuario.'';
+        return $this->idtipoUsuario;
     }
 
+    /**
+     * Set nomtipousuario
+     *
+     * @param string $nomtipousuario
+     *
+     * @return TipoUsuario
+     */
+    public function setNomtipousuario($nomtipousuario)
+    {
+        $this->nomtipousuario = $nomtipousuario;
 
+        return $this;
+    }
+
+    /**
+     * Get nomtipousuario
+     *
+     * @return string
+     */
+    public function getNomtipousuario()
+    {
+        return $this->nomtipousuario;
+    }
 }
-

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Alumno
  *
- * @ORM\Table(name="alumno", indexes={@ORM\Index(name="fk_Alumno_Matricula1_idx", columns={"Matricula_idMatricula"}), @ORM\Index(name="fk_Alumno_Padre1_idx", columns={"Padre_idPadre"}), @ORM\Index(name="fk_Alumno_Responsable1_idx", columns={"Responsable_idResponsable"})})
+ * @ORM\Table(name="alumno", indexes={@ORM\Index(name="fk_Alumno_Padre1_idx", columns={"Padre_idPadre"}), @ORM\Index(name="fk_Alumno_Responsable1_idx", columns={"Responsable_idResponsable"})})
  * @ORM\Entity
  */
 class Alumno
@@ -17,7 +17,6 @@ class Alumno
      *
      * @ORM\Column(name="carnetAlumno", type="string", length=7, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $carnetalumno;
 
@@ -76,16 +75,6 @@ class Alumno
      * @ORM\Column(name="telefonoCasa", type="string", length=8, nullable=true)
      */
     private $telefonocasa;
-
-    /**
-     * @var \Matricula
-     *
-     * @ORM\ManyToOne(targetEntity="Matricula")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Matricula_idMatricula", referencedColumnName="idMatricula")
-     * })
-     */
-    private $matriculamatricula;
 
     /**
      * @var \Padre
@@ -312,30 +301,6 @@ class Alumno
     }
 
     /**
-     * Set matriculamatricula
-     *
-     * @param \AppBundle\Entity\Matricula $matriculamatricula
-     *
-     * @return Alumno
-     */
-    public function setMatriculamatricula(\AppBundle\Entity\Matricula $matriculamatricula = null)
-    {
-        $this->matriculamatricula = $matriculamatricula;
-
-        return $this;
-    }
-
-    /**
-     * Get matriculamatricula
-     *
-     * @return \AppBundle\Entity\Matricula
-     */
-    public function getMatriculamatricula()
-    {
-        return $this->matriculamatricula;
-    }
-
-    /**
      * Set padrepadre
      *
      * @param \AppBundle\Entity\Padre $padrepadre
@@ -381,5 +346,19 @@ class Alumno
     public function getResponsableresponsable()
     {
         return $this->responsableresponsable;
+    }
+
+    /**
+     * Set carnetalumno
+     *
+     * @param string $carnetalumno
+     *
+     * @return Alumno
+     */
+    public function setCarnetalumno($carnetalumno)
+    {
+        $this->carnetalumno = $carnetalumno;
+
+        return $this;
     }
 }

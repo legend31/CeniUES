@@ -39,5 +39,62 @@ class Asistenciaalumno
     private $alumnoCarnetalumno;
 
 
-}
 
+    /**
+     * Get idasistenciaalumno
+     *
+     * @return integer
+     */
+    public function getIdasistenciaalumno()
+    {
+        return $this->idasistenciaalumno;
+    }
+
+    /**
+     * Set asistio
+     *
+     * @param boolean $asistio
+     *
+     * @return Asistenciaalumno
+     */
+    public function setAsistio($asistio)
+    {
+        $this->asistio = $asistio;
+
+        return $this;
+    }
+
+    /**
+     * Get asistio
+     *
+     * @return boolean
+     */
+    public function getAsistio()
+    {
+        return $this->asistio;
+    }
+
+    /**
+     * Set alumnoCarnetalumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumnoCarnetalumno
+     *
+     * @return Asistenciaalumno
+     */
+    public function setAlumnoCarnetalumno(\AppBundle\Entity\Alumno $alumnoCarnetalumno = null)
+    {
+        $this->alumnoCarnetalumno = $alumnoCarnetalumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumnoCarnetalumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumnoCarnetalumno()
+    {
+        return $this->alumnoCarnetalumno;
+    }
+}
