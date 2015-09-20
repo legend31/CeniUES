@@ -14,5 +14,17 @@ class PruebaController extends Controller
     {
         //Si lo ves funciona
         return new Response('');
+
+    }
+
+    /**
+     * @Route ("/prueba2")
+     */
+
+    public function pruebaAction()
+    {
+        //Si lo ves funciona
+        return $this->render('');
+
     }
 }
