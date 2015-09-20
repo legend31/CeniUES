@@ -13,6 +13,7 @@ class PruebaController extends Controller
     public function indexAction()
     {
         //Si lo ves funciona
+        // y si no?
         return new Response('');
 
     }
