@@ -27,7 +27,7 @@ class DefaultController extends Controller
 
     public function pruebaAction()
     {
-        //Si lo ves funciona
+        //Si lo ves funciona 2.0
 
         return $this->render('');
     }
