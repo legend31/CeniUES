@@ -15,6 +15,20 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         //A ver si sale
+        //Si lo ves funciona
+        // y si no? LLora
+        return new Response('');
+
+    }
+
+    /**
+     * @Route ("/prueba2")
+     */
+
+    public function pruebaAction()
+    {
+        //Si lo ves funciona
+
         return $this->render('');
     }
 }
