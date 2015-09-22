@@ -1,0 +1,38 @@
+{% extends "::layoutbase.html.twig" %}
+
+    {% block principal %}
+        <!--Inicia contenido de la UI-->
+        <section class="content">
+            <div class="row">
+                <div class="row-xs-12">
+                    <div class="box">
+
+                        <!--Inicia Cabecera de tabla-->
+                        <div class="box-header">
+                            <h3 class="box-title">Listado de Modulos</h3>
+                        </div>
+                        <!--Finaliza Cabecera de tabla-->
+
+                        <!--Inicia cuerpo de tabla-->
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NOMBRE DE MODULO</th>
+                                    <th>FECHA INICIO</th>
+                                    <th>FECHA FIN</th>
+                                    <th>DURACION</th>
+                                    <th>OPCIONES</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Finaliza Cuerpo de tabla-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Finaliza contenido de la UI-->
+        <!--Nota: NO COLOCAR COMENTARIOS HTML FUERA DE LAS ETIQUETAS DE TWIG-->
+{% endblock %}
