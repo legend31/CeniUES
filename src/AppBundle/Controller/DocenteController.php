@@ -74,7 +74,7 @@ class DocenteController extends Controller
 
         $form = $this->createFormBuilder($docente)
             ->add('carnetdocente','text', array('label' => 'Ingrese carnet'))
-            ->add('save', 'submit', array('label' => 'Buscar Docente'))
+            ->add('save', 'submit', array('label' => 'Eliminar Docente'))
             ->getForm();
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Eliminar Docente','form' => $form->createView()));
 
