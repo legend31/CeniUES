@@ -4,7 +4,7 @@
         <!--Inicia contenido de la UI-->
         <section class="content">
             <div class="row">
-                <div class="row-xs-12">
+                <div class="col-xs-12">
                     <div class="box">
 
                         <!--Inicia Cabecera de tabla-->
@@ -16,15 +16,24 @@
                         <!--Inicia cuerpo de tabla-->
                         <div class="box-body table-responsive">
                             <table class="table table-hover">
-                                <tbody>
-                                <tr>
+                                <thead>
                                     <th>ID</th>
                                     <th>NOMBRE DE MODULO</th>
                                     <th>FECHA INICIO</th>
                                     <th>FECHA FIN</th>
                                     <th>DURACION</th>
                                     <th>OPCIONES</th>
+                                </thead>
+                                <tbody>
+                                {% for modulos in modulo %}
+                                <tr>
+                                    <td>{{ modulos.idmodulo }}</td>
+                                    <td>{{ modulos.nombremodulo }}</td>
+                                    <td>{{ modulos.fechainicio | date('d-m-Y') }}</td>
+                                    <td>{{ modulos.fechafin | date('d-m-Y')}}</td>
+                                    <td>{{ modulos.duracion }}</td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

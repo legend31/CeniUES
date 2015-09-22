@@ -21,7 +21,13 @@ class ModulosNivelesController extends Controller{
      * @Route("/modulos", name="gmodulos")
      */
     public function gmodulosAction(){
-        return $this->render('AppBundle:admin:gmodulosniveles/gmodulos.html.twig');
+
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $modulo = $repositorio->findAll();
+
+        return $this->render('AppBundle:admin:gmodulosniveles/gmodulos.html.twig',array('modulo' => $modulo));
     }
+
+
 
 }
