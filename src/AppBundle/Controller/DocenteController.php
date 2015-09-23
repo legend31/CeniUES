@@ -33,10 +33,8 @@ class DocenteController extends Controller
 
         $form = $this->createFormBuilder($docente)
             ->add('carnetdocente','text',array('label' => 'Carnet del docente'))
-            ->add('primernombredocente','text',array('label' => 'Primer nombre'))
-            ->add('segundonombredocente','text',array('label' => 'Segundo nombre'))
-            ->add('primerapellidodocente','text',array('label' => 'Primer apellido'))
-            ->add('segundoapellidodocente','text',array('label' => 'Segundo apellido'))
+            ->add('nombredocente','text',array('label' => 'Nombre'))
+            ->add('apellidodocente','text',array('label' => 'Apellido'))
             ->add('dui','text',array('label' => 'DUI'))
             ->add('direcciondocente','text',array('label' => 'Dirección de residencia'))
             ->add('telefono','text',array('label' => 'Número telefónico'))
@@ -44,7 +42,7 @@ class DocenteController extends Controller
             ->add('save', 'submit', array('label' => 'Agregar Docente'))
             ->getForm();
 
-        $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Agregar Docente', 'form' => $form->createView()));
+        $html = $this->container->get('templating')->render('AppBundle:docente:creardocente.html.twig', array('TituloPagina' => 'Agregar Docente', 'form' => $form->createView()));
 
         return new Response($html);
     }
@@ -73,7 +71,7 @@ class DocenteController extends Controller
         $docente= new Docente();
 
         $form = $this->createFormBuilder($docente)
-            ->add('carnetdocente','text', array('label' => 'Ingrese carnet'))
+            ->add('carnetdocente','text', array('label' => 'Ingrese carnet', 'attr' => array('maxlength' => 7)))
             ->add('save', 'submit', array('label' => 'Eliminar Docente'))
             ->getForm();
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Eliminar Docente','form' => $form->createView()));
