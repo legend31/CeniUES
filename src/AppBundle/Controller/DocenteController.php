@@ -36,8 +36,8 @@ class DocenteController extends Controller
             ->add('nombredocente','text',array('label' => 'Nombre'))
             ->add('apellidodocente','text',array('label' => 'Apellido'))
             ->add('dui','text',array('label' => 'DUI'))
-            ->add('direcciondocente','text',array('label' => 'Dirección de residencia'))
-            ->add('telefono','text',array('label' => 'Número telefónico'))
+            ->add('direcciondocente','text',array('label' => 'Direccion de residencia'))
+            ->add('telefono','text',array('label' => 'N&uacute;mero telef&oacute;nico'))
             ->add('fechanacimiento','datetime',array('label' => 'Fecha de nacimiento'))
             ->add('save', 'submit', array('label' => 'Agregar Docente'))
             ->getForm();
