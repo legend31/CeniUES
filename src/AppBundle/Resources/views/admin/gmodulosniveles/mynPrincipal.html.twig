@@ -1,0 +1,51 @@
+{% extends "::layoutbase.html.twig" %}
+
+    {% block principal %}
+
+        <!--Cabecera de la seccion principal-->
+        <section class="content-header">
+            <h1>Gestion de Modulos y Niveles Principal</h1>
+            <ol class="breadcrumb"></ol>
+        </section>
+        <!-- Fin de cabecera de seccion principal-->
+
+        <!--Inicio de contenido-->
+        <section class="content">
+            <!--Inicia Primera fila de opciones-->
+            <div class="row">
+                <!--Opcion1-->
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-aqua disabled">
+                        <div class="inner">
+                            <h3>Gestionar</h3>
+                            <p>Moduloss</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-cube"></i>
+                        </div>
+                        <a  href="{{ path('gmodulos') }}" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-green disabled">
+                        <div class="inner">
+                            <h3>Gestionar</h3>
+                            <p>Niveles</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <a  href="#" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Fin de contenido-->
+{% endblock %}
