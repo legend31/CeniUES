@@ -1,0 +1,45 @@
+{% extends '::layoutbase.html.twig' %}
+{% block principal%}
+    <br>
+    <div class="container">
+        <h2>Matricula Antiguo Ingreso</h2>
+        <br>
+        <form class="form-horizontal" method="post" action="{{ path('matantiguo') }}">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="inputFecha">Fecha</label>
+                <div class="col-sm-7">
+                    <input id="inputFecha" class="form-control" type="date" name="fecha" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="inputRecibo">Recibo</label>
+                <div class="col-sm-7">
+                    <input id="inputRecibo" class="form-control" type="text" name="recibo" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="selectNivel">Nivel</label>
+                <div class="col-sm-7">
+                    <select id ="selectNivel"name="nivel">
+                        {% for item in niveles %}
+                            <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="selectAlumno">Alumno</label>
+                    <div class="col-sm-7">
+                        <select id="selectAlumno" name="carnet">
+                        {% for item in alumnos %}
+                            <option value="{{ item.carnetAlumno }}">{{ item.carnetAlumno }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+            </div>
+            <div class="col-sm-offset-2 col-sm-7">
+                <input class="btn bg-primary" type="submit" value="Enviar">
+            </div>
+        </form>
+    </div>
+{% endblock %}

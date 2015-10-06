@@ -1,8 +1,12 @@
 <?php
 
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Role\Role;
+
 
 /**
  * Usuario
@@ -10,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario", indexes={@ORM\Index(name="fk_Usuario_Tipo_Usuario_idx", columns={"Tipo_Usuario_idTipo_Usuario"})})
  * @ORM\Entity
  */
-class Usuario
+class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -47,7 +51,7 @@ class Usuario
      *
      * @ORM\Column(name="isactive", type="integer", nullable=false)
      */
-    private $isactive = '1';
+    private $isactive;
 
     /**
      * @var \TipoUsuario
@@ -59,135 +63,198 @@ class Usuario
      */
     private $tipoUsuariotipoUsuario;
 
+    /*----------------------------------------------------------------------------------------------------------------*/
 
-
-    /**
-     * Get idusuario
-     *
-     * @return integer
-     */
     public function getIdusuario()
     {
         return $this->idusuario;
     }
 
-    /**
-     * Set nomusuario
-     *
-     * @param string $nomusuario
-     *
-     * @return Usuario
-     */
-    public function setNomusuario($nomusuario)
-    {
-        $this->nomusuario = $nomusuario;
 
-        return $this;
+    public function setIdusuario($idusuario)
+    {
+        $this->idusuario = $idusuario;
     }
 
-    /**
-     * Get nomusuario
-     *
-     * @return string
-     */
+
     public function getNomusuario()
     {
         return $this->nomusuario;
     }
 
-    /**
-     * Set emailusuario
-     *
-     * @param string $emailusuario
-     *
-     * @return Usuario
-     */
-    public function setEmailusuario($emailusuario)
-    {
-        $this->emailusuario = $emailusuario;
 
-        return $this;
+    public function setNomusuario($nomusuario)
+    {
+        $this->nomusuario = $nomusuario;
     }
 
-    /**
-     * Get emailusuario
-     *
-     * @return string
-     */
+
     public function getEmailusuario()
     {
         return $this->emailusuario;
     }
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return Usuario
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
 
-        return $this;
+    public function setEmailusuario($emailusuario)
+    {
+        $this->emailusuario = $emailusuario;
+    }
+
+
+    public function getTipoUsuariotipoUsuario()
+    {
+        return $this->tipoUsuariotipoUsuario;
+    }
+
+
+    public function setTipoUsuariotipoUsuario($tipoUsuariotipoUsuario)
+    {
+        $this->tipoUsuariotipoUsuario = $tipoUsuariotipoUsuario;
+    }
+
+    public function setPassword($pass){
+        $this->password=$pass;
+    }
+
+    public function getIsActive(){
+        return $this->isactive;
+    }
+
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->idusuario
+        ));
+    }
+
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->idusuario
+
+            ) = unserialize($serialized);
     }
 
     /**
-     * Get password
+     * Returns the roles granted to the user.
      *
-     * @return string
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
      */
+    public function getRoles()
+    {
+        $aux = $this->tipoUsuariotipoUsuario;
+        if($aux == 'Administrador'){
+            return array('ROLE_ADMINISTRADOR');
+        }else{
+            if($aux == 'Docente'){
+                return array('ROLE_DOCENTE');
+            }else return array('ROLE_ANONYMOUS');
+        }
+    }
+
     public function getPassword()
     {
         return $this->password;
     }
 
     /**
-     * Set isactive
+     * Returns the salt that was originally used to encode the password.
      *
-     * @param integer $isactive
+     * This can return null if the password was not encoded using a salt.
      *
-     * @return Usuario
+     * @return string|null The salt
      */
-    public function setIsactive($isactive)
+    public function getSalt()
     {
-        $this->isactive = $isactive;
 
-        return $this;
+    }
+
+    public function getUsername()
+    {
+        return $this->nomusuario;
     }
 
     /**
-     * Get isactive
+     * Removes sensitive data from the user.
      *
-     * @return integer
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
      */
-    public function getIsactive()
+    public function eraseCredentials()
     {
-        return $this->isactive;
+
     }
 
     /**
-     * Set tipoUsuariotipoUsuario
+     * Checks whether the user's account has expired.
      *
-     * @param \AppBundle\Entity\TipoUsuario $tipoUsuariotipoUsuario
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
      *
-     * @return Usuario
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
      */
-    public function setTipoUsuariotipoUsuario(\AppBundle\Entity\TipoUsuario $tipoUsuariotipoUsuario = null)
+    public function isAccountNonExpired()
     {
-        $this->tipoUsuariotipoUsuario = $tipoUsuariotipoUsuario;
-
-        return $this;
+        return true;
     }
 
     /**
-     * Get tipoUsuariotipoUsuario
+     * Checks whether the user is locked.
      *
-     * @return \AppBundle\Entity\TipoUsuario
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
      */
-    public function getTipoUsuariotipoUsuario()
+    public function isAccountNonLocked()
     {
-        return $this->tipoUsuariotipoUsuario;
+        return !($this->getIsActive()===2);
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->getIsActive() === 1;
     }
 }

@@ -347,4 +347,18 @@ class Alumno
     {
         return $this->responsableresponsable;
     }
+
+    /**
+     * Set carnetalumno
+     *
+     * @param string $carnetalumno
+     *
+     * @return Alumno
+     */
+    public function setCarnetalumno($carnetalumno)
+    {
+        $this->carnetalumno = $carnetalumno;
+
+        return $this;
+    }
 }
