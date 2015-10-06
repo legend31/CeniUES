@@ -46,5 +46,13 @@ class ModulosNivelesController extends Controller{
 
     }
 
+/*Seccion dedicada para la gestion de niveles*/
+    /**
+     * @Route("/niveles", name="gniveles")
+     */
+    public function gnivelesAction(){
+        return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig');
+    }
+
 
 }
