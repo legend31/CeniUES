@@ -34,7 +34,7 @@
                                         <td>{{ modulos.duracion }}</td>
                                         <td>
                                             <div class="fc-button-group">
-                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-modulos-modal" onclick="">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-modulos-modal" onclick="obtenerModulos({{ modulos.idmodulo }})">
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
@@ -66,17 +66,91 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--<button type="button" class="fa fa-close" data-dismiss="modal" aria-hidden="true"></button>-->
-                        <h4 class="modal-title"><i class=""></i></h4>
+                        <h4 class="modal-title"><i class="box-title">Informacion Modulo</i></h4>
+                        <label></label>
+                        <!--<input type="text" id="nombre" name="mombre" />-->
                     </div>
 
-                        <div class="modal-body">
+                    <div class="modal-body">
                         <div>
+                            <div class="box-body">
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Id Modulo</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="idmodulo" name="idmodulo" class="">
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Nombre Modulo Modulo</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="nombremodulo" name="nombremodulo" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Fecha Inicio</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="fini" name="fini" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Fecha Fin</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="ffin" name="ffin" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Duracion</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="duracio" name="duracion" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+                            </div>
+
                         </div>
+                    </div>
+                </div><!-- /.modal -->
+{% endblock %}
+{% block javascript2 %}
+<script>
 
-                </div>
-            </div>
-        </div><!-- /.modal -->
+                function obtenerModulos(id){
+
+                    $.ajax({
+                        url:'{{ path('infomod') }}',
+                        type: 'POST',
+                        data: {idmodulo:id},
+                        success:function(response){
+                            var date = new Date();
+
+                            $('#idmodulo').val(response.idmod);
+                            $('#nombremodulo').val(response.nombremod);
+                            $('#fini').val(response.fechainicio.toLocaleString());
+                            //$('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            $('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            $('#duracio').val(response.duracion+" Meses");
+
+                        }
+
+                    })
+                }
+</script>
 {% endblock %}
