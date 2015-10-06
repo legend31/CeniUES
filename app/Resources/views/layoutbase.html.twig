@@ -570,6 +570,36 @@
                             </ul>
                         </li>
                         <!--Finaliza Generacion de Reportes-->
+
+                        <!--Inicia Gestion de Modulos y Niveles-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Modulos y Niveles</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Gestion de Modulos-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="{{ path('gmodulos') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestion de Modulos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestion de Niveles
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!--Finaliza Sub-Menu de Gestion de Modulos y Niveles-->
+                        </li>
+
+                        <!--Finaliza Gestion de Modulos-->
                     </ul>
                 {% endblock %}
             </section>
@@ -815,4 +845,7 @@
         </div>
         <!--Fin de la captura de contenidos-->
     </div>
+
+    {% block javascript2 %}
+        {% endblock %}
 {% endblock %}
