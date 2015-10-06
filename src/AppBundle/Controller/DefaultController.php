@@ -27,16 +27,5 @@ class DefaultController extends Controller
     public function principalAction(){
         return $this->render('AppBundle:admin:vPrincipal.html.twig');
     }
-    /**
-     * @Route("/fer")
-     */
-    public function ferAction(){
-        return new Response('Hola Fer');
-    }
-    /**
-     * @Route("/prueba", name="prueba")
-     */
-    public function pruebaAction(){
-        return $this->render("AppBundle:admin:prueba_principal.html.twig");
-    }
+
 }
