@@ -1,0 +1,51 @@
+{% extends 'layoutbase.html.twig' %}
+{% block principal %}
+    <div class="container">
+        <h3>Gestion de informacion de Alumno</h3>
+        <br>
+        <div>
+            <form name="form" method="post" action="" class="form-inline">
+                <div class="form-group">
+                    <label class="control-label required" for="form_Carnet">Carnet</label>
+                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required="required" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="form_Buscar"  class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+            <br>
+        </div>
+        {% if al %}
+            <div class="container-fluid">
+                <table class="table-responsive">
+                    <table class="table table-bordered  ">
+                        <thead>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Edad</th>
+                        <th>Padre</th>
+                        <th>Responsable</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                            <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                            <td>{{ al.edad }}</td>
+                            <td>
+                                <a href="{{ path('padreUp',{'id':al.padrepadre.idpadre}) }}" title="Modificar">
+                                    {{ al.padrepadre.nombrepadre }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('responUp',{'id':al.responsableresponsable.idresponsable}) }}" title="Modificar">
+                                    {{ al.responsableresponsable.nombreresponsable }}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
