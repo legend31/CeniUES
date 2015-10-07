@@ -21,7 +21,16 @@ class DocenteController extends Controller
      */
     public function docenteHomeAction()
     {
-        return $this->render('AppBundle:docente:pdoc.html.twig');
+        $em = $this->getDoctrine()->getEntityManager();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+
+        if(!$docentes)
+        {
+            throw $this->createNotFoundException('No se encontro ningun docente');
+        }
+
+        return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+        //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
     }
 
     /**
