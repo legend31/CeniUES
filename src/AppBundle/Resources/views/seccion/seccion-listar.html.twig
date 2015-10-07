@@ -17,7 +17,7 @@
                 <tbody>
                 {% for sec in secciones %}
                     <tr>
-                        <td>{{ sec.nombreseccion}}</td>
+                        <td>Seccion {{ sec.nombreseccion}}</td>
                         <td>
                             <a href="{{ path('secAct',{'id':sec.idSeccion}) }}" title="Modificar">
                                 <img src="{{ asset('bundles/app/images/actualizar.png') }}">

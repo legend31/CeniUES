@@ -9,6 +9,7 @@ use AppBundle\Entity\Padre;
 use AppBundle\Entity\Responsable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -195,18 +196,23 @@ class MatriculaController extends Controller
      * @Route("/json")
      */
     public function jsonAction(){
-        $padres=$this->getDoctrine()->getRepository('AppBundle:Padre')->findAll();
+        $padres=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findAll();
         foreach($padres as $p){
-            $pp[]=$p->getNombrepadre();
+            $pp[]=$p->getCarnetalumno();
         }
-        $j= json_encode($pp);
-        return $this->render('AppBundle::echo.html.twig',array('datos'=>$j));
-        //return new Response();
+        echo json_encode($pp);
+        return new Response();
     }
     /**
      * @Route("/ferloco")
      */
     public function locoAction(){
         return $this->render('AppBundle::echo.html.twig');
+    }
+    /**
+     * @Route("/completar")
+     */
+    public function completarAction(){
+        return $this->render('AppBundle::echo1.html.twig');
     }
 }
