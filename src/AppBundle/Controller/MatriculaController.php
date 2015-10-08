@@ -30,10 +30,8 @@ class MatriculaController extends Controller
             $mat=$em->getRepository('AppBundle:Matricula')->find($d);
             $mat->setEsactivo(0);
             $em->flush();
-            $this->get('session')->getFlashBag()->add(
-                'mensaje',
-                'Desmatriculacion Exitosa'
-            );
+            //MensajeFlash
+            $this->MensajeFlash('Desmatriculacion exitosa!');
             return $this->redirectToRoute('des');
         }
         if($form->isValid()) {
@@ -82,16 +80,22 @@ class MatriculaController extends Controller
             $al->setSegundonombrealumno($request->get("segundo_nombre"));
             $al->setSegundoapellidoalumno($request->get("segundo_apellido"));
             $al->setFechanacimiento(new \DateTime($request->get("fecha_nacimiento")));
-            $al->setEdad($request->get("edad"));
             $al->setDireccioncasa("xx");
             $al->setTelefonocasa("xx");
             $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->find($request->get('padre')));
             $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->find($request->get("responsable")));
 
+            // Transformar la Edad
+            $fecha=$al->getFechanacimiento()->format('Y-m-d H:i:s');
+            $segundos=strtotime('now') - strtotime($fecha);
+            //Para hacerlo dias
+            $edad=intval($segundos/60/60/24/365);
+            // ******************
+            $al->setEdad($edad);
+
             $em->persist($al);
             $em->flush();
             return $this->redirectToRoute('antiguo');
-            //return new Response('Padre: '.$request->get('responsable'));
         }
         $respon = $em->getRepository("AppBundle:Responsable")->findAll();
         $padre = $em->getRepository("AppBundle:Padre")->findAll();
@@ -214,5 +218,26 @@ class MatriculaController extends Controller
      */
     public function completarAction(){
         return $this->render('AppBundle::echo1.html.twig');
+    }
+    /**
+     * @Route("/fecha")
+     */
+    public function FechaAction(){
+        /*$fecha=new \DateTime(date("Y-m-d"));
+        $f=date("Y-m-d");
+        echo $f;
+        return new Response();*/
+
+        $fecha="1992-03-31 00:00:00";
+        $segundos=strtotime('now') - strtotime($fecha);
+        $diferencia_dias=intval($segundos/60/60/24/365);
+        echo "La cantidad de días entre el ".$fecha." y hoy es <b>".$diferencia_dias."</b>";
+        return new Response();
+    }
+    private function MensajeFlash($m){
+        $this->get('session')->getFlashBag()->add(
+            'mensaje',
+            ''.$m
+        );
     }
 }
