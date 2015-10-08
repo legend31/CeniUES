@@ -1,0 +1,66 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block principal %}
+    <!--Inicia contenido de la UI-->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+
+                    <!--Inicia Cabecera de tabla-->
+                    <div class="box-header">
+                        <h3 class="box-title">Listado de Niveles</h3>
+                    </div>
+                    <!--Finaliza Cabecera de tabla-->
+
+                    <!--Inicia cuerpo de tabla-->
+                    <div class="box-body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>ID</th>
+                            <th>NOMBRE DE MODULO</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
+                            <th>DURACION</th>
+                            <th>OPCIONES</th>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>Nivel 1</td>
+                                    <td>01-01-2015</td>
+                                    <td>01-03-2015</td>
+                                    <td>2 Meses</td>
+                                    <td>
+                                        <div class="fc-button-group">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-niveless-modal" onclick="">
+                                                    <i class="fa fa-eye"></i>
+                                                </span>
+
+                                            <a class="btn btn-default">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+
+                                            <a class="btn btn-default">
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Finaliza Cuerpo de tabla-->
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-block btn-success">
+                        <i class="fa fa-plus"></i>Agregar Nivel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Finaliza contenido de la UI-->
+{% endblock %}

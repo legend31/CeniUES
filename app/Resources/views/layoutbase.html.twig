@@ -239,7 +239,7 @@
                                 </li>
 <!-- Aqui Es donde Joahm toco -->
                                 <li>
-                                    <a href="{{ path("prueba") }}">
+                                    <a href="">
                                         <i class="fa fa-circle-o"></i>
                                         Consultar Evaluacion
                                     </a>
@@ -535,6 +535,36 @@
                             </ul>
                         </li>
                         <!--Finaliza Generacion de Reportes-->
+
+                        <!--Inicia Gestion de Modulos y Niveles-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Modulos y Niveles</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Gestion de Modulos-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="{{ path('gmodulos') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestion de Modulos
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Gestion de Niveles
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!--Finaliza Sub-Menu de Gestion de Modulos y Niveles-->
+                        </li>
+
+                        <!--Finaliza Gestion de Modulos-->
                     </ul>
                 {% endblock %}
             </section>
@@ -756,7 +786,21 @@
                             </div>
                         </div>
                         <!--Inicia Opcion 10-->
-
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                    <h3>Gestionar</h3>
+                                    <p>modulos y niveles</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                                <a  href="{{ path('gmyn') }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
                         <!--Finaliza Opcion 10-->
                     </div>
                     <!--Finaliza Tercera Fila de Opciones-->
@@ -766,4 +810,7 @@
         </div>
         <!--Fin de la captura de contenidos-->
     </div>
+
+    {% block javascript2 %}
+        {% endblock %}
 {% endblock %}
