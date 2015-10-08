@@ -13,14 +13,7 @@ class AlumnoController extends Controller
      * @Route("/antiguo",name="antiguo")
      */
     public function MenuAction(){
-        //return $this->render('AppBundle:matricula:antiguoingreso.html.twig');
         return $this->render('AppBundle:matricula:mPestanias.html.twig');
-        /*$f=$this->getDoctrine()->getRepository('AppBundle:Matricula')->fechaReciente('bc11023');
-        $fecha=$this->getDoctrine()->getRepository('AppBundle:Matricula')->find(1);
-        var_dump($f>$fecha);
-        var_dump($f);
-        return new Response('Fecha '.$f[1]);
-        */
     }
     /**
      * @Route("/alumnoBuscar",name="alBuscar")
@@ -49,6 +42,8 @@ class AlumnoController extends Controller
             $p->setLugartrabajom($request->get("tM"));
 
             $em->flush($p);
+            //Mensaje Flash
+            $this->MensajeFlash('Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:padre-mod.html.twig',array('padre'=>$p,'id'=>$id));
@@ -57,7 +52,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/responUpdate/{id}",name="responUp")
      */
-    public function responInsertAction(Request $request,$id){
+    public function responUpAction(Request $request,$id){
         $em=$this->getDoctrine()->getEntityManager();
         $res=$em->getRepository('AppBundle:Responsable')->find($id);
         if($request->isMethod("POST")){
@@ -67,8 +62,16 @@ class AlumnoController extends Controller
 
             $em->persist($res);
             $em->flush();
+            //Mensaje Flash
+            $this->MensajeFlash('Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:responsable-mod.html.twig',array('responsable'=>$res,'id'=>$id));
+    }
+    private function MensajeFlash($m){
+        $this->get('session')->getFlashBag()->add(
+            'mensaje',
+            ''.$m
+        );
     }
 }

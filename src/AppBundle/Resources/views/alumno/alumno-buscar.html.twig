@@ -2,6 +2,20 @@
 {% block principal %}
     <div class="container">
         <h3>Gestion de informacion de Alumno</h3>
+        {# Mensaje Flash  #}
+        <div class="row">
+            <div class="col-sm-8">
+                {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                    <br>
+                    <div class="alert alert-success fade in">
+                    <span class="close" data-dismiss="alert">
+                        &times;
+                    </span>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         <br>
         <div>
             <form name="form" method="post" action="" class="form-inline">
