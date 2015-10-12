@@ -1,0 +1,9 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} {{ TituloPagina }} {% endblock %}
+
+{% block principal %}
+    {{ form_start(form) }}
+        {{ form_label(form.carnetdocente) }}
+    {{ form_end(form) }}
+{% endblock %}

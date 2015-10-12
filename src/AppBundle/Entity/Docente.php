@@ -280,4 +280,16 @@ class Docente
     {
         return $this->fechanacimiento;
     }
+
+    //metodos hechos por mi (Fredy)
+    //Metodo para obtener el ambos nombres en una sola cadena
+    public function getNombredocente()
+    {
+        return $this->getPrimernombredocente()." ".$this->getSegundonombredocente();
+    }
+
+    public function getApellidodocente()
+    {
+        return $this->getPrimerapellidodocente()." ".$this->getSegundoapellidodocente();
+    }
 }

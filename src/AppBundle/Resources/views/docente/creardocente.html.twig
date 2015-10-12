@@ -1,0 +1,59 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} {{ TituloPagina }} {% endblock %}
+
+{% block principal %}
+    <section class="content-header">
+        <h1>
+            Nuevo docente<br>
+            <small>Digite los datos que se le solicitan en el siguiente formulario:</small>
+        </h1><br>
+
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Datos personales</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="form_nombredocente">{{ form_label(form.nombredocente) }}</label>
+                        <input type="text" class="form-control" id="form_nombredocente" name="form[nombredocente]" placeholder="Nombres del nuevo docente">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_apellidodocente"> {{ form_label(form.apellidodocente) }} </label>
+                        <input type="text" class="form-control" id="form_apellidodocente" name="form[apellidodocente]" placeholder="Apellidos del nuevo docente">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_dui"> {{ form_label(form.dui) }} </label>
+                        <input type="text" class="form-control" id="form_dui" name="form[dui]" placeholder="Documento Unico de Identidad">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_carnetdocente"> {{ form_label(form.carnetdocente) }} </label>
+                        <input type="text" class="form-control" id="form_carnetdocente" name="form[carnetdocente]" placeholder="N&uacute;mero de carnet" maxlength=7>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_direcciondocente"> {{ form_label(form.direcciondocente) }} </label>
+                        <input type="text" class="form-control" id="form_direcciondocente" name="form[direcciondocente]" placeholder="Direcci&oacute;n de residencia">
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
+                    <a class="btn btn-default bg-green-gradient">
+                        <i class="fa fa-save"></i> Guardar
+                    </a>
+                    <a class="btn btn-default bg-blue-gradient">
+                        <i class="fa fa-trash-o"></i> Limpiar
+                    </a>
+                    <a class="btn btn-default bg-red-gradient pull-right">
+                        <i class="fa fa-close"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div><!-- /.box -->
+    </div>
+    </section>
+{% endblock %}
