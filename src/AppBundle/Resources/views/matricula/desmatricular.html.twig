@@ -1,38 +1,56 @@
 {% extends 'AppBundle:matricula:desmatricularform.html.twig' %}
+{% block title %}
+    Desmatriculacion Alumno
+{% endblock %}
 {% block principal %}
     {{ parent() }}
 {% if al %}
     <br>
-    <div class="container-fluid">
-        <table class="table-responsive">
-            <table class="table table-bordered  ">
-                <thead>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Nivel</th>
-                <th>Responsable</th>
-                <th>Estado</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
-                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
-                    <td>{{ al.edad }}</td>
-                    <td>{{ mat.nivelnivel.nombrenivel}}</td>
-                    <td>{{ al.responsableresponsable.nombreresponsable }}</td>
-                    <td>
-                        {% if mat and mat.esactivo == 1 %}
-                            <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
-                                <img src="{{ asset('bundles/app/images/dislike.png') }}">
-                            </a>
-                        {% else %}
-                            Inactivo
-                        {% endif %}
-                </tr>
-                </tbody>
-            </table>
-        </table>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+
+                    <!--Inicia Cabecera de tabla-->
+                    <div class="box-header">
+                        <h3 class="box-title">Informacion de alumno</h3>
+                    </div>
+                    <!--Finaliza Cabecera de tabla-->
+
+                    <!--Inicia cuerpo de tabla-->
+                    <div class="box-body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Edad</th>
+                            <th>Nivel</th>
+                            <th>Responsable</th>
+                            <th>Estado</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                                <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                                <td>{{ al.edad }}</td>
+                                <td>{{ mat.nivelnivel.nombrenivel}}</td>
+                                <td>{{ al.responsableresponsable.nombreresponsable }}</td>
+                                <td>
+                                    {% if mat and mat.esactivo == 1 %}
+                                        <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
+                                            <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                                        </a>
+                                    {% else %}
+                                        Inactivo
+                                    {% endif %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Finaliza Cuerpo de tabla-->
+                </div>
+        </div>
     </div>
+    </section>
 {% endif %}
 {% endblock %}

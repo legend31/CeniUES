@@ -1,0 +1,124 @@
+{% extends '::layoutbase.html.twig' %}
+    {% block principal %}
+        <!--Inicia contenido de la UI-->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+
+                        <!--Inicia Cabecera de tabla-->
+                        <div class="box-header">
+                            <h3 class="box-title">Listado de Modulos</h3>
+                        </div>
+                        <!--Finaliza Cabecera de tabla-->
+
+                        <!--Inicia cuerpo de tabla-->
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Edad</th>
+                                <th>Nivel</th>
+                                <th>Responsable</th>
+                                <th>Estado</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                                    <td>{{ al.edad }}</td>
+                                    <td>{{ mat.nivelnivel.nombrenivel}}</td>
+                                    <td>{{ al.responsableresponsable.nombreresponsable }}</td>
+                                    <td>
+                                        {% if mat and mat.esactivo == 1 %}
+                                            <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
+                                                <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                                            </a>
+                                        {% else %}
+                                            Inactivo
+                                        {% endif %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Finaliza Cuerpo de tabla-->
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="{{ path("newmodulo") }}"><button class="btn btn-block btn-success" >
+                                <i class="fa fa-plus"></i>Agregar Modulo
+                            </button></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Finaliza contenido de la UI-->
+        <!--Nota: NO COLOCAR COMENTARIOS HTML FUERA DE LAS ETIQUETAS DE TWIG-->
+
+
+        <div class="modal fade" id="ver-modulos-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--<button type="button" class="fa fa-close" data-dismiss="modal" aria-hidden="true"></button>-->
+                        <h4 class="modal-title"><i class="box-title">Informacion Modulo</i></h4>
+                        <label></label>
+                        <!--<input type="text" id="nombre" name="mombre" />-->
+                    </div>
+
+                    <div class="modal-body">
+                        <div>
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Id Modulo</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="idmodulo" name="idmodulo" class="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Nombre Modulo Modulo</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="nombremodulo" name="nombremodulo" class="">
+                                    </div>
+                                </div>
+
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Fecha Inicio</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="fini" name="fini" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Fecha Fin</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="ffin" name="ffin" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Duracion</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="duracio" name="duracion" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /.modal -->
+    {% endblock %}

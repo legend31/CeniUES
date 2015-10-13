@@ -1,5 +1,10 @@
 {% extends '::layoutbase.html.twig' %}
 {% block principal %}
+    <head>
+        <meta charset="UTF-8">
+        <script src="{{ asset('bundles/app/js/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+    </head>
     <br>
     <div class="container">
         <h3>Desmatriculacion de Alumno</h3>
@@ -27,6 +32,16 @@
                 </div>
                 {{ form_end(formulario) }}
     </div>
+    <script>
+        $('document').ready(
+                function(){
+                    $('#form_Carnet').autocomplete(
+                            {
+                                source : {{render(controller('AppBundle:Matricula:json')) }}
+                            });
+                }
+        );
+    </script>
 {% endblock %}
 
 

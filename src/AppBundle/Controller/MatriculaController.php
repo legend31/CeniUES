@@ -38,15 +38,6 @@ class MatriculaController extends Controller
             $form->getData();
             $data = $form->getData();
             $al = $this->getDoctrine()->getRepository('AppBundle:Alumno')->find($data['Carnet']);
-            /*if($al) {
-                $fecha = $this->getDoctrine()->getRepository('AppBundle:Matricula')->fechaReciente($data['Carnet']);
-                $m = $this->getDoctrine()->getRepository('AppBundle:Matricula')->matriculasReciente($fecha);
-                return $this->render('AppBundle:matricula:desmatricular.html.twig', array('al' => $al,'mat' =>$m, 'formulario' => $form->createView()));
-            }
-            else
-                return $this->render('AppBundle:matricula:desmatricular.html.twig', array('al' => $al,'mat' =>'', 'formulario' => $form->createView()));
-            */
-            //Reviso todas las matriculas de ese alumno
             $m=   $this->getDoctrine()->getRepository('AppBundle:Matricula')->findByalumnoCarnetalumno($data['Carnet']);
             foreach($m as $item)
             {
@@ -173,7 +164,6 @@ class MatriculaController extends Controller
     public function matriculaAntiguaAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
         $nivel=$em->getRepository('AppBundle:Nivel')->findAll();
-        $al=$em->getRepository('AppBundle:Alumno')->findAll();
         //Formulario
         if($request->isMethod("POST"))
         {
@@ -194,7 +184,7 @@ class MatriculaController extends Controller
             $em->flush();
             return $this->redirectToRoute('matantiguo');
         }
-        return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel,'alumnos' =>$al));
+        return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
     }
     /**
      * @Route("/json")
@@ -212,12 +202,6 @@ class MatriculaController extends Controller
      */
     public function locoAction(){
         return $this->render('AppBundle::echo.html.twig');
-    }
-    /**
-     * @Route("/completar")
-     */
-    public function completarAction(){
-        return $this->render('AppBundle::echo1.html.twig');
     }
     /**
      * @Route("/fecha")
