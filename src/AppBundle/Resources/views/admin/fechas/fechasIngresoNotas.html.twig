@@ -1,0 +1,57 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block principal %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Periodo de Fechas para Ingreso de Notas de Alumnos</h3>
+                    </div>
+
+                    <form role="form">
+                        <div class="box-body">
+                            <div class="form-group col-sm-12">
+                                <div class="form-group">
+                                    <label>Periodo de tiempo para ingresar notas</label>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Fecha Inicio</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Fecha Fin</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="box-footer">
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                            <button type="submit" class="btn btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

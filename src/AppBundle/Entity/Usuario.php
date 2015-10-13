@@ -257,4 +257,18 @@ class Usuario implements AdvancedUserInterface, \Serializable
     {
         return $this->getIsActive() === 1;
     }
+
+    /**
+     * Set isactive
+     *
+     * @param integer $isactive
+     *
+     * @return Usuario
+     */
+    public function setIsactive($isactive)
+    {
+        $this->isactive = $isactive;
+
+        return $this;
+    }
 }

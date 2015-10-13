@@ -18,13 +18,16 @@
                 </ul>
                 <div class="tab-content">
                     <div id="matricula" class="tab-pane fade in active">
-                        <h3>Formulario de Matricula</h3>
+                        {#<h3>Formulario de Matricula</h3>#}
+                        {{ render(controller('AppBundle:Matricula:matriculaNuevo')) }}
                     </div>
                     <div id="padre" class="tab-pane fade">
-                        <h3>Formulario de Padre</h3>
+                        {{ render(controller('AppBundle:Matricula:padreInsert')) }}
+                        {# <h3>Formulario de Padre</h3> #}
                     </div>
                     <div id="responsable" class="tab-pane fade">
-                        <h3>Formulario de Responsable</h3>
+                        {{ render(controller('AppBundle:Matricula:responInsert')) }}
+                        {# <h3>Formulario de Responsable</h3> #}
                     </div>
                     <div id="alumno" class="tab-pane fade">
                         <!-- Incluyendo un controlador -->

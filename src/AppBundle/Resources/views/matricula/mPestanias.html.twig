@@ -1,0 +1,38 @@
+{% extends '::layoutbase.html.twig' %}
+{% block title %}
+        Menu
+{% endblock %}
+{% block principal %}
+        <style type="text/css">
+            .bs-example{
+                margin: 20px;
+            }
+        </style>
+        <div class="bs-example">
+           <div class="container">
+               <h3>Formularios de Nuevo Ingreso</h3>
+               <div class="nav-tabs-custom" data-find="_2">
+                   <ul class="nav nav-tabs">
+                       <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
+                       <li class=""><a href="#responsable" data-toggle="tab" aria-expanded="false">Responsable</a></li>
+                       <li class=""><a href="#alumno" data-toggle="tab" aria-expanded="false">Alumno</a></li>
+                       <li class=""><a href="#matricula" data-toggle="tab" aria-expanded="false">Matricula</a></li>
+                   </ul>
+                   <div class="tab-content" data-find="_1">
+                       <div class="tab-pane" id="matricula">
+                           {{ render(controller('AppBundle:Matricula:matriculaNuevo')) }}
+                       </div><!-- /.tab-pane -->
+                       <div class="tab-pane active" id="padre">
+                           {{ render(controller('AppBundle:Matricula:padreInsert')) }}
+                       </div><!-- /.tab-pane -->
+                       <div class="tab-pane" id="responsable">
+                           {{ render(controller('AppBundle:Matricula:responInsert')) }}
+                       </div><!-- /.tab-pane -->
+                       <div class="tab-pane" id="alumno">
+                           {{ render(controller('AppBundle:Matricula:alumnoInsert')) }}
+                       </div><!-- /.tab-pane -->
+                   </div><!-- /.tab-content -->
+               </div>
+           </div>
+        </div>
+{% endblock %}

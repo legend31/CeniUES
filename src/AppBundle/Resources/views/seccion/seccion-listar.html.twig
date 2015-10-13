@@ -1,0 +1,36 @@
+{% extends '::layoutbase.html.twig' %}
+{% block principal %}
+<div class="container">
+    <h3>Agregar nueva Seccion</h3>
+    <a href="{{ path('nvoseccion') }}" class="btn btn-primary" title="Agregar">Agregar</a>
+</div>
+<div class="container">
+    {% if secciones %}
+        <h3>Gestionar Secciones</h3>
+        <table class="table-responsive col-sm-8">
+            <table class="table table-bordered table-hover">
+                <hr>
+                <thead>
+                <th> Nombre</th>
+                <th> Opciones</th>
+                </thead>
+                <tbody>
+                {% for sec in secciones %}
+                    <tr>
+                        <td>Seccion {{ sec.nombreseccion}}</td>
+                        <td>
+                            <a href="{{ path('secAct',{'id':sec.idSeccion}) }}" title="Modificar">
+                                <img src="{{ asset('bundles/app/images/actualizar.png') }}">
+                            </a>
+                            <a href="{{ path('secDel',{'id':sec.idSeccion}) }}" title="Eliminar">
+                                <img src="{{ asset('bundles/app/images/delete.png') }}">
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

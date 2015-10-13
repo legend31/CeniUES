@@ -46,6 +46,14 @@ class ModulosNivelesController extends Controller{
 
     }
 
+    /**
+     * @Route("/newmodulo", name="newmodulo")
+     */
+    public function nuevoModuloAction(){
+        return $this->render('@App/admin/gmodulosniveles/formNuevoModulo.html.twig');
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
     /**
      * @Route("/niveles", name="gniveles")
@@ -53,6 +61,15 @@ class ModulosNivelesController extends Controller{
     public function gnivelesAction(){
         return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig');
     }
+
+    /**
+     * @Route("newnivel", name="newnivel")
+     */
+    public function newNivelAction(){
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+    }
+
+
 
 
 }

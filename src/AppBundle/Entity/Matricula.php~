@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="matricula", indexes={@ORM\Index(name="fk_Matricula_Nivel1_idx", columns={"Nivel_idNivel"}), @ORM\Index(name="fk_Matricula_Alumno1_idx", columns={"Alumno_carnetAlumno"})})
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\MatriculaRepository")
+ */
 class Matricula
 {
     /**

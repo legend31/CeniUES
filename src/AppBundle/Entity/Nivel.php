@@ -38,7 +38,7 @@ class Nivel
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaInicio", type="date", nullable=false)
+     * @ORM\Column(name="fechaInicio", type="date", nullable=true)
      */
     private $fechainicio;
 

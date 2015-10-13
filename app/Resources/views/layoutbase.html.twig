@@ -274,7 +274,7 @@
                             <!--Inicia Sub-Menu de Gestionar Matricula-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="{{ path('antiguo') }}">
+                                    <a href="{{ path('matantiguo') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Matricula Antiguo Ingreso
                                     </a>
@@ -309,30 +309,16 @@
                             <!--Inicia Sub-Menu Gestionar Alumnos-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('antiguo') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Registrar Alumno
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Alumno
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
+                                    <a href="{{ path('alBuscar') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Modificar Alumno
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Eliminar Alumno
                                     </a>
                                 </li>
                             </ul>
@@ -351,30 +337,9 @@
                             <!--Inicia Sub-Menu Gestionar Secciones-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('secHome') }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Crear Secciones
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Secciones
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Modificar Secciones
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Eliminar Secciones
+                                        Gestionar
                                     </a>
                                 </li>
                             </ul>
@@ -632,7 +597,7 @@
                                 <div class="icon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <a  href="#" class="small-box-footer">
+                                <a  href="{{ path("fechaspricipal") }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
@@ -848,4 +813,6 @@
 
     {% block javascript2 %}
         {% endblock %}
+    {% block fer %}
+    {% endblock %}
 {% endblock %}

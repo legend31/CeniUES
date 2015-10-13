@@ -1,0 +1,32 @@
+{% extends '::layoutbase.html.twig' %}
+{% block principal %}
+    <div class="container">
+        <h2>Modicar Responsable</h2>
+        <br>
+        <form class="form-horizontal" method="post" action="{{ path('responUp',{'id':id}) }}">
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputNombre">Nombre</label>
+                <div class="col-lg-7">
+                    <input id="inputNombre" class="form-control" type="text" name="nombre" value="{{ responsable.nombreresponsable }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputP">Parentesco</label>
+                <div class="col-lg-7">
+                    <input id="inputP" class="form-control" type="text" name="parentesco" value="{{ responsable.parentesco }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="inputtel">Telefono</label>
+                <div class="col-lg-7">
+                    <input id="inputtel" class="form-control" type="text" name="tel" value="{{ responsable.telefono }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-7">
+                    <input class="btn bg-primary" type="submit" value="Guardar Cambios">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

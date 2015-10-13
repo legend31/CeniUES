@@ -1,5 +1,4 @@
-{% extends "::layoutbase.html.twig" %}
-
+{% extends '::layoutbase.html.twig' %}
     {% block principal %}
         <!--Inicia contenido de la UI-->
         <section class="content">
@@ -17,48 +16,39 @@
                         <div class="box-body table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <th>ID</th>
-                                    <th>NOMBRE DE MODULO</th>
-                                    <th>FECHA INICIO</th>
-                                    <th>FECHA FIN</th>
-                                    <th>DURACION</th>
-                                    <th>OPCIONES</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Edad</th>
+                                <th>Nivel</th>
+                                <th>Responsable</th>
+                                <th>Estado</th>
                                 </thead>
                                 <tbody>
-                                {% for modulos in modulo %}
-                                    <tr>
-                                        <td>{{ modulos.idmodulo }}</td>
-                                        <td>{{ modulos.nombremodulo }}</td>
-                                        <td>{{ modulos.fechainicio | date('d-m-Y') }}</td>
-                                        <td>{{ modulos.fechafin | date('d-m-Y')}}</td>
-                                        <td>{{ modulos.duracion }}</td>
-                                        <td>
-                                            <div class="fc-button-group">
-                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-modulos-modal" onclick="obtenerModulos({{ modulos.idmodulo }})">
-                                                    <i class="fa fa-eye"></i>
-                                                </span>
-
-                                                <a class="btn btn-default">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-
-                                                <a class="btn btn-default">
-                                                    <i class="fa fa-close"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                                <tr>
+                                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                                    <td>{{ al.edad }}</td>
+                                    <td>{{ mat.nivelnivel.nombrenivel}}</td>
+                                    <td>{{ al.responsableresponsable.nombreresponsable }}</td>
+                                    <td>
+                                        {% if mat and mat.esactivo == 1 %}
+                                            <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
+                                                <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                                            </a>
+                                        {% else %}
+                                            Inactivo
+                                        {% endif %}
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                         <!--Finaliza Cuerpo de tabla-->
                     </div>
                     <div class="col-sm-2">
-                    <a href="{{ path("newmodulo") }}"><button class="btn btn-block btn-success" >
-                        <i class="fa fa-plus"></i>Agregar Modulo
-                    </button></a>
-                </div>
+                        <a href="{{ path("newmodulo") }}"><button class="btn btn-block btn-success" >
+                                <i class="fa fa-plus"></i>Agregar Modulo
+                            </button></a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -131,29 +121,4 @@
                         </div>
                     </div>
                 </div><!-- /.modal -->
-{% endblock %}
-{% block javascript2 %}
-<script>
-
-                function obtenerModulos(id){
-
-                    $.ajax({
-                        url:'{{ path('infomod') }}',
-                        type: 'POST',
-                        data: {idmodulo:id},
-                        success:function(response){
-                            var date = new Date();
-
-                            $('#idmodulo').val(response.idmod);
-                            $('#nombremodulo').val(response.nombremod);
-                            $('#fini').val(response.fechainicio.toLocaleString());
-                            //$('#ffin').val(date.toLocaleDateString(response.fechafin));
-                            $('#ffin').val(date.toLocaleDateString(response.fechafin));
-                            $('#duracio').val(response.duracion+" Meses");
-
-                        }
-
-                    })
-                }
-</script>
-{% endblock %}
+    {% endblock %}

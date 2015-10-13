@@ -1,0 +1,98 @@
+{% extends '::layoutbase.html.twig' %}
+{% block title %}
+    Busqueda Alumno
+{% endblock %}
+{% block principal %}
+    <head>
+        <meta charset="UTF-8">
+        <script src="{{ asset('bundles/app/js/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+    </head>
+    <br>
+    <div class="container">
+        <h3>Gestion de informacion de Alumno</h3>
+        {# Mensaje Flash  #}
+        <div class="row">
+            <div class="col-xs-12">
+                {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                    <br>
+                    <div class="alert alert-success fade in">
+                    <span class="close" data-dismiss="alert">
+                        &times;
+                    </span>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div>
+            <form name="form" method="post" action="" class="form-inline">
+                <div class="form-group">
+                    <label class="control-label required" for="form_Carnet">Carnet</label>
+                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required="required" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="form_Buscar"  class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+            <br>
+        </div>
+        {% if al %}
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="box">
+
+                        <!--Inicia Cabecera de tabla-->
+                        <div class="box-header">
+                            <h3 class="box-title">Informacion de Alumno</h3>
+                        </div>
+                        <!--Finaliza Cabecera de tabla-->
+
+                        <!--Inicia cuerpo de tabla-->
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Edad</th>
+                                <th>Padre</th>
+                                <th>Responsable</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                                    <td>{{ al.edad }}</td>
+                                    <td>
+                                        <a href="{{ path('padreUp',{'id':al.padrepadre.idpadre}) }}" title="Modificar">
+                                            {{ al.padrepadre.nombrepadre }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('responUp',{'id':al.responsableresponsable.idresponsable}) }}" title="Modificar">
+                                            {{ al.responsableresponsable.nombreresponsable }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+        {% endif %}
+    </div>
+    </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $('document').ready(
+                function(){
+                    $('#form_Carnet').autocomplete(
+                            {
+                                source : {{render(controller('AppBundle:Matricula:json')) }}
+                            });
+                }
+        );
+    </script>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends '::layoutbase.html.twig' %}
+{% extends '::pbase.html.twig' %}
 {% block body %}
     <div class="container">
         <h2>Ingreso de Alumno</h2>
@@ -40,17 +40,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputEdad">Edad</label>
-                <div class="col-lg-7">
-                    <input id="inputEdad" class="form-control" type="text" name="edad">
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="control-label col-lg-2" for="inputResponsable">Responsable</label>
                 <div class="col-lg-7">
-                    <select id="inputPadre" name="padre">
-                        {% for item in padres %}
-                            <option value="{{ item.idpadre }}">{{ item.nombrepadre }}</option>
+                    <select id="inputResponsable" name="responsable">
+                        {% for item in responsables %}
+                            <option value="{{ item.idresponsable }}">{{ item.nombreresponsable }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -66,18 +60,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputMatricula">Matricula</label>
-                <div class="col-lg-7">
-                    <select id="inputMatricula" name="matricula">
-                        {% for item in matriculas %}
-                            <option value="{{ item.idmatricula }}">{{ item.numerorecibo }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-7">
-                    <input class="btn bg-primary" type="submit" value="Enviar">
+                    <input class="btn bg-primary" type="submit" value="Guardar">
                 </div>
             </div>
         </form>
