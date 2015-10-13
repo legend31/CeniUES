@@ -1,0 +1,100 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block principal %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Ingresar Notas</h3>
+                    </div>
+
+                    <form role="form">
+                        <div class="box-body">
+                            <div class="form-group col-sm-12">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nivel</label>
+                                        <select class="form-control">
+                                            <option>Nivel de Prueba 1</option>
+                                            <option>Nivel de Prueba 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Clase</label>
+                                        <select class="form-control">
+                                            <option>Clase de Prueba 1</option>
+                                            <option>Clase de Prueba 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <button class="btn btn-info">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-xs-12">
+                        <div class="box">
+
+                            <!--Inicia Cabecera de tabla-->
+                            <div class="box-header">
+                                <h3 class="box-title">Listado de Notas para el Nivel 1 Prueba</h3>
+                            </div>
+                            <!--Finaliza Cabecera de tabla-->
+
+                            <!--Inicia cuerpo de tabla-->
+                            <div class="box-body table-responsive">
+                                <table class="table table-bordered table-hover dataTable">
+                                    <thead>
+                                    <th>No</th>
+                                    <th>ESTUDIANTE</th>
+                                    <th>EV.1</th>
+                                    <th>EV.2</th>
+                                    <th>EV.3</th>
+                                    <th>EV.4</th>
+                                    <th>EV.5</th>
+                                    <td>NOTA FINAL</td>
+
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Carlos Lopez</td>
+                                        <td>6.00</td>
+                                        <td>9.00</td>
+                                        <td>7.00</td>
+                                        <td>8.50</td>
+                                        <td>7.00</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Finaliza Cuerpo de tabla-->
+                        </div>
+                    </div>
+
+
+                    <div class="box-footer">
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
