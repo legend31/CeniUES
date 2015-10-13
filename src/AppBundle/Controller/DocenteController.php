@@ -61,30 +61,29 @@ class DocenteController extends Controller
      */
     public function consultarDocenteAction()
     {
-        $docente= new Docente();
-
-        $form = $this->createFormBuilder($docente)
-            ->add('carnetdocente','text', array('label' => 'Ingrese carnet'))
-            ->add('save', 'submit', array('label' => 'Buscar Docente'))
-            ->getForm();
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
         return new Response($html);
     }
 
     /**
-     * @Route("/edocente", name="eliminarD")
+     * @Route("/dnivel", name="docn")
      */
-    public function eliminarDocenteAction()
+    public function docenteNivelAction()
     {
-        $docente= new Docente();
+        $em = $this->getDoctrine()->getEntityManager();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        $locales = $em->getRepository('AppBundle:Local')->findAll();
+        $niveles = $em->getRepository('AppBundle:Nivel')->findAll();
+        $seccion = $em->getRepository('AppBundle:Seccion')->findAll();
 
-        $form = $this->createFormBuilder($docente)
-            ->add('carnetdocente','text', array('label' => 'Ingrese carnet', 'attr' => array('maxlength' => 7)))
-            ->add('save', 'submit', array('label' => 'Eliminar Docente'))
-            ->getForm();
-        $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Eliminar Docente','form' => $form->createView()));
+        if(!$docentes||!$locales||!$niveles)
+        {
+            throw $this->createNotFoundException('No se encontro ningun dato relacionado');
+        }
 
-        return new Response($html);
+        $envio = array('docentes'=>$docentes,'local'=>$locales,'niveles'=>$niveles);
+
+        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', $envio));
     }
 }
