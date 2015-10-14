@@ -65,7 +65,7 @@ class MatriculaController extends Controller
         //Validando el envio del formulario
         if($request->isMethod("POST")) {
             $al = new Alumno();
-            $al->setCarnetalumno($request->get("carnet"));
+            $al->setCarnetalumno(strtoupper($request->get("carnet")));
             $al->setPrimernombrealumno($request->get("primer_nombre"));
             $al->setPrimerapellidoalumno($request->get("primer_apellido"));
             $al->setSegundonombrealumno($request->get("segundo_nombre"));
@@ -103,7 +103,7 @@ class MatriculaController extends Controller
             $p->setTelefonotrabajopadre($request->get("telP"));
             $p->setLugartrabajop($request->get("tP"));
             $p->setNombremadre($request->get("nombreM"));
-            $p->setTelefonotrabajomadre($request->get("telM"));
+            $p->setTelefonotrabajomadre($request->get("telMadre"));
             $p->setLugartrabajom($request->get("tM"));
 
             $em->persist($p);
