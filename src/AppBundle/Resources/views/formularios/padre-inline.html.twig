@@ -1,47 +1,48 @@
-{% extends '::pbase.html.twig' %}
+{% extends '::boostrapbase.html.twig' %}
 {% block body %}
     <div class="container">
-        <h2>Ingreso de Padre</h2>
-        <br>
+        <div class="col-sm-offset-2">
+            <h2>Ingreso de Padres</h2>
+        </div>
         <form class="form-horizontal" method="post" action="{{ path('padreinsert') }}">
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputPadre">Nombre Padre</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputPadre">Nombre Padre</label>
+                <div class="col-sm-3">
                     <input id="inputPadre" class="form-control" type="text" name="nombreP" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputTrabajoP">Lugar de Trabajo</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputTrabajoP">Lugar de Trabajo</label>
+                <div class="col-sm-3">
                     <input id="inputTrabajoP" class="form-control" type="text" name="tP" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputtelP">Telefono</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputtelP">Telefono</label>
+                <div class="col-sm-3">
                     <input id="inputtelP" class="form-control" type="text" name="telP" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputMadre">Nombre Madre</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputMadre">Nombre Madre</label>
+                <div class="col-sm-3">
                     <input id="inputMadre" class="form-control" type="text" name="nombreM" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputTrabajoM">Lugar de Trabajo</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputTrabajoM">Lugar de Trabajo</label>
+                <div class="col-sm-3">
                     <input id="inputTrabajoM" class="form-control" type="text" name="tM" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" for="inputtelM">Telefono</label>
-                <div class="col-lg-7">
+                <label class="control-label col-sm-4" for="inputtelM">Telefono</label>
+                <div class="col-sm-3">
                     <input id="inputtelM" class="form-control" type="text" name="telP" required>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-7">
+                <div class="col-sm-offset-4 col-sm-4">
                     <input class="btn bg-primary" type="submit" value="Guardar">
                 </div>
             </div>

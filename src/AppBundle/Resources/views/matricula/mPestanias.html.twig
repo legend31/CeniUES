@@ -9,8 +9,8 @@
             }
         </style>
         <div class="bs-example">
-           <div class="container">
-               <h3>Formularios de Nuevo Ingreso</h3>
+           <div class="container-fluid">
+               <h2>Formularios Nuevo Ingreso</h2>
                <div class="nav-tabs-custom" data-find="_2">
                    <ul class="nav nav-tabs">
                        <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
@@ -26,10 +26,10 @@
                            {{ render(controller('AppBundle:Matricula:padreInsert')) }}
                        </div><!-- /.tab-pane -->
                        <div class="tab-pane" id="responsable">
-                           {{ render(controller('AppBundle:Matricula:responInsert')) }}
+                            {{ render(controller('AppBundle:Matricula:responInsert')) }}
                        </div><!-- /.tab-pane -->
                        <div class="tab-pane" id="alumno">
-                           {{ render(controller('AppBundle:Matricula:alumnoInsert')) }}
+                          {{ render(controller('AppBundle:Matricula:alumnoInsert')) }}
                        </div><!-- /.tab-pane -->
                    </div><!-- /.tab-content -->
                </div>

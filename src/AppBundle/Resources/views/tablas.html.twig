@@ -16,38 +16,27 @@
                         <div class="box-body table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Edad</th>
-                                <th>Nivel</th>
-                                <th>Responsable</th>
-                                <th>Estado</th>
+                                <th> Nombre</th>
+                                <th> Opciones</th>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
-                                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
-                                    <td>{{ al.edad }}</td>
-                                    <td>{{ mat.nivelnivel.nombrenivel}}</td>
-                                    <td>{{ al.responsableresponsable.nombreresponsable }}</td>
-                                    <td>
-                                        {% if mat and mat.esactivo == 1 %}
-                                            <a href="{{ path('des',{'d':mat.idmatricula}) }}" title="Desmatricular">
-                                                <img src="{{ asset('bundles/app/images/dislike.png') }}">
+                                {% for sec in secciones %}
+                                    <tr>
+                                        <td>Seccion {{ sec.nombreseccion}}</td>
+                                        <td>
+                                            <a href="{{ path('secAct',{'id':sec.idSeccion}) }}" title="Modificar">
+                                                <img src="{{ asset('bundles/app/images/actualizar.png') }}">
                                             </a>
-                                        {% else %}
-                                            Inactivo
-                                        {% endif %}
-                                </tr>
+                                            <a href="{{ path('secDel',{'id':sec.idSeccion}) }}" title="Eliminar">
+                                                <img src="{{ asset('bundles/app/images/delete.png') }}">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                         <!--Finaliza Cuerpo de tabla-->
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="{{ path("newmodulo") }}"><button class="btn btn-block btn-success" >
-                                <i class="fa fa-plus"></i>Agregar Modulo
-                            </button></a>
                     </div>
                 </div>
             </div>

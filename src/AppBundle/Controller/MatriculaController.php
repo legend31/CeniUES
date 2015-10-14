@@ -73,8 +73,8 @@ class MatriculaController extends Controller
             $al->setFechanacimiento(new \DateTime($request->get("fecha_nacimiento")));
             $al->setDireccioncasa("xx");
             $al->setTelefonocasa("xx");
-            $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->find($request->get('padre')));
-            $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->find($request->get("responsable")));
+            $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->findOneBy(array('nombrepadre'=>$request->get('padre'))));
+            $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->findOneBy(array('nombreresponsable'=>$request->get("responsable"))));
 
             // Transformar la Edad
             $fecha=$al->getFechanacimiento()->format('Y-m-d H:i:s');
@@ -87,10 +87,9 @@ class MatriculaController extends Controller
             $em->persist($al);
             $em->flush();
             return $this->redirectToRoute('antiguo');
+            //return new Response('Padre es '.$request->get("responsable"));
         }
-        $respon = $em->getRepository("AppBundle:Responsable")->findAll();
-        $padre = $em->getRepository("AppBundle:Padre")->findAll();
-        return $this->render('AppBundle:formularios:alumno-inline.html.twig', array('responsables' => $respon,'padres' => $padre));
+        return $this->render('AppBundle:formularios:alumno-inline.html.twig');
 
     }
     /**
@@ -135,7 +134,6 @@ class MatriculaController extends Controller
      */
     public function matriculaNuevoAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
-        $al=$em->getRepository('AppBundle:Alumno')->findAll();
         //Formulario
         if($request->isMethod("POST"))
         {
@@ -156,7 +154,7 @@ class MatriculaController extends Controller
             $em->flush();
             return $this->redirectToRoute('antiguo');
         }
-        return $this->render('AppBundle:formularios:matricula-nvo.html.twig',array('alumnos' =>$al));
+        return $this->render('AppBundle:formularios:matricula-nvo.html.twig');
     }
     /**
      * @Route("/matriculaantiguo",name="matantiguo")
@@ -193,6 +191,28 @@ class MatriculaController extends Controller
         $padres=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findAll();
         foreach($padres as $p){
             $pp[]=$p->getCarnetalumno();
+        }
+        echo json_encode($pp);
+        return new Response();
+    }
+    /**
+     * @Route("/jsonResponsable")
+     */
+    public function jsonResponsableAction(){
+        $respon=$this->getDoctrine()->getRepository('AppBundle:Responsable')->findAll();
+        foreach($respon as $res){
+            $pp[]=$res->getNombreresponsable();
+        }
+        echo json_encode($pp);
+        return new Response();
+    }
+    /**
+     * @Route("/jsonPadre")
+     */
+    public function jsonPadreAction(){
+        $padres=$this->getDoctrine()->getRepository('AppBundle:Padre')->findAll();
+        foreach($padres as $pa){
+            $pp[]=$pa->getNombrepadre();
         }
         echo json_encode($pp);
         return new Response();

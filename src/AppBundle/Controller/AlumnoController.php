@@ -13,7 +13,7 @@ class AlumnoController extends Controller
      * @Route("/antiguo",name="antiguo")
      */
     public function MenuAction(){
-        return $this->render('AppBundle:matricula:mPestanias.html.twig');
+        return $this->render('AppBundle:alumno:alumnotabs.html.twig');
     }
     /**
      * @Route("/alumnoBuscar",name="alBuscar")
@@ -55,6 +55,25 @@ class AlumnoController extends Controller
     public function responUpAction(Request $request,$id){
         $em=$this->getDoctrine()->getEntityManager();
         $res=$em->getRepository('AppBundle:Responsable')->find($id);
+        if($request->isMethod("POST")){
+            $res->setNombreresponsable($request->get("nombre"));
+            $res->setParentesco($request->get("parentesco"));
+            $res->setTelefono($request->get("tel"));
+
+            $em->persist($res);
+            $em->flush();
+            //Mensaje Flash
+            $this->MensajeFlash('Modificacion exitosa');
+            return $this->redirectToRoute('alBuscar');
+        }
+        return $this->render('AppBundle:alumno:responsable-mod.html.twig',array('responsable'=>$res,'id'=>$id));
+    }
+    /**
+     * @Route("/alumUpdate/{id}",name="alumUp")
+     */
+    public function AlumUpAction(Request $request,$id){
+        $em=$this->getDoctrine()->getManager();
+        $res=$em->getRepository('AppBundle:Alumno')->find($id);
         if($request->isMethod("POST")){
             $res->setNombreresponsable($request->get("nombre"));
             $res->setParentesco($request->get("parentesco"));

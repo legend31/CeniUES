@@ -1,35 +1,46 @@
-{% extends '::pbase.html.twig' %}
+{% extends '::boostrapbase.html.twig' %}
 {% block body%}
-    <br>
+    <head>
+        <meta charset="UTF-8">
+        <script src="{{ asset('bundles/app/js/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+    </head>
     <div class="container">
-        <h2>Matricula Nuevo Ingreso</h2>
-        <br>
+        <div class="col-sm-offset-1">
+            <h2>Ingreso de Matricula</h2>
+        </div>
         <form class="form-horizontal" method="post" action="{{ path('matnuevo') }}">
             <div class="form-group">
-                <label class="control-label col-sm-2" for="inputFecha">Fecha</label>
-                <div class="col-sm-7">
+                <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
+                <div class="col-sm-4">
                     <input id="inputFecha" class="form-control" type="date" name="fecha" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="inputRecibo">Recibo</label>
-                <div class="col-sm-7">
+                <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
+                <div class="col-sm-4">
                     <input id="inputRecibo" class="form-control" type="text" name="recibo" required>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="selectAlumno">Alumno</label>
-                <div class="col-sm-7">
-                    <select id="selectAlumno" name="carnet">
-                        {% for item in alumnos %}
-                            <option value="{{ item.carnetAlumno }}">{{ item.carnetAlumno }}</option>
-                        {% endfor %}
-                    </select>
+                <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
+                <div class="col-sm-4">
+                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required="required" />
                 </div>
             </div>
-            <div class="col-sm-offset-2 col-sm-7">
+            <div class="col-sm-offset-3 col-sm-4">
                 <input class="btn bg-primary" type="submit" value="Guardar">
             </div>
         </form>
     </div>
+    <script>
+        $('document').ready(
+                function(){
+                    $('#form_Carnet').autocomplete(
+                            {
+                                source : {{render(controller('AppBundle:Matricula:json')) }}
+                            });
+                }
+        );
+    </script>
 {% endblock %}
