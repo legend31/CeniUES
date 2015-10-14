@@ -73,7 +73,7 @@ class DocenteController extends Controller
     public function docenteNivelAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll('primernombredocente');
         $locales = $em->getRepository('AppBundle:Local')->findAll();
         $niveles = $em->getRepository('AppBundle:Nivel')->findAll();
         $seccion = $em->getRepository('AppBundle:Seccion')->findAll();
@@ -83,8 +83,8 @@ class DocenteController extends Controller
             throw $this->createNotFoundException('No se encontro ningun dato relacionado');
         }
 
-        $envio = array('docentes'=>$docentes,'local'=>$locales,'niveles'=>$niveles);
+        $enviar = array_merge($docentes, $locales, $niveles, $seccion);
 
-        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', $envio));
+        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes)));
     }
 }
