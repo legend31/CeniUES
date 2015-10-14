@@ -28,4 +28,11 @@ class DefaultController extends Controller
         return $this->render('AppBundle:admin:vPrincipal.html.twig');
     }
 
+    /**
+     * @Route("/listaalumnos", name="listaalumno")
+     */
+    public function listaAlumno(){
+        return $this->render('AppBundle:reportes:listadoalumnos.html.twig');
+    }
+
 }
