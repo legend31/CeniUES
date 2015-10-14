@@ -1,0 +1,51 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} {{ TituloPagina }} {% endblock %}
+
+
+
+{% block principal %}
+    <section class="content-header">
+        <h1>
+            Nueva evaluaci&oacute;n<br>
+        </h1><br>
+
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos de la nueva evaluaci&oacute;n</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="form_nombreevaluacion">{{ form_label(form.nombreevaluacion) }}</label>
+                            <input type="text" class="form-control" id="form_nombreevaluacion" name="form[nombreevaluacion]" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="form_ponderacion"> {{ form_label(form.ponderacion) }} </label>
+                            <input type="text" class="form-control" id="form_ponderacion" name="form[ponderacion]" placeholder="">
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
+                        <a class="btn btn-default bg-green-gradient">
+                            <i class="fa fa-save"></i> Guardar
+                        </a>
+                        <a class="btn btn-default bg-blue-gradient">
+                            <i class="fa fa-trash-o"></i> Limpiar
+                        </a>
+                        <a class="btn btn-default bg-red-gradient pull-right" href="{{ path('evalhome') }}">
+                            <i class="fa fa-close"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript2 %}
+{% endblock %}

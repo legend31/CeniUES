@@ -61,6 +61,7 @@ class DocenteController extends Controller
      */
     public function consultarDocenteAction()
     {
+
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
         return new Response($html);

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Docente;
+use AppBundle\Entity\Evaluacion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,5 +32,24 @@ class EvaluacionController extends Controller
 
         return new Response($this->container->get('templating')->render('AppBundle:evaluacion:evaluacionPrincipal.html.twig', array('evaluaciones'=>$evaluaciones)));
         //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
+    }
+
+    /**
+     * @Route("/newEval", name="agreval")
+     */
+    public function agregarEvaluaciónAction()
+    {
+        $evaluacion= new Evaluacion();
+
+        $form = $this->createFormBuilder($evaluacion)
+            ->add('idevaluacion','text',array('label' => 'ID evaluacion'))
+            ->add('nombreevaluacion','text',array('label' => 'Titulo de la evaluacion'))
+            ->add('ponderacion','text',array('label' => 'Ponderacion'))
+            ->add('save', 'submit', array('label' => 'Agregar Evaluación'))
+            ->getForm();
+
+        $html = $this->container->get('templating')->render('AppBundle:evaluacion:agregarE.html.twig', array('TituloPagina' => 'Agregar Evaluación', 'form' => $form->createView()));
+
+        return new Response($html);
     }
 }
