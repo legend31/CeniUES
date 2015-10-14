@@ -351,7 +351,7 @@
 
                         <!--Inicia Gestionar Notas-->
                         <li class="treeview">
-                            <a href="#">
+                            <a href="">
                                 <i class="fa fa-pencil-square"></i>
                                 <span>Gestionar Notas</span>
                                 <i class="fa fa-angle-left pull-right"></i>
@@ -360,32 +360,19 @@
                             <!--Inicia Sub-Menu Gestionar Notas-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('ingresarnotas') }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Ingresar Notas
+                                        Administrar Notas
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('consultarnotas') }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Eliminar Notas
+                                        Consultar Notas
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Modificar Notas
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar notas
-                                    </a>
-                                </li>
                             </ul>
                             <!--Finaliza Sub-Menu Gestionar Notas-->
                         </li>

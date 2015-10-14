@@ -21,4 +21,12 @@ class NotasController extends Controller{
     public function ingresarNotas(){
         return $this->render("AppBundle:notas:igresarNotas.html.twig");
     }
+
+    /**
+     * @Route("/consultarnotas", name="consultarnotas")
+     */
+    public function consultarNotas(){
+        return $this->render('AppBundle:notas:consultarNotas.html.twig');
+    }
+
 }
