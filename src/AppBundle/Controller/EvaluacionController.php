@@ -48,7 +48,7 @@ class EvaluacionController extends Controller
             ->add('save', 'submit', array('label' => 'Agregar Evaluación'))
             ->getForm();
 
-        $html = $this->container->get('templating')->render('AppBundle:evaluacion:agregarE.html.twig', array('TituloPagina' => 'Agregar Evaluación', 'form' => $form->createView()));
+        $html = $this->container->get('templating')->render('AppBundle:evaluacion:agregarE.html.twig', array('TituloPagina' => 'Agregar Evaluacion', 'form' => $form->createView()));
 
         return new Response($html);
     }
