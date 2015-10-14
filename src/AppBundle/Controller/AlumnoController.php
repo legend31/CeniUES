@@ -73,19 +73,19 @@ class AlumnoController extends Controller
      */
     public function AlumUpAction(Request $request,$id){
         $em=$this->getDoctrine()->getManager();
-        $res=$em->getRepository('AppBundle:Alumno')->find($id);
+        $al=$em->getRepository('AppBundle:Alumno')->find($id);
         if($request->isMethod("POST")){
-            $res->setNombreresponsable($request->get("nombre"));
-            $res->setParentesco($request->get("parentesco"));
-            $res->setTelefono($request->get("tel"));
+            $al->setPrimernombrealumno($request->get("primer_nombre"));
+            $al->setPrimerapellidoalumno($request->get("primer_apellido"));
+            $al->setSegundonombrealumno($request->get("segundo_nombre"));
+            $al->setSegundoapellidoalumno($request->get("segundo_apellido"));
 
-            $em->persist($res);
             $em->flush();
             //Mensaje Flash
             $this->MensajeFlash('Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
-        return $this->render('AppBundle:alumno:responsable-mod.html.twig',array('responsable'=>$res,'id'=>$id));
+        return $this->render('AppBundle:alumno:alumno-mod.html.twig',array('alumno'=>$al,'id'=>$id));
     }
     private function MensajeFlash($m){
         $this->get('session')->getFlashBag()->add(
