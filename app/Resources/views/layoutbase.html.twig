@@ -7,9 +7,11 @@
         <header class="main-header">
             <!--Logo-->
             <div class="logo">
-            <span class="logo-lg">
-                <b>CENIUES UES</b>
-            </span>
+            <a href="{{ path('principal') }}"> <!--<span class="logo-lg active"-->
+                <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                <!--<b>CENIUES</b>-->
+            <!--</span>-->
+            </a>
             </div>
             <!--Fin de Logo-->
 
@@ -164,14 +166,14 @@
                             <!--Inicio Sub-Menu gestion de Docentes-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('agregarD') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Ingresar Docentes
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('consultarD') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Consultar Docentes
                                     </a>
@@ -232,7 +234,7 @@
                             <!--Inicia Sub-Menu Gestionar Evaluaciones-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('agreval') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Ingresar Evaluacion
                                     </a>
@@ -633,7 +635,7 @@
                                 <div class="icon">
                                     <i class="fa fa-list-alt"></i>
                                 </div>
-                                <a  href="#" class="small-box-footer">
+                                <a  href="{{ path('docn') }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
@@ -651,7 +653,7 @@
                                 <div class="icon">
                                     <i class="fa fa-check-square"></i>
                                 </div>
-                                <a  href="#" class="small-box-footer">
+                                <a  href="{{ path('evalhome') }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
