@@ -1,0 +1,68 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block principal %}
+    <section class="invoice">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> CENIUES
+                    <small class="pull-right">Date: 14/10/2015</small>
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-strped">
+                    <thead>
+                        <tr>
+                            <th>Carnet</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Numero de Recibo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PL00001</td>
+                            <td>Juan Jose</td>
+                            <td>Perez Lopez</td>
+                            <td>0000000-01</td>
+                        </tr>
+                        <tr>
+                            <td>HC00002</td>
+                            <td>Katherine Guadalupe</td>
+                            <td>Hernandez Castro</td>
+                            <td>0000000-02</td>
+                        </tr>
+                        <tr>
+                            <td>MV00003</td>
+                            <td>Carlos Alexander</td>
+                            <td>Martinez Vasquez</td>
+                            <td>0000000-03</td>
+                        </tr>
+                        <tr>
+                            <td>BC00004</td>
+                            <td>Fernando Eduardo</td>
+                            <td>Bolaños Canjura</td>
+                            <td>0000000-04</td>
+                        </tr>
+                        <tr>
+                            <td>QC00005</td>
+                            <td>Karen Liliana</td>
+                            <td>Quintanilla Campos</td>
+                            <td>0000000-05</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+                <!--<button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>-->
+                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generar PDF</button>
+            </div>
+        </div>
+    </section>
+{% endblock %}
