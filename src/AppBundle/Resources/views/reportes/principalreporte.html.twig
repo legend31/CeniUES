@@ -1,0 +1,82 @@
+{% extends "::layoutbase.html.twig" %}
+
+    {% block principal %}
+
+        <!--Cabecera de la seccion principal-->
+        <section class="content-header">
+            <h1>Generar reportes</h1>
+            <small>Seleccione el reporte que desea generar</small>
+            <ol class="breadcrumb"></ol>
+        </section>
+        <!-- Fin de cabecera de seccion principal-->
+
+        <!--Inicio de contenido-->
+        <section class="content">
+            <!--Inicia Primera fila de opciones-->
+            <div class="row">
+                <!--Opcion1-->
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-aqua disabled">
+                        <div class="inner">
+                            <h3>Reporte</h3>
+                            <p>Alumnos Inscritos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-database"></i>
+                        </div>
+                        <a  href="{{ path('ainscritos') }}" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-green disabled">
+                        <div class="inner">
+                            <h3>Reporte</h3>
+                            <p>Notas</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-mortar-board"></i>
+                        </div>
+                        <a  href="#" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-red disabled">
+                        <div class="inner">
+                            <h3>Reporte</h3>
+                            <p>Distribucion Niveles</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-table"></i>
+                        </div>
+                        <a  href="#" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-xs-6">
+                    <!--Small box-->
+                    <div class="small-box bg-yellow disabled">
+                        <div class="inner">
+                            <h3>Reporte</h3>
+                            <p>Distribucion modulos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa  fa-sitemap"></i>
+                        </div>
+                        <a  href="#" class="small-box-footer">
+                            Click para acceder
+                        </a>
+                    </div>
+            </div>
+        </section>
+        <!--Fin de contenido-->
+    {% endblock %}

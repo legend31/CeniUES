@@ -1,0 +1,56 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} {{ TituloPagina }} {% endblock %}
+
+{% block principal %}
+    <div class="pad margin no-print">
+    </div>
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-globe"></i> Alumnos inscritos en el sistema CENIUES
+                <small class="pull-right">Date: 2/10/2014</small>
+            </h2>
+        </div><!-- /.col -->
+    </div>
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Carnet</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Residencia</th>
+                    <th>Telefono</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in form %}
+                <tr>
+                    <td>{{ entity.getCarnetalumno }}</td>
+                    <td>{{ entity.getPrimernombrealumno }} {{ entity.getSegundonombrealumno }}</td>
+                    <td>{{ entity.getPrimerapellidoalumno }} {{ entity.getSegundoapellidoalumno }}</td>
+                    <td>{{ entity.getDireccioncasa }}</td>
+                    <td>{{ entity.getTelefonocasa }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    <!-- this row will not appear when printing -->
+    <div class="row no-print">
+        <div class="col-xs-12">
+            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+            <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+            <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+        </div>
+    </div>
+</section>
+{%  endblock %}
