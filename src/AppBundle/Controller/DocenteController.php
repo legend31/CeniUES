@@ -83,8 +83,6 @@ class DocenteController extends Controller
             throw $this->createNotFoundException('No se encontro ningun dato relacionado');
         }
 
-        $enviar = array_merge($docentes, $locales, $niveles, $seccion);
-
         return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes)));
     }
 }
