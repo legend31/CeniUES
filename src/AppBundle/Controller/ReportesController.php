@@ -40,4 +40,14 @@ class ReportesController extends Controller
         return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
         //$this->render('AppBundle:reportes:alumnosinscritos.html.twig');
     }
+    /**
+     * @Route("/listadoAlumnosPdf",name="listadoAlumPdf")
+     */
+    public function pdfAction(){
+        $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('listadoporniveles.pdf');
+        return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
+        //return $this->render('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
+    }
 }

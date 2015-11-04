@@ -35,4 +35,12 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('fecha',$fecha )
             ->getSingleResult();
     }
+    public function alumnosmMatriculados()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m WHERE m.esactivo = :activo ORDER BY m.nivelnivel ASC '
+        )
+            ->setParameter('activo',1 )
+            ->getResult();
+    }
 }

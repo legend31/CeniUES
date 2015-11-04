@@ -1,0 +1,43 @@
+<div class="container">
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="box">
+                    <h1>Programa de Ingles para Niños CENIUES</h1>
+                    <!--Inicia Cabecera de tabla-->
+                    <div class="box-header">
+                        <h3 class="box-title">Listado de alumnos por nivel</h3>
+                    </div>
+                    <!--Finaliza Cabecera de tabla-->
+
+                    <!--Inicia cuerpo de tabla-->
+                    <div class="box-body table-responsive">
+                        <table border=1 cellspacing=0 cellpadding=10 bordercolor="000000" class="table table-hover">
+                            <thead>
+                            <th>Carnet</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Edad</th>
+                            <th>Nivel</th>
+                            <th>Responsable</th>
+                            </thead>
+                            <tbody>
+                            {% for mat in mat %}
+                            <tr>
+                                <td>{{ mat.alumnoCarnetalumno.carnetalumno}}</td>
+                                <td>{{ mat.alumnoCarnetalumno.primernombrealumno }} {{ mat.alumnoCarnetalumno.segundonombrealumno }}</td>
+                                <td>{{ mat.alumnoCarnetalumno.primerapellidoalumno }} {{ mat.alumnoCarnetalumno.segundoapellidoalumno }}</td>
+                                <td>{{ mat.alumnoCarnetalumno.edad }}</td>
+                                <td>{{ mat.nivelnivel.nombrenivel}}</td>
+                                <td>{{ mat.alumnoCarnetalumno.responsableresponsable.nombreresponsable }}</td>
+                            </tr>
+                            </tbody>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
