@@ -35,4 +35,18 @@ class DefaultController extends Controller
         return $this->render('AppBundle:reportes:listadoalumnos.html.twig');
     }
 
+    /**
+     * @Route("/pdf")
+     */
+    public function pdfAction(){
+        $em=$this->getDoctrine()->getEntityManager();
+        $alumno=$em->getRepository('AppBundle:Alumno')->findOneBy(array('carnetalumno'=>'bc11023'));
+            //return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>$alumno));
+
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('ceniues.pdf');
+        return $pdfGenerator->displayForView('AppBundle::pdf.html.twig',array('al'=>$alumno));
+        //return $this->render('AppBundle::pdf.html.twig',array('al'=>$alumno));
+    }
+
 }
