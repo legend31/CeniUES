@@ -38,7 +38,8 @@ class SeccionController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         $secciones=$em->getRepository('AppBundle:Seccion')->findAll();
 
-        return $this->render('AppBundle:seccion:seccion-listar.html.twig',array('secciones'=>$secciones));
+        //return $this->render('AppBundle:seccion:seccion-listar.html.twig',array('secciones'=>$secciones));
+        return $this->render('AppBundle:formularios:seccionquemada.html.twig');
     }
     /**
      * @Route("/seccionUpdate/{id}",name="secAct")

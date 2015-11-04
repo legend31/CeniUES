@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Proxies\__CG__\AppBundle\Entity\Modulo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,28 @@ class ModulosNivelesController extends Controller{
      */
     public function nuevoModuloAction(){
         return $this->render('@App/admin/gmodulosniveles/formNuevoModulo.html.twig');
+    }
+
+    /**
+     * @Route("/nmod", name="nmod")
+     */
+    public function newModuloAction(Request $request){
+        $em=$this->getDoctrine()->getManager();
+        //$repmod = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        //Verifico el envio de form
+        if($request->isMethod("POST")){
+            //$auxmod= new Modulo();
+            //$auxmod = $repmod->findOneBy(".'$request->get('nombreMod')'.");
+
+            $mod = new Modulo();
+            $mod->setNombremodulo($request->get('nombreMod'));
+            $em->persist($mod);
+            $em->flush();
+            return $this->redirectToRoute('newmodulo');
+
+        }
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
+
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/

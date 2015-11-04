@@ -1,0 +1,60 @@
+{% extends '::layoutbase.html.twig' %}
+{% block title %}
+    Gestionar Secciones
+{% endblock %}
+{% block principal %}
+    <div class="container-fluid">
+            <h3>Gestionar Secciones</h3>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <!--Inicia Cabecera de tabla-->
+                            <div class="box-header">
+                                <h3 class="box-title">Listado de Niveles</h3>
+                            </div>
+                            <!--Finaliza Cabecera de tabla-->
+
+                            <!--Inicia cuerpo de tabla-->
+                            <div class="box-body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <th> Nombre</th>
+                                    <th>Secciones</th>
+                                    <th> Opciones</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nivel 1</td>
+                                            <td>A B</td>
+                                            <td>
+                                                <a href="#" title="Añadir">
+                                                    <img src="{{ asset('bundles/app/images/add.png') }}">
+                                                </a>
+                                                <a href="#" title="Eliminar">
+                                                    <img src="{{ asset('bundles/app/images/delete.png') }}">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nivel 2</td>
+                                            <td>A</td>
+                                            <td>
+                                                <a href="#" title="Añadir">
+                                                    <img src="{{ asset('bundles/app/images/add.png') }}">
+                                                </a>
+                                                <a href="#" title="Eliminar">
+                                                    <img src="{{ asset('bundles/app/images/delete.png') }}">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Finaliza Cuerpo de tabla-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+{% endblock %}

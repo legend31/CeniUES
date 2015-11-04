@@ -28,11 +28,14 @@ class MatriculaController extends Controller
         $form->handleRequest($request);
         if($d>0){
             $mat=$em->getRepository('AppBundle:Matricula')->find($d);
+
             $mat->setEsactivo(0);
+            $em->
             $em->flush();
             //MensajeFlash
             $this->MensajeFlash('Desmatriculacion exitosa!');
             return $this->redirectToRoute('des');
+            //return $this->render('AppBundle:matricula:desmatricular.html.twig',array('al'=>$em->getRepository('AppBundle:Alumno')->find($mat->getAlumnoCarnetalumno()),'mat' =>$mat,'formulario' => $form->createView()));
         }
         if($form->isValid()) {
             $form->getData();

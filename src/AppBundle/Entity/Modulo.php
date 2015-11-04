@@ -31,7 +31,7 @@ class Modulo
     /**
      * @var integer
      *
-     * @ORM\Column(name="duracion", type="integer", nullable=false)
+     * @ORM\Column(name="duracion", type="integer", nullable=true)
      */
     private $duracion;
 
