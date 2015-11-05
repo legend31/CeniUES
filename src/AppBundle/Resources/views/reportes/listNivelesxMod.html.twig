@@ -1,0 +1,51 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block tittle %}{{ TituloPagina }}{% endblock %}
+
+{% block principal %}
+    <div class="pad margin no-print"></div>
+
+    <section class="invonce">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Listado de niveles para el modulo
+                    <small class="pull-right">Date: 5/11/2015</small>
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Maestro</th>
+                            <th>Aula</th>
+                            <th>Edificio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for nivel in niv %}
+                        <tr>
+                            <td>{{ nivel.nombrenivel }}</td>
+                            <td>Larisa Carrillo</td>
+                            <td>16</td>
+                            <td>Edificio de idiomas</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+            </div>
+        </div>
+    </section>
+{% endblock %}

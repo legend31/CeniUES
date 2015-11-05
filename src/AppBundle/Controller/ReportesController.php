@@ -40,4 +40,21 @@ class ReportesController extends Controller
         return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
         //$this->render('AppBundle:reportes:alumnosinscritos.html.twig');
     }
+
+    /**
+     * @Route("/LisNxM", name="lnivelesmodulos")
+     */
+    public function listNivxModAction()
+    {
+        //$modulo= $this->getDoctrine()->getRepository('AppBundle:Modulo')->find($id);
+        //$niveles = $modulo->getNivelnivel();
+        $em = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niveles = $em->findAll();
+
+        if(!$niveles){
+            throw $this->createNotFoundException('No se encontraron niveles');
+
+        }
+        return new Response($this->container->get('templating')->render('AppBundle:reportes:listNivelesxMod.html.twig',array('niv' => $niveles)));
+    }
 }
