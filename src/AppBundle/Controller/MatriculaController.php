@@ -95,6 +95,7 @@ class MatriculaController extends Controller
         return $this->render('AppBundle:formularios:alumno-inline.html.twig');
 
     }
+
     /**
      * @Route("/padreInsertar",name="padreinsert")
      */
@@ -183,9 +184,16 @@ class MatriculaController extends Controller
             //Perisistencia
             $em->persist($mat);
             $em->flush();
+            $this->MensajeFlash('Matriculacion exitosa');
             return $this->redirectToRoute('matantiguo');
         }
         return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
+    }
+    /**
+     * @Route("/ingresoporcolocacion",name="examencolocacion")
+     */
+    public function examenColocacionAction(){
+        return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig');
     }
     /**
      * @Route("/json")
@@ -219,12 +227,6 @@ class MatriculaController extends Controller
         }
         echo json_encode($pp);
         return new Response();
-    }
-    /**
-     * @Route("/ferloco")
-     */
-    public function locoAction(){
-        return $this->render('AppBundle::echo.html.twig');
     }
     /**
      * @Route("/fecha")

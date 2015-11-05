@@ -12,6 +12,14 @@
     <div class="container">
         <h2>Matricula Antiguo Ingreso</h2>
         <br>
+        {% for flashMessage in app.session.flashbag.get('mensaje') %}
+            <script>
+                window.onload = function notificacion(){
+                    alertify.log("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
         <form class="form-horizontal" method="post" action="{{ path('matantiguo') }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
