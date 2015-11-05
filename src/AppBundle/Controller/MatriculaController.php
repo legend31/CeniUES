@@ -89,8 +89,10 @@ class MatriculaController extends Controller
 
             $em->persist($al);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
-            //return new Response('Padre es '.$request->get("responsable"));
+            if($request->get("origen")=="nuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:alumno-inline.html.twig');
 
@@ -112,7 +114,10 @@ class MatriculaController extends Controller
 
             $em->persist($p);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
+            if($request->get("origen")=="padrenuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:padre-inline.html.twig');
     }
@@ -129,7 +134,10 @@ class MatriculaController extends Controller
 
             $em->persist($res);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
+            if($request->get("origen")=="nuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:responsable-inline.html.twig');
     }
