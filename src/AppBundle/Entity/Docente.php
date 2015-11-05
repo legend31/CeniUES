@@ -307,7 +307,7 @@ class Docente
         $this->segundoapellidodocente = $apellido[1];
         return $this;
     }
-//Nada
+    //Nada
     /**
      * Set carnetdocente
      *
