@@ -83,7 +83,11 @@ class ModulosNivelesController extends Controller{
      * @Route("/niveles", name="gniveles")
      */
     public function gnivelesAction(){
-        return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $auxnivel = new Nivel();
+        $repo = $em->getRepository('AppBundle:Nivel');
+        $auxnivel= $repo->findAll();
+        return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig',array('listNivel'=>$auxnivel));
     }
 
     /**
