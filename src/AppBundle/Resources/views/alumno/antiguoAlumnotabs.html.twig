@@ -15,7 +15,7 @@
     </head>
     <div class="bs-example">
         <div class="container-fluid">
-            <h2>Formularios Nuevo Ingreso</h2>
+            <h2>Formularios Ingreso por Colocacion</h2>
             <div class="nav-tabs-custom" data-find="_2">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
@@ -28,7 +28,7 @@
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Matricula</h2>
                         </div>
-                        <form class="form-horizontal" method="post" action="{{ path('matnuevo') }}">
+                        <form class="form-horizontal" method="post" action="{{ path('matantiguo') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
                                 <div class="col-sm-4">
@@ -47,6 +47,23 @@
                                     <input class="form-control" type="search" id="form_Carnet" name="carnet" required>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
+                                <div class="col-sm-4">
+                                    <select id ="selectNivel"name="nivel">
+                                        {% for item in niveles %}
+                                            <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="inputNota">Calificacion</label>
+                                <div class="col-sm-4">
+                                    <input id="inputNota" class="form-control" type="text" name="nota" required>
+                                </div>
+                            </div>
+                            <input type="hidden" name="origen" value="colocacion">
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-4">
                                     <input class="btn bg-primary" type="submit" value="Guardar">
@@ -97,6 +114,7 @@
                                     <input id="inputtelM" class="form-control" type="text" name="telP" required>
                                 </div>
                             </div>
+                            <input type="hidden" name="origen" value="colocacion">
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-4">
                                     <input class="btn bg-primary" type="submit" value="Guardar">
@@ -127,6 +145,7 @@
                                     <input id="inputtel" class="form-control" type="text" name="tel" required>
                                 </div>
                             </div>
+                            <input type="hidden" name="origen" value="colocacion">
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-4">
                                     <input class="btn bg-primary" type="submit" value="Guardar">
@@ -188,6 +207,7 @@
                                     <input class="form-control" type="text" id="inputPa" name="padre" required>
                                 </div>
                             </div>
+                            <input type="hidden" name="origen" value="colocacion">
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-4">
                                     <input class="btn bg-primary" type="submit" value="Guardar">

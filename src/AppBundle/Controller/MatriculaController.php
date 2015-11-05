@@ -30,7 +30,6 @@ class MatriculaController extends Controller
             $mat=$em->getRepository('AppBundle:Matricula')->find($d);
 
             $mat->setEsactivo(0);
-            $em->
             $em->flush();
             //MensajeFlash
             $this->MensajeFlash('Desmatriculacion exitosa!');
@@ -89,8 +88,10 @@ class MatriculaController extends Controller
 
             $em->persist($al);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
-            //return new Response('Padre es '.$request->get("responsable"));
+            if($request->get("origen")=="nuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:alumno-inline.html.twig');
 
@@ -112,7 +113,10 @@ class MatriculaController extends Controller
 
             $em->persist($p);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
+            if($request->get("origen")=="padrenuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:padre-inline.html.twig');
     }
@@ -129,7 +133,10 @@ class MatriculaController extends Controller
 
             $em->persist($res);
             $em->flush();
-            return $this->redirectToRoute('antiguo');
+            if($request->get("origen")=="nuevo")
+                return $this->redirectToRoute('antiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:responsable-inline.html.twig');
     }
@@ -184,8 +191,11 @@ class MatriculaController extends Controller
             //Perisistencia
             $em->persist($mat);
             $em->flush();
-            $this->MensajeFlash('Matriculacion exitosa');
-            return $this->redirectToRoute('matantiguo');
+            //$this->MensajeFlash('Matriculacion exitosa');
+            if($request->get("origen")=="antiguo")
+                return $this->redirectToRoute('matantiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
     }
@@ -193,7 +203,8 @@ class MatriculaController extends Controller
      * @Route("/ingresoporcolocacion",name="examencolocacion")
      */
     public function examenColocacionAction(){
-        return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig');
+        $niveles=$this->getDoctrine()->getRepository('AppBundle:Nivel')->findAll();
+        return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig',array('niveles'=>$niveles));
     }
     /**
      * @Route("/json")
