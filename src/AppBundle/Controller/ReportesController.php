@@ -30,7 +30,7 @@ class ReportesController extends Controller
      */
     public function alumnosInscritosAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        /*$em = $this->getDoctrine()->getEntityManager();
         $alumnos = $em->getRepository('AppBundle:Alumno')->findAll();
 
         if(!$alumnos)
@@ -38,7 +38,11 @@ class ReportesController extends Controller
             throw $this->createNotFoundException('No se encontro ningun docente');
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
-        //$this->render('AppBundle:reportes:alumnosinscritos.html.twig');
+        */
+        $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('listadoporniveles.pdf');
+        return $this->render('AppBundle:reportes:listadoAlumnosFer.html.twig',array('mat'=>$mat));
     }
     /**
      * @Route("/listadoAlumnosPdf",name="listadoAlumPdf")
@@ -48,6 +52,5 @@ class ReportesController extends Controller
         $pdfGenerator=$this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoporniveles.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
-        //return $this->render('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
     }
 }

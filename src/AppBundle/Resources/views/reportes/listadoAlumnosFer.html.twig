@@ -1,0 +1,55 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} Listado de Alumnos{% endblock %}
+
+{% block principal %}
+    <div class="pad margin no-print">
+    </div>
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Alumnos inscritos en el sistema CENIUES
+                    <small class="pull-right">Date: 6/11/2015</small>
+                </h2>
+            </div><!-- /.col -->
+        </div>
+
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Carnet</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Nivel</th>
+                    <th>Responsable</th>
+                    </thead>
+                    <tbody>
+                    {% for mat in mat %}
+                    <tr>
+                        <td>{{ mat.alumnoCarnetalumno.carnetalumno}}</td>
+                        <td>{{ mat.alumnoCarnetalumno.primernombrealumno }} {{ mat.alumnoCarnetalumno.segundonombrealumno }}</td>
+                        <td>{{ mat.alumnoCarnetalumno.primerapellidoalumno }} {{ mat.alumnoCarnetalumno.segundoapellidoalumno }}</td>
+                        <td>{{ mat.alumnoCarnetalumno.edad }}</td>
+                        <td>{{ mat.nivelnivel.nombrenivel}}</td>
+                        <td>{{ mat.alumnoCarnetalumno.responsableresponsable.nombreresponsable }}</td>
+                    </tr>
+                    </tbody>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="{{ path('listadoAlumPdf') }}" class="btn btn-primary pull-right" ><i class="fa fa-download"></i> Generate PDF</a>
+            </div>
+        </div>
+    </section>
+{%  endblock %}
