@@ -47,10 +47,20 @@ class ReportesController extends Controller
     /**
      * @Route("/listadoAlumnosPdf",name="listadoAlumPdf")
      */
-    public function pdfAction(){
+    public function pdfAlumnosAction(){
         $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
         $pdfGenerator=$this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoporniveles.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
+    }
+    /**
+     * @Route("/listadoDocentesPdf",name="listadoDocentesPdf")
+     */
+    public function pdfDocentesAction(){
+        $em = $this->getDoctrine()->getEntityManager();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('listadoDocentes.pdf');
+        return $pdfGenerator->displayForView('AppBundle:reportes:listadoDocentesPdf.html.twig',array('form'=>$docentes));
     }
 }
