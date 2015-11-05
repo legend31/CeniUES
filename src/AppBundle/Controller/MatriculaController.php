@@ -184,8 +184,11 @@ class MatriculaController extends Controller
             //Perisistencia
             $em->persist($mat);
             $em->flush();
-            $this->MensajeFlash('Matriculacion exitosa');
-            return $this->redirectToRoute('matantiguo');
+            //$this->MensajeFlash('Matriculacion exitosa');
+            if($request->get("origen")=="antiguo")
+                return $this->redirectToRoute('matantiguo');
+            else
+                return $this->redirectToRoute('examencolocacion');
         }
         return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
     }
@@ -193,7 +196,8 @@ class MatriculaController extends Controller
      * @Route("/ingresoporcolocacion",name="examencolocacion")
      */
     public function examenColocacionAction(){
-        return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig');
+        $niveles=$this->getDoctrine()->getRepository('AppBundle:Nivel')->findAll();
+        return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig',array('niveles'=>$niveles));
     }
     /**
      * @Route("/json")
