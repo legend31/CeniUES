@@ -8,19 +8,18 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Ingreso de Nivel</h3>
                         </div>
-                        <form role="form">
+                        <form role="form" method="post" action="{{ path("nnivel") }}">
                             <div class="box-body">
                                 <div class="form-group col-sm-12">
                                     <label>Nombre de Nivel</label>
-                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del nivel">
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del nivel" id="nombreNivel" name="nombreNivel">
                                 </div>
-
 
 
                             </div>
                             <div class="box-footer">
                                 <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                     <input type="submit" class="btn btn-primary" value="Guardar" id="guardarniv">
                                     <button type="submit" class="btn btn-danger">Cancelar</button>
                                 </div>
                             </div>

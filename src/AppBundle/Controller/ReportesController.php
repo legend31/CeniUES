@@ -63,4 +63,21 @@ class ReportesController extends Controller
         $pdfGenerator->setName('listadoDocentes.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listadoDocentesPdf.html.twig',array('form'=>$docentes));
     }
+
+    /**
+     * @Route("/LisNxM", name="lnivelesmodulos")
+     */
+    public function listNivxModAction()
+    {
+        //$modulo= $this->getDoctrine()->getRepository('AppBundle:Modulo')->find($id);
+        //$niveles = $modulo->getNivelnivel();
+        $em = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niveles = $em->findAll();
+
+        if(!$niveles){
+            throw $this->createNotFoundException('No se encontraron niveles');
+
+        }
+        return new Response($this->container->get('templating')->render('AppBundle:reportes:listNivelesxMod.html.twig',array('niv' => $niveles)));
+    }
 }
