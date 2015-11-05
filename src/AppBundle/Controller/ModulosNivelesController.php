@@ -77,6 +77,21 @@ class ModulosNivelesController extends Controller{
 
     }
 
+    /**
+     * @Route("/obtmod", name="obtmod")
+     */
+    public function obtenermodAction(Request $request){
+       /* $em = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        if($request->isMethod("POST")){
+
+            $mod=new Modulo();
+            $mod = $em->findAll();
+
+            return new JsonResponse(array('Mod'=>$mod));
+
+        }*/
+    }
+
     /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
     /**
