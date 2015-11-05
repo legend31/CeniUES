@@ -85,6 +85,37 @@
                                 </tbody>
                             </table>
                         </div>
+
+            <div class="container-fluid">
+                <table class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Edad</th>
+                        <th>Padre</th>
+                        <th>Responsable</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                            <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                            <td>{{ al.edad }}</td>
+                            <td>
+                                <a href="{{ path('padreUp',{'id':al.padrepadre.idpadre}) }}" title="Modificar">
+                                    {{ al.padrepadre.nombrepadre }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('responUp',{'id':al.responsableresponsable.idresponsable}) }}" title="Modificar">
+                                    {{ al.responsableresponsable.nombreresponsable }}
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </table>
+            </div>
         {% endif %}
     </div>
     </div>
