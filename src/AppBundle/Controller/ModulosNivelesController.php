@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Nivel;
 use Proxies\__CG__\AppBundle\Entity\Modulo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -82,7 +83,11 @@ class ModulosNivelesController extends Controller{
      * @Route("/niveles", name="gniveles")
      */
     public function gnivelesAction(){
-        return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $auxnivel = new Nivel();
+        $repo = $em->getRepository('AppBundle:Nivel');
+        $auxnivel= $repo->findAll();
+        return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig',array('listNivel'=>$auxnivel));
     }
 
     /**
@@ -92,7 +97,22 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
     }
 
+    /**
+     * @Route("/nnivel", name="nnivel")
+     */
+    public function agregarNivelAction(Request $request){
+        $em= $this->getDoctrine()->getManager();
+        if($request->isMethod("POST")){
+            $niv= new Nivel();
+            $niv->setNombrenivel($request->get("nombreNivel"));
+            $em->persist($niv);
+            $em->flush();
 
+            return $this->redirectToRoute('newnivel');
+        }
+
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+    }
 
 
 }
