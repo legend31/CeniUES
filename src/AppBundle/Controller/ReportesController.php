@@ -39,19 +39,17 @@ class ReportesController extends Controller
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
         //$this->render('AppBundle:reportes:alumnosinscritos.html.twig');
-    }
-<<<<<<< HEAD
-    /**
+    }/**
      * @Route("/listadoAlumnosPdf",name="listadoAlumPdf")
      */
-    public function pdfAction(){
-        $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
-        $pdfGenerator=$this->get('siphoc.pdf.generator');
+    public function pdfAction()
+    {
+        $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
+        $pdfGenerator = $this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoporniveles.pdf');
-        return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
+        return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig', array('mat' => $mat));
         //return $this->render('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
-=======
-
+    }
     /**
      * @Route("/LisNxM", name="lnivelesmodulos")
      */
@@ -67,6 +65,5 @@ class ReportesController extends Controller
 
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:listNivelesxMod.html.twig',array('niv' => $niveles)));
->>>>>>> 8e910df83134ad45319b4f61105c7bff10c70cab
     }
 }
