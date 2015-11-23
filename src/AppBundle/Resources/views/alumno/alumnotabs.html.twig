@@ -38,13 +38,13 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
                                 <div class="col-sm-4">
-                                    <input id="inputRecibo" class="form-control" type="text" name="recibo" required>
+                                    <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" required pattern="[R]{1}[-]{1}[0-9]{4}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required>
+                                    <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" required pattern="[A-Z]{2}[0-9]{5}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -70,13 +70,13 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputTrabajoP">Lugar de Trabajo</label>
                                 <div class="col-sm-4">
-                                    <input id="inputTrabajoP" class="form-control" type="text" name="tP" required>
+                                    <input id="inputTrabajoP" class="form-control" type="text" name="trabP" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputtelP">Telefono</label>
+                                <label class="control-label col-sm-3" for="inTelPadre">Telefono</label>
                                 <div class="col-sm-4">
-                                    <input id="inputtelP" class="form-control" type="text" name="telP" required>
+                                    <input class="form-control" id="inTelPadre" type="text" name="telP" placeholder="2216-0101" required pattern="[0-9]{4}[-]{1}[0-9]{4}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -86,15 +86,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputTrabajoM">Lugar de Trabajo</label>
+                                <label for="" class="control-label col-sm-3" for="momjob">Lugar de trabajo</label>
                                 <div class="col-sm-4">
-                                    <input id="inputTrabajoM" class="form-control" type="text" name="tM" required>
+                                    <input id="momjob"  type="text" class="form-control" name="maTrab" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputtelM">Telefono</label>
+                                <label for="" class="control-label col-sm-3" for="momtel">Telefono</label>
                                 <div class="col-sm-4">
-                                    <input id="inputtelM" class="form-control" type="text" name="telP" required>
+                                    <input id="momtel"  type="text" class="form-control" name="maTel" placeholder="2216-0101" required pattern="[0-9]{4}[-]{1}[0-9]{4}">
                                 </div>
                             </div>
                             <input type="hidden" name="origen" value="padrenuevo">
@@ -125,7 +125,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputtel">Telefono</label>
                                 <div class="col-sm-4">
-                                    <input id="inputtel" class="form-control" type="text" name="tel" required>
+                                    <input id="inputtel" class="form-control" type="text" name="tel" placeholder="2216-0101" required pattern="[0-9]{4}-[0-9]{4}">
                                 </div>
                             </div>
                             <input type="hidden" name="origen" value="nuevo">
@@ -145,7 +145,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputCarnet">Carnet</label>
                                 <div class="col-sm-4">
-                                    <input id="inputCarnet" class="form-control" type="text" name="carnet" required>
+                                    <input id="inputCarnet" class="form-control" type="text" name="carnet" placeholder="BC11023" required pattern="[A-Z]{2}[0-9]{5}">
                                 </div>
                             </div>
                             <div class="form-group">

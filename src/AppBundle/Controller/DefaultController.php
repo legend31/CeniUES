@@ -34,5 +34,13 @@ class DefaultController extends Controller
     public function listaAlumno(){
         return $this->render('AppBundle:reportes:listadoalumnos.html.twig');
     }
-
+    /**
+     * @Route("/record",name="record")
+     */
+    public function recordAction(){
+        $recodA=$this->getDoctrine()->getRepository('AppBundle:Recordalumno')->find(1);
+        $record=$this->getDoctrine()->getRepository('AppBundle:Record')->find(1);
+        var_dump($record->getNivelnivel());
+        return new Response();
+    }
 }

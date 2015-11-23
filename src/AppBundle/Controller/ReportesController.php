@@ -62,6 +62,7 @@ class ReportesController extends Controller
         $pdfGenerator=$this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoDocentes.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listadoDocentesPdf.html.twig',array('form'=>$docentes));
+
     }
 
     /**
@@ -69,8 +70,6 @@ class ReportesController extends Controller
      */
     public function listNivxModAction()
     {
-        //$modulo= $this->getDoctrine()->getRepository('AppBundle:Modulo')->find($id);
-        //$niveles = $modulo->getNivelnivel();
         $em = $this->getDoctrine()->getRepository('AppBundle:Nivel');
         $niveles = $em->findAll();
 
@@ -79,5 +78,16 @@ class ReportesController extends Controller
 
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:listNivelesxMod.html.twig',array('niv' => $niveles)));
+    }
+    /**
+     * @Route("/LisNxMPdf", name="lnivelesmodulosPDF")
+     */
+    public function listNivxModPDFAction()
+    {
+        $em = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niveles = $em->findAll();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('listadoNiveles.pdf');
+        return $pdfGenerator->displayForView('AppBundle:reportes:listNivelesxModPdf.html.twig',array('niv'=>$niveles));
     }
 }

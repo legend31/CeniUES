@@ -10,6 +10,14 @@ namespace AppBundle\Entity;
  */
 class MatriculaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function matriculasOrdenadas($carnet)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m WHERE m.alumnoCarnetalumno = :carnet ORDER BY m.nivelnivel ASC'
+        )
+            ->setParameter('carnet',$carnet )
+            ->getResult();
+    }
     public function matriculasActivas($carnet)
     {
         return $this->getEntityManager()->createQuery(

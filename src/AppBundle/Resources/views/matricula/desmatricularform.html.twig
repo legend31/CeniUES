@@ -22,7 +22,7 @@
             </div>
         </div>
         <br>
-                {{ form_start(formulario,{ 'attr': {'class': 'form-inline'}}) }}
+                {{ form_start(formulario,{ 'attr': {'class': 'form-inline','action': path('desma'), 'method': 'POST'}}) }}
                 <div class="form-group">
                     {{ form_label(formulario.Carnet, null, { 'label_attr': {'class': 'control-label'} }) }}
                     {{ form_widget(formulario.Carnet, { 'attr': {'class': 'form-control'} }) }}

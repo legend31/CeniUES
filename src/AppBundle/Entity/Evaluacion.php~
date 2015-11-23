@@ -62,16 +62,6 @@ class Evaluacion
     }
 
     /**
-     * Get nombreevaluacion
-     *
-     * @return string
-     */
-    public function getNombreevaluacion()
-    {
-        return $this->nombreevaluacion;
-    }
-
-    /**
      * Set ponderacion
      *
      * @param float $ponderacion
@@ -83,6 +73,16 @@ class Evaluacion
         $this->ponderacion = $ponderacion;
 
         return $this;
+    }
+
+    /**
+     * Get nombreevaluacion
+     *
+     * @return string
+     */
+    public function getNombreevaluacion()
+    {
+        return $this->nombreevaluacion;
     }
 
     /**

@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="nivel")
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\NivelRepository")
+ */
 class Nivel
 {
     /**
