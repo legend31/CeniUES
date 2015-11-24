@@ -15,209 +15,66 @@
     </head>
     <div class="bs-example">
         <div class="container-fluid">
-            <h2>Formularios Ingreso por Colocacion</h2>
-            <div class="nav-tabs-custom" data-find="_2">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
-                    <li class=""><a href="#responsable" data-toggle="tab" aria-expanded="false">Responsable</a></li>
-                    <li class=""><a href="#alumno" data-toggle="tab" aria-expanded="false">Alumno</a></li>
-                    <li class=""><a href="#matricula" data-toggle="tab" aria-expanded="false">Matricula</a></li>
-                </ul>
-                <div class="tab-content" data-find="_1">
-                    <div class="tab-pane" id="matricula">
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Matricula</h2>
-                        </div>
-                        <form class="form-horizontal" method="post" action="{{ path('examencolocacion') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
-                                <div class="col-sm-4">
-                                    <input id="inputFecha" class="form-control" type="date" name="fecha" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
-                                <div class="col-sm-4">
-                                    <input id="inputRecibo" class="form-control" type="text" name="recibo" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
-                                <div class="col-sm-4">
-                                    <select id ="selectNivel"name="nivel">
-                                        {% for item in niveles %}
-                                            <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputNota">Calificacion</label>
-                                <div class="col-sm-4">
-                                    <input id="inputNota" class="form-control" type="number" name="nota" required pattern="[0-9]{2}">
-                                </div>
-                            </div>
-                            <input type="hidden" name="origen" value="colocacion">
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-
-
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane active" id="padre">
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Padres</h2>
-                        </div>
-                        <form class="form-horizontal" method="post" action="{{ path('padreinsert') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputPadre">Nombre Padre</label>
-                                <div class="col-sm-4">
-                                    <input id="inputPadre" class="form-control" type="text" name="nombreP" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputTrabajoP">Lugar de Trabajo</label>
-                                <div class="col-sm-4">
-                                    <input id="inputTrabajoP" class="form-control" type="text" name="tP" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputtelP">Telefono</label>
-                                <div class="col-sm-4">
-                                    <input id="inputtelP" class="form-control" type="text" name="telP" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputMadre">Nombre Madre</label>
-                                <div class="col-sm-4">
-                                    <input id="inputMadre" class="form-control" type="text" name="nombreM" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputTrabajoM">Lugar de Trabajo</label>
-                                <div class="col-sm-4">
-                                    <input id="inputTrabajoM" class="form-control" type="text" name="tM" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputtelM">Telefono</label>
-                                <div class="col-sm-4">
-                                    <input id="inputtelM" class="form-control" type="text" name="telP" required>
-                                </div>
-                            </div>
-                            <input type="hidden" name="origen" value="colocacion">
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="responsable">
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Responsable</h2>
-                        </div>
-                        <form class="form-horizontal" method="post" action="{{ path('responinsert') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputNombre">Nombre</label>
-                                <div class="col-sm-4">
-                                    <input id="inputNombre" class="form-control" type="text" name="nombre" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputP">Parentesco</label>
-                                <div class="col-sm-4">
-                                    <input id="inputP" class="form-control" type="text" name="parentesco" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputtel">Telefono</label>
-                                <div class="col-sm-4">
-                                    <input id="inputtel" class="form-control" type="text" name="tel" required>
-                                </div>
-                            </div>
-                            <input type="hidden" name="origen" value="colocacion">
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="alumno">
-
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Alumno</h2>
-                        </div>
-                        <form class="form-horizontal" method="post" action="{{ path('alumnoinsert') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputCarnet">Carnet</label>
-                                <div class="col-sm-4">
-                                    <input id="inputCarnet" class="form-control" type="text" placeholder="BC11023" name="carnet" required pattern="[A-Za-z]{2}[0-9]{5}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputPrimer">Primer Nombre</label>
-                                <div class="col-sm-4">
-                                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" required pattern="[A-Za-z]{1,30}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputSegundo">Segundo Nombre</label>
-                                <div class="col-sm-4">
-                                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" required pattern="[A-Za-z]{1,30}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputPrimerApe">Primer Apellido</label>
-                                <div class="col-sm-4">
-                                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" required pattern="[A-Za-z]{1,30}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputSegApe">Segundo Apellido</label>
-                                <div class="col-sm-4">
-                                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" required pattern="[A-Za-z]{1,30}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputFecha">Fecha de Nacimiento</label>
-                                <div class="col-sm-4">
-                                    <input id="inputFecha" class="form-control" type="date" name="fecha_nacimiento" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3 required" for="inputRespon">Responsable</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="text" id="inputRespon" name="responsable" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3 required" for="inputPa">Padre</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="text" id="inputPa" name="padre" required>
-                                </div>
-                            </div>
-                            <input type="hidden" name="origen" value="colocacion">
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-
-                    </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-            </div>
+            <h2>Ingreso por Colocacion</h2>
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.log("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            <br>
+            <form class="form-horizontal" method="post" action="{{ path('examencolocacion') }}">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
+                    <div class="col-sm-4">
+                        <input id="inputFecha" class="form-control" type="date" name="fecha" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
+                    <div class="col-sm-4">
+                        <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" required pattern="[R]{1}[-]{1}[0-9]{1,}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
+                    <div class="col-sm-4">
+                        <select id ="selectNivel"name="nivel">
+                            {% for item in niveles %}
+                                <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="inputNota">Calificacion</label>
+                    <div class="col-sm-4">
+                        <input id="inputNota" class="form-control" type="number" name="nota" step="0.01" required>
+                    </div>
+                </div>
+                <input type="hidden" name="origen" value="colocacion">
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-4">
+                        <input class="btn bg-primary" type="submit" value="Guardar">
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <script>
@@ -226,26 +83,6 @@
                     $('#form_Carnet').autocomplete(
                             {
                                 source : {{render(controller('AppBundle:Matricula:json')) }}
-                            });
-                }
-        );
-    </script>
-    <script>
-        $('document').ready(
-                function(){
-                    $('#inputRespon').autocomplete(
-                            {
-                                source : {{render(controller('AppBundle:Matricula:jsonResponsable')) }}
-                            });
-                }
-        );
-    </script>
-    <script>
-        $('document').ready(
-                function(){
-                    $('#inputPa').autocomplete(
-                            {
-                                source : {{render(controller('AppBundle:Matricula:jsonPadre')) }}
                             });
                 }
         );
