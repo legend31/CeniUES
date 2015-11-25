@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Nivel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,6 @@ class DefaultController extends Controller
         ));
     }
 
-
     /**
      * @Route("/principal", name="principal")
      */
@@ -38,9 +38,16 @@ class DefaultController extends Controller
      * @Route("/record",name="record")
      */
     public function recordAction(){
-        $recodA=$this->getDoctrine()->getRepository('AppBundle:Recordalumno')->find(1);
+        /*$recodA=$this->getDoctrine()->getRepository('AppBundle:Recordalumno')->find(1);
         $record=$this->getDoctrine()->getRepository('AppBundle:Record')->find(1);
-        var_dump($record->getNivelnivel());
+        var_dump($record->getNivelnivel());*/
+        $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find(1);
+        $s=$this->getDoctrine()->getRepository('AppBundle:Seccion')->find(1);
+        //$s->getIdseccion()
+        $a=$n->getSeccionseccion()->toArray();
+        foreach($a as $ar){
+            echo "<br>".$ar->getIdseccion();
+        }
         return new Response();
     }
 }

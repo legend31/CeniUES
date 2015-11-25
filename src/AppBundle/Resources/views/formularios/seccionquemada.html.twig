@@ -6,8 +6,15 @@
     <div class="container-fluid">
             <h3>Gestionar Secciones</h3>
             <section class="content">
+                <div>
+                    <a class="btn btn-success pull-left" href="{{ path('nvoseccion') }}" style="margin-right: 5px;" title="Agregar"> Agregar Seccion</a>
+                </div>
+                <div>
+                    <a class="btn btn-danger pull-right" href="#" style="margin-right: 5px;" title="Eliminar"> Eliminar Seccion</a>
+                </div>
                 <div class="row">
                     <div class="col-xs-12">
+                        <br>
                         <div class="box">
                             <!--Inicia Cabecera de tabla-->
                             <div class="box-header">
@@ -24,22 +31,14 @@
                                     <th> Opciones</th>
                                     </thead>
                                     <tbody>
-                                    {% for sec in secciones %}
+                                    {% for niv in niveles %}
                                         <tr>
-                                            <td>Nivel 1</td>
-                                            <td>A B</td>
+                                            <td>{{ niv.nombrenivel }}</td>
                                             <td>
-                                                <a href="#" title="Añadir">
-                                                    <img src="{{ asset('bundles/app/images/add.png') }}">
-                                                </a>
-                                                <a href="#" title="Eliminar">
-                                                    <img src="{{ asset('bundles/app/images/delete.png') }}">
-                                                </a>
+                                               {% for sec in niv.seccionseccion %}
+                                                   {{ sec.nombreseccion }}
+                                               {% endfor %}
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nivel 2</td>
-                                            <td>A</td>
                                             <td>
                                                 <a href="#" title="Añadir">
                                                     <img src="{{ asset('bundles/app/images/add.png') }}">
