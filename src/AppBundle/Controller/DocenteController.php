@@ -151,4 +151,22 @@ class DocenteController extends Controller
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:listadoDocentes.html.twig', array('TituloPagina' => 'Docentes inscritos', 'form' => $docentes)));
     }
+
+    /**
+     * @Route("/detallesD", name="detallesD")
+     */
+    public function detallesPorCarnetAction(){
+        $request = $this->get('request');
+        $carnet = $request->get('carnetdocente');
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Docente');
+        $docente = $repo->findOneBy(array('carnetdocente'=>$carnet));
+
+        return new JsonResponse(array("carnetdoc"=>$docente->getCarnetdocente(),
+            "nombre"=>$docente->getNombredocente(),
+            "apellido"=>$docente->getApellidodocente(),
+            "dui"=>$docente->getDui(),
+            "direccion"=>$docente->getDirecciondocente(),
+            "fnac"=>$docente->getFechanacimiento(),
+            "ntel"=>$docente->getTelefono()));
+    }
 }
