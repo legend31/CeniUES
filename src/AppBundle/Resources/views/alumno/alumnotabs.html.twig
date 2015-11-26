@@ -36,7 +36,7 @@
                                 </script>
                             {% endfor %}
                         </div>
-                        <form class="form-horizontal" method="post" action="{{ path('matnuevo') }}">
+                        <form class="form-horizontal contact_form" method="post" action="{{ path('matnuevo') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
                                 <div class="col-sm-4">
@@ -68,7 +68,7 @@
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Padres</h2>
                         </div>
-                        <form class="form-horizontal" method="post" action="{{ path('padreinsert') }}">
+                        <form class="form-horizontal contact_form" method="post" action="{{ path('padreinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPadre">Nombre Padre</label>
                                 <div class="col-sm-4">
@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputTrabajoP">Lugar de Trabajo</label>
                                 <div class="col-sm-4">
-                                    <input id="inputTrabajoP" class="form-control" type="text" name="trabP" required>
+                                    <input id="inputTrabajoP" class="form-control" type="text" name="trabP" pattern="[a-zA-Z ]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -90,13 +90,13 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputMadre">Nombre Madre</label>
                                 <div class="col-sm-4">
-                                    <input id="inputMadre" class="form-control" type="text" name="nombreM" required>
+                                    <input id="inputMadre" class="form-control" type="text" name="nombreM" pattern="[a-zA-Z]{1,}"required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label col-sm-3" for="momjob">Lugar de trabajo</label>
                                 <div class="col-sm-4">
-                                    <input id="momjob"  type="text" class="form-control" name="maTrab" required>
+                                    <input id="momjob"  type="text" class="form-control" name="maTrab" pattern="[a-zA-Z ]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -117,17 +117,17 @@
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Responsable</h2>
                         </div>
-                        <form class="form-horizontal" method="post" action="{{ path('responinsert') }}">
+                        <form class="form-horizontal contact_form" method="post" action="{{ path('responinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputNombre">Nombre</label>
                                 <div class="col-sm-4">
-                                    <input id="inputNombre" class="form-control" type="text" name="nombre" required>
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputP">Parentesco</label>
                                 <div class="col-sm-4">
-                                    <input id="inputP" class="form-control" type="text" name="parentesco" required>
+                                    <input id="inputP" class="form-control" type="text" name="parentesco" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -149,7 +149,7 @@
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Alumno</h2>
                         </div>
-                        <form class="form-horizontal" method="post" action="{{ path('alumnoinsert') }}">
+                        <form class="form-horizontal contact_form" method="post" action="{{ path('alumnoinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputCarnet">Carnet</label>
                                 <div class="col-sm-4">
@@ -159,25 +159,25 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPrimer">Primer Nombre</label>
                                 <div class="col-sm-4">
-                                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" required>
+                                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputSegundo">Segundo Nombre</label>
                                 <div class="col-sm-4">
-                                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" required>
+                                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPrimerApe">Primer Apellido</label>
                                 <div class="col-sm-4">
-                                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" required>
+                                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputSegApe">Segundo Apellido</label>
                                 <div class="col-sm-4">
-                                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" required>
+                                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">

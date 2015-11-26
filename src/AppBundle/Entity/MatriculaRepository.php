@@ -51,4 +51,20 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('activo',1 )
             ->getResult();
     }
+    public function numeroMatriculados()
+    {
+        //query = $em->createQuery('SELECT COUNT (DISTINCT ad.alumnoCarnetalumn) FROM AppBundle:Matricula');
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT (DISTINCT ad.alumnoCarnetalumno) FROM AppBundle:Matricula ad'
+        )
+            ->getSingleScalarResult();
+    }
+    public function numeroActivos()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT(ad.alumnoCarnetalumno)FROM AppBundle:Matricula ad WHERE ad.esactivo = :activo'
+        )
+            ->setParameter('activo',1 )
+            ->getSingleScalarResult();
+    }
 }

@@ -240,6 +240,7 @@ class MatriculaController extends Controller
             $pp[]=$p->getCarnetalumno();
         }
         echo json_encode($pp);
+        //var_dump($pp);
         return new Response();
     }
     /**
