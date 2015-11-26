@@ -43,13 +43,43 @@ class DocenteController extends Controller
 
         return new Response($html);*/
     }
+    /**
+     * @Route("/busqueda", name="docBuscar")
+     */
+    public function buscarDocenteAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $search = $request->get("carnet");
+        $docentes = $em->getRepository('AppBundle:Docente')->findBy($search);
+
+        if(!$docentes)
+        {
+            throw $this->createNotFoundException('No se encontro ningun docente');
+        }
+
+        return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+        //return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
+        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
+
+        return new Response($html);*/
+    }
 
     /**
      * @Route("/cdocente", name="consultarD")
      */
     public function consultarDocenteAction()
     {
+        return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
+        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
+        return new Response($html);*/
+    }
+
+    /**
+     * @Route("/mdocente", name="modificarD")
+     */
+    public function modificarDocenteAction()
+    {
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
         return new Response($html);
