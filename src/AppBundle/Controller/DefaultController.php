@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Nivel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,8 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/principal", name="principal")
+     * @Route("/admin/principal", name="principal")
+     * @Security("has_role('ROLE_ADMINISTRADOR')")
      */
     public function principalAction(){
         return $this->render('AppBundle:admin:vPrincipal.html.twig');
@@ -49,5 +51,22 @@ class DefaultController extends Controller
             echo "<br>".$ar->getIdseccion();
         }
         return new Response();
+    }
+
+
+    //Funcion encargada de realizar la redireccion a las paginas principales para cada tipo usuario
+    /**
+     * @Route("/control", name="control_redirect")
+     */
+    public function controlRedirectAction(){
+        if(true == $this->get('security.authorization_checker')->isGranted('ROLE_ADMINISTRADOR')){
+            return $this->redirectToRoute("principal");
+        }else{
+            if(true == $this->get('security.authorization_checker')->isGranted('ROLE_DOCENTE')){
+                return $this->redirectToRoute("docprincipal");
+            }else{
+                return $this->redirectToRoute("login");
+            }
+        }
     }
 }

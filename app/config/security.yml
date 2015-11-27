@@ -22,8 +22,38 @@ security:
             form_login:
                 login_path: login
                 check_path: login_check
+                default_target_path: control_redirect
+            logout:
+                path: logout
+                invalidate_session: true
+                target: login
+        admin:
+            pattern: ^/admin/
+            security: true
+            provider: our_db_provider
+            form_login:
+                login_path: login
+                check_path: login_check
                 default_target_path: principal
             logout:
-                path: /logout
+                path: logout
+                invalidate_session: true
                 target: login
+
+        doc:
+            pattern: ^/doc/
+            security: true
+            provider: our_db_provider
+            form_login:
+                login_path: login
+                check_path: login_check
+                default_target_path: docprincipal
+            logout:
+                path: logout
+                invalidate_session: true
+                target: login
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/doc, roles: ROLE_DOCENTE }
 
