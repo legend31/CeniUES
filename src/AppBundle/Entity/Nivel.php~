@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="nivel")
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\NivelRepository")
+ */
 class Nivel
 {
     /**
@@ -38,7 +41,7 @@ class Nivel
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaInicio", type="date", nullable=false)
+     * @ORM\Column(name="fechaInicio", type="date", nullable=true)
      */
     private $fechainicio;
 

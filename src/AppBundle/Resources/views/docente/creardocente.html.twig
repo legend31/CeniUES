@@ -1,6 +1,6 @@
 {% extends "::layoutbase.html.twig" %}
 
-{% block title %} {{ TituloPagina }} {% endblock %}
+{% block title %} Agregar Docente {% endblock %}
 
 {% block principal %}
     <section class="content-header">
@@ -16,41 +16,45 @@
                 <h3 class="box-title">Datos personales</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" method="post" action="{{ path('insertarD') }}">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="form_nombredocente">{{ form_label(form.nombredocente) }}</label>
-                        <input type="text" class="form-control" id="form_nombredocente" name="form[nombredocente]" placeholder="Nombres del nuevo docente">
+                        <label for="form_nombredocente">Nombre</label>
+                        <input type="text" class="form-control" id="form_nombredocente" name="ndoc" placeholder="Nombres del nuevo docente">
                     </div>
                     <div class="form-group">
-                        <label for="form_apellidodocente"> {{ form_label(form.apellidodocente) }} </label>
-                        <input type="text" class="form-control" id="form_apellidodocente" name="form[apellidodocente]" placeholder="Apellidos del nuevo docente">
+                        <label for="form_apellidodocente"> Appellido </label>
+                        <input type="text" class="form-control" id="form_apellidodocente" name="adoc" placeholder="Apellidos del nuevo docente">
                     </div>
                     <div class="form-group">
-                        <label for="form_dui"> {{ form_label(form.dui) }} </label>
-                        <input type="text" class="form-control" id="form_dui" name="form[dui]" placeholder="Documento Unico de Identidad">
+                        <label for="form_dui"> DUI </label>
+                        <input type="text" class="form-control" id="form_dui" name="ddoc" placeholder="Documento Unico de Identidad">
                     </div>
                     <div class="form-group">
-                        <label for="form_carnetdocente"> {{ form_label(form.carnetdocente) }} </label>
-                        <input type="text" class="form-control" id="form_carnetdocente" name="form[carnetdocente]" placeholder="N&uacute;mero de carnet" maxlength=7>
+                        <label for="form_carnetdocente"> Carnet </label>
+                        <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="N&uacute;mero de carnet" maxlength=7>
                     </div>
                     <div class="form-group">
-                        <label for="form_direcciondocente"> {{ form_label(form.direcciondocente) }} </label>
-                        <input type="text" class="form-control" id="form_direcciondocente" name="form[direcciondocente]" placeholder="Direcci&oacute;n de residencia">
+                        <label for="form_direcciondocente"> Direcci&oacute;n de residencia </label>
+                        <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="Direcci&oacute;n de residencia">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_direcciondocente"> N&uacute;mero telef&oacute;nico </label>
+                        <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" placeholder="N&uacute;mero de telef&oacute;no">
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
                     <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
-                    <a class="btn btn-default bg-green-gradient">
-                        <i class="fa fa-save"></i> Guardar
-                    </a>
-                    <a class="btn btn-default bg-blue-gradient">
-                        <i class="fa fa-trash-o"></i> Limpiar
-                    </a>
-                    <a class="btn btn-default bg-red-gradient pull-right" href="{{ path('dhome') }}">
-                        <i class="fa fa-close"></i> Cancelar
-                    </a>
+                    <div class="form-group">
+                        <div class="col-sm-offset-0 col-sm-4">
+                            <button class="btn bg-green-gradient" type="submit"><i class="fa fa-save"> Guardar</i></button>
+                            <button class="btn bg-primary"><i class="fa fa-trash"> Limpiar</i></button>
+                        </div>
+                        <a class="btn btn-default bg-red-gradient pull-right" href="{{ path('dhome') }}">
+                            <i class="fa fa-close"></i> Cancelar
+                        </a>
+                    </div>
                 </div>
             </form>
         </div><!-- /.box -->

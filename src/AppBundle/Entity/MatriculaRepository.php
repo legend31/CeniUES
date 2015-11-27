@@ -10,6 +10,14 @@ namespace AppBundle\Entity;
  */
 class MatriculaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function matriculasOrdenadas($carnet)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m WHERE m.alumnoCarnetalumno = :carnet ORDER BY m.nivelnivel ASC'
+        )
+            ->setParameter('carnet',$carnet )
+            ->getResult();
+    }
     public function matriculasActivas($carnet)
     {
         return $this->getEntityManager()->createQuery(
@@ -34,5 +42,29 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
         )
             ->setParameter('fecha',$fecha )
             ->getSingleResult();
+    }
+    public function alumnosmMatriculados()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m WHERE m.esactivo = :activo ORDER BY m.nivelnivel ASC '
+        )
+            ->setParameter('activo',1 )
+            ->getResult();
+    }
+    public function numeroMatriculados()
+    {
+        //query = $em->createQuery('SELECT COUNT (DISTINCT ad.alumnoCarnetalumn) FROM AppBundle:Matricula');
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT (DISTINCT ad.alumnoCarnetalumno) FROM AppBundle:Matricula ad'
+        )
+            ->getSingleScalarResult();
+    }
+    public function numeroActivos()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT(ad.alumnoCarnetalumno)FROM AppBundle:Matricula ad WHERE ad.esactivo = :activo'
+        )
+            ->setParameter('activo',1 )
+            ->getSingleScalarResult();
     }
 }

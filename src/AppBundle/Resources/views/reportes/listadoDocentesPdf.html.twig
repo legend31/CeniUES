@@ -1,0 +1,42 @@
+<div class="pad margin no-print">
+</div>
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-globe"></i> Docentes inscritos en el sistema CENIUES
+            </h2>
+        </div><!-- /.col -->
+    </div>
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table border=1 cellspacing=0 cellpadding=15 bordercolor="000000" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Carnet</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>DUI</th>
+                    <th>Residencia</th>
+                    <th>Telefono</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in form %}
+                    <tr>
+                        <td>{{ entity.getCarnetdocente }}</td>
+                        <td>{{ entity.getPrimernombredocente }} {{ entity.getSegundonombredocente }}</td>
+                        <td>{{ entity.getPrimerapellidodocente }} {{ entity.getSegundoapellidodocente }}</td>
+                        <td>{{ entity.getDui }}</td>
+                        <td>{{ entity.getDirecciondocente }}</td>
+                        <td>{{ entity.getTelefono }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
