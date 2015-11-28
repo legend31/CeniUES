@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AlumnoController extends Controller
 {
     /**
-     * @Route("/nuevoAlum",name="antiguo")
+     * @Route("/nuevoAlumMenu",name="antiguo")
      */
     public function MenuAction(){
         return $this->render('AppBundle:alumno:alumnotabs.html.twig');

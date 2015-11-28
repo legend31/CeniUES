@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="modulo")
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ModuloRepository")
+ */
 class Modulo
 {
     /**

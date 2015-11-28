@@ -15,7 +15,7 @@
     </head>
     <div class="bs-example">
         <div class="container-fluid">
-            <h2>Ingreso por Colocacion</h2>
+            <h2>Matricula por Examen de Colocacion</h2>
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <script>
                     window.onload = function error(){
@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" required>
+                        <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" pattern="[A-Z]{2}[0-9]{5}" required>
                     </div>
                 </div>
                 <div class="form-group">

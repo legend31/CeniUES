@@ -43,16 +43,46 @@ class DocenteController extends Controller
 
         return new Response($html);*/
     }
+    /**
+     * @Route("/busqueda", name="docBuscar")
+     */
+    public function buscarDocenteAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $search = $request->get("carnet");
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        if($request->isMethod("POST"))
+        {
+            $docentes = $em->getRepository('AppBundle:Docente')->find($search);
+            if($docentes) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes' => $docentes)));
+            }
+            else
+                throw $this->createNotFoundException('No se encontro ningun docente');
+        }
+        else
+            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+    }
 
     /**
      * @Route("/cdocente", name="consultarD")
      */
     public function consultarDocenteAction()
     {
+        return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
+        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
-        $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
+        return new Response($html);*/
+    }
 
-        return new Response($html);
+    /**
+     * @Route("/mdocente", name="modificarD")
+     */
+    public function modificarDocenteAction()
+    {
+        //$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
+
+        return new Response();
     }
 
     /**
@@ -106,7 +136,7 @@ class DocenteController extends Controller
         $em->flush();
         return $this->redirectToRoute('dhome');
     }
-
+    //Nada
     /**
      * @Route("/ldocente", name="documentoD")
      */

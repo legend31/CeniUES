@@ -11,16 +11,16 @@
                         <h3 class="box-title">Docentes registrados en el sistema</h3>
                         <div class="box-tools">
                             <div class="input-group" style="width: 350px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Buscar">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                    <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
-                                </div>
-
+                                <form role="form" method="post" action="{{ path('docBuscar') }}">
+                                    <input type="text" name="carnet" class="form-control input-sm pull-right" placeholder="Buscar">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button></div>
+                                </form>
                             </div>
                         </div>
                     </div><!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
+                        {% if docentes %}
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
@@ -29,44 +29,19 @@
                                     <th>Nombres</th>
                                     <th>DUI</th>
                                     <th>Telefono</th>
-                                    <th>Opciones</th>
                                 </tr>
-                                {% for entity in docentes %}
+                                {% for entity in docentes%}
                                     <tr>
                                         <td>{{ entity.getCarnetdocente }}</td>
                                         <td>{{ entity.getApellidodocente }}</td>
                                         <td>{{ entity.getNombredocente }}</td>
                                         <td>{{ entity.getDui }}</td>
                                         <td>{{ entity.getTelefono }}</td>
-                                        <td>
-                                            <div class="fc-button-group">
-                                                <button class="btn btn-default btn-sm" data-widget="" data-toggle="tooltip" title="" data-original-title="Detalles"><i class="fa fa-eye"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-target="#eliminar" data-toggle="modal" title="" data-original-title="Eliminar"><i class="fa fa-trash"></i></button>
-
-                                                <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria_hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4>Eliminar docente</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                &iquest;Est&aacute; seguro que desea eliminar al docente {{ entity.getNombredocente }}?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a class="btn btn-default bg-red-gradient" href="#"> Eliminar </a>
-                                                                <a class="btn btn-default pull-right" data-dismiss="modal"> Cancelar </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        {% endif %}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

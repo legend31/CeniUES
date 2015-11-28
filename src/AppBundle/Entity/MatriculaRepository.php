@@ -67,4 +67,14 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('activo',1 )
             ->getSingleScalarResult();
     }
+    public function verificarMatricula($carnet,$recibo)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m  WHERE m.numerorecibo = :recibo OR  m.alumnoCarnetalumno = :carnet AND m.esactivo = :activo'
+        )
+            ->setParameter('carnet',$carnet )
+            ->setParameter('recibo',$recibo )
+            ->setParameter('activo',1 )
+            ->getResult();
+    }
 }
