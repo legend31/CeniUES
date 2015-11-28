@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Seccion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,6 +30,18 @@ class SeccionController extends Controller
         }
         return $this->render('AppBundle:formularios:seccion-inline.html.twig');
     }
+    /**
+     * @Route("/secInNAdd/{id}",name="nvoseccionAddN")
+     */
+    public function seccionNAddAction($id)
+    {
+        $em=$this->getDoctrine()->getEntityManager();
+        //Relacionando los objetos
+        $nivel=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($id);
+        $nivel->addSeccionseccion($em->getRepository('AppBundle:Seccion')->find(1));
+        $em->flush($nivel);
+        return $this->redirectToRoute('secHome');
+    }
 
     /**
      * @Route("/seccionHome",name="secHome")
@@ -36,10 +49,9 @@ class SeccionController extends Controller
     public function seccionListarAction(Request $request)
     {
         $em=$this->getDoctrine()->getEntityManager();
-        $secciones=$em->getRepository('AppBundle:Seccion')->findAll();
-
+        $secciones=$em->getRepository('AppBundle:Nivel')->findAll();
         //return $this->render('AppBundle:seccion:seccion-listar.html.twig',array('secciones'=>$secciones));
-        return $this->render('AppBundle:formularios:seccionquemada.html.twig');
+        return $this->render('AppBundle:formularios:seccionquemada.html.twig',array('niveles'=>$secciones));
     }
     /**
      * @Route("/seccionUpdate/{id}",name="secAct")

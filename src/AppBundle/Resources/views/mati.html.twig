@@ -13,7 +13,7 @@
 
                         <!--Inicia Cabecera de tabla-->
                         <div class="box-header">
-                            <h3 class="box-title">Niveles Inscitos Por Alumno</h3>
+                            <h3 class="box-title">Informacion de alumno</h3>
                         </div>
                         <!--Finaliza Cabecera de tabla-->
 
@@ -29,7 +29,6 @@
                                 <th>Estado</th>
                                 </thead>
                                 <tbody>
-                                {% for mat in mat %}
                                 <tr>
                                     <td>{{ mat.alumnoCarnetalumno.primernombrealumno }} {{ mat.alumnoCarnetalumno.segundonombrealumno}}</td>
                                     <td>{{ mat.alumnoCarnetalumno.primerapellidoalumno }} {{ mat.alumnoCarnetalumno.segundoapellidoalumno }}</td>
@@ -45,7 +44,6 @@
                                             Inactivo
                                         {% endif %}
                                 </tr>
-                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

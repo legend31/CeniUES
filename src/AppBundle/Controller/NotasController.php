@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Detalleevaluacion;
+use AppBundle\Entity\Resultadoevaluacion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,5 +30,4 @@ class NotasController extends Controller{
     public function consultarNotas(){
         return $this->render('AppBundle:notas:consultarNotas.html.twig');
     }
-
 }

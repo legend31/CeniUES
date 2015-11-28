@@ -3,41 +3,41 @@
     <div class="container">
         <h2>Modificar Padre</h2>
         <br>
-        <form class="form-horizontal" method="post" action="{{ path('padreUp',{'id':id}) }}">
+        <form class="form-horizontal contact_form" method="post" action="{{ path('padreUp',{'id':id}) }}">
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputPadre">Nombre Padre</label>
                 <div class="col-lg-7">
-                    <input id="inputPadre" class="form-control" type="text" name="nombreP" value="{{ padre.nombrepadre }}" required>
+                    <input id="inputPadre" class="form-control" type="text" name="nombreP" value="{{ padre.nombrepadre }}" required pattern="[A-Za-z ]{1,}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputTrabajoP">Lugar de Trabajo</label>
                 <div class="col-lg-7">
-                    <input id="inputTrabajoP" class="form-control" type="text" name="tP" value="{{ padre.lugartrabajop }}" required>
+                    <input id="inputTrabajoP" class="form-control" type="text" name="tP" value="{{ padre.lugartrabajop }}" required pattern="[A-Za-z ]{1,}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputtelP">Telefono</label>
                 <div class="col-lg-7">
-                    <input id="inputtelP" class="form-control" type="text" name="telP" value="{{ padre.telefonotrabajopadre }}" required>
+                    <input id="inputtelP" class="form-control" type="text" name="telP" value="{{ padre.telefonotrabajopadre }}" pattern="[0-9]{4}[0-9]{4}"required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputMadre">Nombre Madre</label>
                 <div class="col-lg-7">
-                    <input id="inputMadre" class="form-control" type="text" name="nombreM" value="{{ padre.nombremadre }}" required>
+                    <input id="inputMadre" class="form-control" type="text" name="nombreM" value="{{ padre.nombremadre }}" pattern="[A-Za-z ]{1,}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputTrabajoM">Lugar de Trabajo</label>
                 <div class="col-lg-7">
-                    <input id="inputTrabajoM" class="form-control" type="text" name="tM" value="{{ padre.lugartrabajom }}" required>
+                    <input id="inputTrabajoM" class="form-control" type="text" name="tM" value="{{ padre.lugartrabajom }}" pattern="[A-Za-z ]{1,}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-2" for="inputtelM">Telefono</label>
                 <div class="col-lg-7">
-                    <input id="inputtelM" class="form-control" type="text" name="telM" value="{{ padre.telefonotrabajomadre }}" required>
+                    <input id="inputtelM" class="form-control" type="text" name="telM" value="{{ padre.telefonotrabajomadre }}" pattern="[0-9]{4}[0-9]{4}" required>
                 </div>
             </div>
             <div class="form-group">

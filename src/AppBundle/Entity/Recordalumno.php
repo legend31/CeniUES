@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="recordalumno", indexes={@ORM\Index(name="fk_RecordAlumno_Alumno1_idx", columns={"Alumno_carnetAlumno"})})
  * @ORM\Entity
  */
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\RecordAlumnoRepository")
+ */
 class Recordalumno
 {
     /**

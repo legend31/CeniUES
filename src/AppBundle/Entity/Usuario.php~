@@ -156,12 +156,13 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function getRoles()
     {
         $aux = $this->tipoUsuariotipoUsuario;
-        if($aux == 'Administrador'){
+        if($aux == 'ADMINISTRADOR'){
             return array('ROLE_ADMINISTRADOR');
         }else{
-            if($aux == 'Docente'){
+            if($aux == 'DOCENTE'){
                 return array('ROLE_DOCENTE');
-            }else return array('ROLE_ANONYMOUS');
+            }
+            else return array('ROLE_ANONYMOUS');
         }
     }
 
@@ -256,5 +257,19 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function isEnabled()
     {
         return $this->getIsActive() === 1;
+    }
+
+    /**
+     * Set isactive
+     *
+     * @param integer $isactive
+     *
+     * @return Usuario
+     */
+    public function setIsactive($isactive)
+    {
+        $this->isactive = $isactive;
+
+        return $this;
     }
 }

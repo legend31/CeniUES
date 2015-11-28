@@ -4,29 +4,29 @@
         <div class="col-sm-offset-1">
             <h2>Ingreso de Alumno</h2>
         </div>
-        <form class="form-horizontal" method="post" action="{{ path('alumUp',{'id':id}) }}">
+        <form class="form-horizontal contact_form" method="post" action="{{ path('alumUp',{'id':id}) }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputPrimer">Primer Nombre</label>
                 <div class="col-sm-4">
-                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" value="{{ alumno.primernombrealumno }}" required>
+                    <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" value="{{ alumno.primernombrealumno }}" pattern="[A-Za-z]{1,}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputSegundo">Segundo Nombre</label>
                 <div class="col-sm-4">
-                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" value="{{ alumno.segundonombrealumno }}" required>
+                    <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" value="{{ alumno.segundonombrealumno }}" pattern="[A-Za-z]{1,}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputPrimerApe">Primer Apellido</label>
                 <div class="col-sm-4">
-                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" value="{{ alumno.primerapellidoalumno }}" required>
+                    <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" value="{{ alumno.primerapellidoalumno }}" pattern="[A-Za-z]{1,}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputSegApe">Segundo Apellido</label>
                 <div class="col-sm-4">
-                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" value="{{ alumno.segundoapellidoalumno }}" required>
+                    <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" value="{{ alumno.segundoapellidoalumno }}" pattern="[A-Za-z]{1,}" required>
                 </div>
             </div>
             <div class="form-group">

@@ -17,7 +17,6 @@ class Docente
      *
      * @ORM\Column(name="carnetDocente", type="string", length=7, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $carnetdocente;
 
@@ -279,5 +278,47 @@ class Docente
     public function getFechanacimiento()
     {
         return $this->fechanacimiento;
+    }
+
+    //metodos hechos por mi (Fredy)
+    //Metodo para obtener el ambos nombres en una sola cadena
+    public function getNombredocente()
+    {
+        return $this->getPrimernombredocente()." ".$this->getSegundonombredocente();
+    }
+
+    public function getApellidodocente()
+    {
+        return $this->getPrimerapellidodocente()." ".$this->getSegundoapellidodocente();
+    }
+
+    public function setNombredocente($nombres)
+    {
+        $nombre = explode(" ", $nombres);
+        $this->primernombredocente = $nombre[0];
+        $this->segundonombredocente = $nombre[1];
+        return $this;
+    }
+
+    public function setApellidodocente($apellidos)
+    {
+        $apellido = explode(" ", $apellidos);
+        $this->primerapellidodocente = $apellido[0];
+        $this->segundoapellidodocente = $apellido[1];
+        return $this;
+    }
+
+    /**
+     * Set carnetdocente
+     *
+     * @param string $carnetdocente
+     *
+     * @return Docente
+     */
+    public function setCarnetdocente($carnet)
+    {
+        $this->carnetdocente = $carnet;
+
+        return $this;
     }
 }
