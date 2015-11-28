@@ -155,15 +155,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     public function getRoles()
     {
-        $aux = $this->tipoUsuariotipoUsuario;
-        if($aux == 'ADMINISTRADOR'){
-            return array('ROLE_ADMINISTRADOR');
-        }else{
-            if($aux == 'DOCENTE'){
-                return array('ROLE_DOCENTE');
-            }
-            else return array('ROLE_ANONYMOUS');
-        }
+        return array($this->tipoUsuariotipoUsuario);
     }
 
     public function getPassword()
