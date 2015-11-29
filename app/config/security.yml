@@ -27,6 +27,7 @@ security:
                 path: logout
                 invalidate_session: true
                 target: login
+
         admin:
             pattern: ^/admin/
             security: true
@@ -56,4 +57,3 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
         - { path: ^/doc, roles: ROLE_DOCENTE }
-

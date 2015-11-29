@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Nivel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,6 @@ class DefaultController extends Controller
 
     /**
      * @Route("/admin/principal", name="principal")
-     * @Security("has_role('ROLE_ADMINISTRADOR')")
      */
     public function principalAction(){
         return $this->render('AppBundle:admin:vPrincipal.html.twig');
@@ -53,8 +51,7 @@ class DefaultController extends Controller
         return new Response();
     }
 
-
-    //Funcion encargada de realizar la redireccion a las paginas principales para cada tipo usuario
+    //FUNCION ENCARGADA DE REALIZAR EL REDIRECCIONAMIENTO A LA PANTALLA PRINCIPAL PARA C/U DE LOS USUARIOS
     /**
      * @Route("/control", name="control_redirect")
      */

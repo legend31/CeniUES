@@ -52,6 +52,7 @@ class ModulosNivelesController extends Controller{
 
     }
 
+    //FUNCION ENCARGADA DE GENERAR LA VISTA PARA INGRESAR UN NUEVO NIVEL
     /**
      * @Route("/admin/newmodulo", name="newmodulo")
      */
@@ -59,6 +60,7 @@ class ModulosNivelesController extends Controller{
         return $this->render('@App/admin/gmodulosniveles/formNuevoModulo.html.twig');
     }
 
+    //FUNCION ENCARGADA DE REALIZAR EL INGRESO DE EL MODULO
     /**
      * @Route("/admin/nmod", name="nmod")
      */
@@ -96,6 +98,7 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig',array('listNivel'=>$auxnivel));
     }
 
+    //FUNCION QUE DA LA VISTA PARA INGRESAR UN NUEVO NIVEL
     /**
      * @Route("/admin/newnivel", name="newnivel")
      */
@@ -103,6 +106,7 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
     }
 
+    //FUNCION ENCARGADA DE INGRESAR EL NIVEL ESCRITO EN PANTALLA
     /**
      * @Route("/admin/nnivel", name="nnivel")
      */
