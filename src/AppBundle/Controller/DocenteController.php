@@ -19,17 +19,27 @@ class DocenteController extends Controller
     /**
      * @Route("/admin/docentes", name="dhome")
      */
-    public function docenteHomeAction()
+    public function docenteHomeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        $em = $this->getDoctrine()->getManager();
 
-        if(!$docentes)
-        {
-            throw $this->createNotFoundException('No se encontro ningun docente');
+        if($request->isMethod("POST")) {
+            $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("carnet"));
+            $docente = array($docentes);
+            if(!$docentes)
+            {
+                throw $this->createNotFoundException('No se encontro ningun docente');
+            }
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente));
         }
-
-        return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+        else {
+            $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+            if(!$docentes)
+            {
+                throw $this->createNotFoundException('No se encontro ningun docente');
+            }
+            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+        }
     }
 
     /**
@@ -41,28 +51,6 @@ class DocenteController extends Controller
         /*$html = $this->container->get('templating')->render('AppBundle:docente:creardocente.html.twig', array('TituloPagina' => 'Agregar Docente', 'form' => $form->createView()));
 
         return new Response($html);*/
-    }
-    /**
-     * @Route("/busqueda", name="docBuscar")
-     */
-    public function buscarDocenteAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
-        $search = $request->get("carnet");
-        if($request->isMethod("POST"))
-        {
-            $docentes = $em->getRepository('AppBundle:Docente')->find("CR11005");
-            if(!$docentes)
-            {
-                throw $this->createNotFoundException('No se encontro ningun docente');
-            }
-            else
-            return $this->render('AppBundle:docente:gestionarDocente.html.twig',array('docentes'=>$docentes));
-        }
-        else
-            return $this->render('AppBundle:docente:gestionarDocente.html.twig',array('docentes'=>$docentes));
-
     }
 
     /**

@@ -11,13 +11,17 @@
                         <h3 class="box-title">Docentes registrados en el sistema</h3>
                         <div class="box-tools">
                             <div class="input-group" style="width: 350px;">
-                                <form role="form" method="post" action="{{ path('docBuscar') }}">
-                                    <input type="text" name="carnet" class="form-control input-sm pull-right" placeholder="Buscar">
-                                    <button class="btn btn-sm btn-default" onclick="{{ path('docBuscar') }}"><i class="fa fa-search"></i></button>
-                                    <div class="input-group-btn">
-                                        <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
+                                <form role="form" method="post" action="{{ path('dhome') }}">
+                                    <div class="input-group" style="width: 250px;">
+                                        <input type="text" name="carnet" id="carnet" class="form-control input-sm pull-right" placeholder="Buscar">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
                                     </div>
                                 </form>
+                                <div class="input-group-btn">
+                                    <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm bg-green-gradient" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
+                                </div>
                             </div>
                         </div>
                     </div><!-- /.box-header -->
