@@ -22,7 +22,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/principal", name="principal")
+     * @Route("/admin/principal", name="principal")
      */
     public function principalAction(){
         return $this->render('AppBundle:admin:vPrincipal.html.twig');
@@ -49,5 +49,21 @@ class DefaultController extends Controller
             echo "<br>".$ar->getIdseccion();
         }
         return new Response();
+    }
+
+    //FUNCION ENCARGADA DE REALIZAR EL REDIRECCIONAMIENTO A LA PANTALLA PRINCIPAL PARA C/U DE LOS USUARIOS
+    /**
+     * @Route("/control", name="control_redirect")
+     */
+    public function controlRedirectAction(){
+        if(true == $this->get('security.authorization_checker')->isGranted('ROLE_ADMINISTRADOR')){
+            return $this->redirectToRoute("principal");
+        }else{
+            if(true == $this->get('security.authorization_checker')->isGranted('ROLE_DOCENTE')){
+                return $this->redirectToRoute("docprincipal");
+            }else{
+                return $this->redirectToRoute("login");
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ModulosNivelesController extends Controller{
 
     /**
-     * @Route("/modulosyniveles", name="gmyn")
+     * @Route("/admin/modulosyniveles", name="gmyn")
      */
     public function modulosnivelesAction(){
         return $this->render('AppBundle:admin:gmodulosniveles/mynPrincipal.html.twig');
@@ -21,7 +21,7 @@ class ModulosNivelesController extends Controller{
     }
 
     /**
-     * @Route("/modulos", name="gmodulos")
+     * @Route("/admin/modulos", name="gmodulos")
      */
     public function gmodulosAction(){
 
@@ -48,15 +48,17 @@ class ModulosNivelesController extends Controller{
 
     }
 
+    //FUNCION ENCARGADA DE GENERAR LA VISTA PARA INGRESAR UN NUEVO NIVEL
     /**
-     * @Route("/newmodulo", name="newmodulo")
+     * @Route("/admin/newmodulo", name="newmodulo")
      */
     public function nuevoModuloAction(){
         return $this->render('@App/admin/gmodulosniveles/formNuevoModulo.html.twig');
     }
 
+    //FUNCION ENCARGADA DE REALIZAR EL INGRESO DE EL MODULO
     /**
-     * @Route("/nmod", name="nmod")
+     * @Route("/admin/nmod", name="nmod")
      */
     public function newModuloAction(Request $request){
         $em=$this->getDoctrine()->getManager();
@@ -80,7 +82,7 @@ class ModulosNivelesController extends Controller{
     /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
     /**
-     * @Route("/niveles", name="gniveles")
+     * @Route("/admin/niveles", name="gniveles")
      */
     public function gnivelesAction(){
         $em = $this->getDoctrine()->getManager();
@@ -90,13 +92,15 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:gniveles.html.twig',array('listNivel'=>$auxnivel));
     }
 
+    //FUNCION QUE DA LA VISTA PARA INGRESAR UN NUEVO NIVEL
     /**
-     * @Route("newnivel", name="newnivel")
+     * @Route("/admin/newnivel", name="newnivel")
      */
     public function newNivelAction(){
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
     }
 
+    //FUNCION ENCARGADA DE INGRESAR EL NIVEL ESCRITO EN PANTALLA
     /**
      * @Route("/nnivel", name="nnivel")
      */
