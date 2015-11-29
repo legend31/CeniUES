@@ -26,7 +26,7 @@ class DocenteController extends Controller
         if($request->isMethod("POST")) {
             $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("carnet"));
             $docente = array($docentes);
-            if(!$docentes)
+            if(!$docente)
             {
                 throw $this->createNotFoundException('No se encontro ningun docente');
             }
@@ -43,14 +43,11 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/admin/adocente", name="agregarD")
+     * @Route("/admin/adocentes", name="agregarD")
      */
     public function agregarDocenteAction()
     {
         return $this->render('AppBundle:docente:creardocente.html.twig');
-        /*$html = $this->container->get('templating')->render('AppBundle:docente:creardocente.html.twig', array('TituloPagina' => 'Agregar Docente', 'form' => $form->createView()));
-
-        return new Response($html);*/
     }
 
     /**
@@ -59,9 +56,6 @@ class DocenteController extends Controller
     public function consultarDocenteAction()
     {
         return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
-        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
-
-        return new Response($html);*/
     }
 
     /**
