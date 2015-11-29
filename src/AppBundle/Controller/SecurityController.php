@@ -37,11 +37,7 @@ class SecurityController extends Controller
      */
     public function loginCheckAction()
     {
-        if ($this->get('session')->has("_security_default")) {
-            return $this->redirectToRoute("principal");
-        } else {
-            return $this->redirectToRoute("login");
-        }
+
     }
 
 }
