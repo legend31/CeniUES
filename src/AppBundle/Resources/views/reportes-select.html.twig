@@ -1,0 +1,46 @@
+{% extends '::layoutbase.html.twig' %}
+{% block title %}
+    Matricula Antiguo Ingreso
+{% endblock %}
+{% block principal%}
+    <script src="{{ asset('libs/highcharts/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('libs/highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('libs/highcharts/exporting.js') }}"></script>
+
+    <div class="container-fluid">
+        <br>
+        <img class="pull-left" src="{{ asset('images/ceniueslogo2.png') }}">
+        <h2 >Programa para ni&ntildeos CENIUES</h2>
+        <h4 class="pull-right">Fecha : 25/11/2015</h4>
+        <hr>
+        <form class="form-inline contact_form" method="post" action="{{ path('reg') }}">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="selectGrafico">Grafico</label>
+                <div class="col-sm-4">
+                    <select id ="selectGrafico"name="grafico">
+                            <option value="aprob">Aprobados</option>
+                            <option value="act">Activos</option>
+                            <option value="not">Notas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
+                <div class="col-sm-4">
+                    <select id ="selectNivel"name="nivel">
+                        {% for n in niveles %}
+                        <option value="{{ n.idnivel }}">{{ n.nombrenivel }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+                <input class="btn bg-primary" type="submit" value="Generar">
+        </form>
+        <hr>
+            <div id="linechart" class="center-block"></div>
+        <hr>
+    </div>
+        <script type="text/javascript">
+        {{ chart(chart) }}
+    </script>
+{% endblock %}

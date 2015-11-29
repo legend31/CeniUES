@@ -102,12 +102,14 @@ class RecordController extends Controller
         //$mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
         //$record=$this->getDoctrine()->getRepository('AppBundle:Recordalumno')->numeroNotas(5);
         //var_dump($record);
+        $em=$this->getDoctrine()->getManager();
+        $niveles=$em->getRepository('AppBundle:Nivel')->findAll();
         for($i=1;$i<11;$i++){
             $notas[]=$this->getDoctrine()->getRepository('AppBundle:Recordalumno')->numeroNotas($i);
         }
         //echo json_encode($pp);
         //return $this->render('AppBundle::linea.html.twig');
-        return $this->render('AppBundle:record:linea.html.twig',array('datos'=>json_encode($notas,JSON_NUMERIC_CHECK)));
+        return $this->render('AppBundle:record:linea.html.twig',array('datos'=>json_encode($notas,JSON_NUMERIC_CHECK),'niveles'=>$niveles));
     }
 }
 
