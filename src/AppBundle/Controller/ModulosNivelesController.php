@@ -82,6 +82,37 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
 
     }
+
+    //FUNCION ENCARGADA DE MODIFICAR DATOS DE UN MODULO
+    /**
+     * @Route("/admin/updatemod", name="actualizarmod")
+     */
+    public function actualizarmodAction(Request $request){
+        $fechaactual = new \DateTime();
+        $em= $this->getDoctrine()->getManager();
+        $rep=$this->getDoctrine()->getRepository('AppBundle:Modulo');
+        if($request->isMethod("POST")){
+            $auxid = $request->get('idmodulo');
+            if($res=$rep->findOneBy(array('idmodulo'=>$auxid))){
+                $auxnombre=$request->get('nombremodulo');
+                $auxfechai=$request->get('fini');
+                $auxfechaf=$request->get('ffin');
+                if($auxfechai>$fechaactual){
+                    $mod = new Modulo();
+                    $mod->setNombremodulo($auxnombre);
+                    $mod->setFechainicio($auxfechai);
+                    $mod->setFechafin($auxfechaf);
+                    $em->persist($mod);
+                    $em->flush();
+                    return new JsonResponse(array("mensaje"=>'si'));
+                }else{
+                    return new JsonResponse(array("mensaje"=>'no'));
+                }
+            }else{
+                throw $this->createNotFoundException('No se obtuvo resultados de la busqueda a BD');
+            }
+        }
+    }
     
 
 
