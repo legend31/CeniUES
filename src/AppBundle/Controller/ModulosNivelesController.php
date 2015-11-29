@@ -9,9 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 class ModulosNivelesController extends Controller{
-
+    //funcion encargada de redirigir al sub menu de las gestion de modulos y niveles
     /**
      * @Route("/admin/modulosyniveles", name="gmyn")
      */
@@ -27,8 +28,11 @@ class ModulosNivelesController extends Controller{
 
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:Modulo');
         $modulo = $repositorio->findAll();
-
-        return $this->render('AppBundle:admin:gmodulosniveles/gmodulos.html.twig',array('modulo' => $modulo));
+        if($modulo) {
+            return $this->render('AppBundle:admin:gmodulosniveles/gmodulos.html.twig', array('modulo' => $modulo));
+        }else{
+            throw $this->createNotFoundException("No se encontraron ningun modulo registrado");
+        }
     }
 
     /**
@@ -42,8 +46,8 @@ class ModulosNivelesController extends Controller{
 
         return new JsonResponse(array("idmod"=>$mod->getIdmodulo(),
             "nombremod"=>$mod->getNombremodulo(),
-            "fechainicio"=>$mod->getFechainicio(),
-            "fechafin"=>$mod->getFechafin(),
+            "fechainicio"=>$mod->getFechainicio()->format('Y-m-d'),
+            "fechafin"=>$mod->getFechafin()->format('Y-m-d'),
             "duracion"=>$mod->getDuracion()));
 
     }
@@ -60,7 +64,7 @@ class ModulosNivelesController extends Controller{
      */
     public function newModuloAction(Request $request){
         $em=$this->getDoctrine()->getManager();
-        //$repmod = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $repmod = $this->getDoctrine()->getRepository('AppBundle:Modulo');
         //Verifico el envio de form
         if($request->isMethod("POST")){
             //$auxmod= new Modulo();
@@ -76,21 +80,8 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
 
     }
+    
 
-    /**
-     * @Route("/obtmod", name="obtmod")
-     */
-    public function obtenermodAction(Request $request){
-       /* $em = $this->getDoctrine()->getRepository('AppBundle:Modulo');
-        if($request->isMethod("POST")){
-
-            $mod=new Modulo();
-            $mod = $em->findAll();
-
-            return new JsonResponse(array('Mod'=>$mod));
-
-        }*/
-    }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
