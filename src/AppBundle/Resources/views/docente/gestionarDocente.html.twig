@@ -13,8 +13,8 @@
                             <div class="input-group" style="width: 350px;">
                                 <form role="form" method="post" action="{{ path('docBuscar') }}">
                                     <input type="text" name="carnet" class="form-control input-sm pull-right" placeholder="Buscar">
+                                    <button class="btn btn-sm btn-default" onclick="{{ path('docBuscar') }}"><i class="fa fa-search"></i></button>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-default" onclick="{{ path('docBuscar') }}"><i class="fa fa-search"></i></button>
                                         <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
                                     </div>
                                 </form>
@@ -34,7 +34,7 @@
                             <tbody>
                                 {% for entity in docentes %}
                                     <tr>
-                                        <td>{{ entity.getCarnetdocente }}</td>
+                                        <td>{{ entity.carnetdocente }}</td>
                                         <td>{{ entity.getApellidodocente }}</td>
                                         <td>{{ entity.getNombredocente }}</td>
                                         <td>{{ entity.getDui }}</td>

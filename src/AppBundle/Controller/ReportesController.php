@@ -38,20 +38,6 @@ class ReportesController extends Controller
             throw $this->createNotFoundException('No se encontro ningun docente');
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
-<<<<<<< HEAD
-        //$this->render('AppBundle:reportes:alumnosinscritos.html.twig');
-    }/**
-     * @Route("/listadoAlumnosPdf",name="listadoAlumPdf")
-     */
-    public function pdfAction()
-    {
-        $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
-        $pdfGenerator = $this->get('siphoc.pdf.generator');
-        $pdfGenerator->setName('listadoporniveles.pdf');
-        return $pdfGenerator->displayForView('AppBundle:reportes:listadoAlumnosPdf.html.twig', array('mat' => $mat));
-        //return $this->render('AppBundle:reportes:listadoAlumnosPdf.html.twig',array('mat'=>$mat));
-    }
-=======
         */
         $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
         $pdfGenerator=$this->get('siphoc.pdf.generator');
@@ -79,7 +65,6 @@ class ReportesController extends Controller
 
     }
 
->>>>>>> c7ea747b490bff64a0b5668a3a3ea813a46375e1
     /**
      * @Route("/LisNxM", name="lnivelesmodulos")
      */
@@ -93,8 +78,6 @@ class ReportesController extends Controller
 
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:listNivelesxMod.html.twig',array('niv' => $niveles)));
-<<<<<<< HEAD
-=======
     }
     /**
      * @Route("/LisNxMPdf", name="lnivelesmodulosPDF")
@@ -106,6 +89,5 @@ class ReportesController extends Controller
         $pdfGenerator=$this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoNiveles.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listNivelesxModPdf.html.twig',array('niv'=>$niveles));
->>>>>>> c7ea747b490bff64a0b5668a3a3ea813a46375e1
     }
 }

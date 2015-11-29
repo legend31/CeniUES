@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DocenteController extends Controller
 {
     /**
-     * @Route("/docentes", name="dhome")
+     * @Route("/admin/docentes", name="dhome")
      */
     public function docenteHomeAction()
     {
@@ -30,11 +30,10 @@ class DocenteController extends Controller
         }
 
         return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
-        //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
     }
 
     /**
-     * @Route("/adocente", name="agregarD")
+     * @Route("/admin/adocente", name="agregarD")
      */
     public function agregarDocenteAction()
     {
@@ -48,20 +47,22 @@ class DocenteController extends Controller
      */
     public function buscarDocenteAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
         $search = $request->get("carnet");
-        $docentes = $em->getRepository('AppBundle:Docente')->findBy($search);
-
-        if(!$docentes)
+        if($request->isMethod("POST"))
         {
-            throw $this->createNotFoundException('No se encontro ningun docente');
+            $docentes = $em->getRepository('AppBundle:Docente')->find("CR11005");
+            if(!$docentes)
+            {
+                throw $this->createNotFoundException('No se encontro ningun docente');
+            }
+            else
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig',array('docentes'=>$docentes));
         }
+        else
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig',array('docentes'=>$docentes));
 
-        return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
-        //return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
-        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
-
-        return new Response($html);*/
     }
 
     /**
