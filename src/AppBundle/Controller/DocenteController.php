@@ -45,9 +45,26 @@ class DocenteController extends Controller
     /**
      * @Route("/admin/adocentes", name="agregarD")
      */
-    public function agregarDocenteAction()
+    public function agregarDocenteAction(Request $request)
     {
-        return $this->render('AppBundle:docente:creardocente.html.twig');
+        if($request->isMethod("POST")){
+            $em=$this->getDoctrine()->getManager();
+            $d=new Docente();
+            $d->setNombredocente($request->get("ndoc"));
+            $d->setApellidodocente($request->get("adoc"));
+            $d->setDui($request->get("ddoc"));
+            $d->setDirecciondocente($request->get("ddoc"));
+            $d->setCarnetdocente($request->get("cdoc"));
+            $d->setTelefono($request->get("tdoc"));
+            $d->setEstado(1);
+
+            $em->persist($d);
+            $em->flush();
+            return $this->redirectToRoute('dhome');
+        }
+        else {
+            return $this->render('AppBundle:docente:creardocente.html.twig');
+        }
     }
 
     /**
@@ -87,10 +104,10 @@ class DocenteController extends Controller
         return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes)));
     }
 
-    /**
+    /*/**
      * @Route("/idocente", name="insertarD")
      */
-    public function insertarDocenteAction(Request $request)
+    /*public function insertarDocenteAction(Request $request)
     {
         $em=$this->getDoctrine()->getEntityManager();
         if($request->isMethod("POST")){
@@ -106,7 +123,7 @@ class DocenteController extends Controller
             $em->flush();
             return $this->redirectToRoute('dhome');
         }
-    }
+    }*/
 
     /**
      * @Route("/edocente", name="eliminarD")

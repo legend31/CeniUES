@@ -16,7 +16,7 @@
                 <h3 class="box-title">Datos personales</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('insertarD') }}">
+            <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('agregarD') }}">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="form_nombredocente" class="col-sm-3 control-label">Nombre</label>
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" placeholder="2222-2222" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" required>
+                            <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
                             <span class="form-control-feedback"></span>
                         </div>
                     </div>
