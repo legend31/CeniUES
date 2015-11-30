@@ -4,6 +4,19 @@
         <!--Inicia contenido de la UI-->
         <section class="content">
             <div class="row">
+                <div class="col-xs-6">
+                    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                        <br>
+                        <div class="alert alert-success fade in">
+                        <span class="close" data-dismiss="alert">
+                            &times;
+                        </span>
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
 
@@ -38,7 +51,7 @@
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
-                                                <a class="btn btn-default" data-toggle="modal" data-target="#modificar-modulos-modal">
+                                                <a class="btn btn-default" href="{{ path('actualizarmod',{'id': modulos.idmodulo}) }}">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
 

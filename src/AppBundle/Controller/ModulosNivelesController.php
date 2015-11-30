@@ -85,15 +85,16 @@ class ModulosNivelesController extends Controller{
 
     //FUNCION ENCARGADA DE MODIFICAR DATOS DE UN MODULO
     /**
-     * @Route("/admin/updatemod", name="actualizarmod")
+     * @Route("/admin/updatemod/{id}", name="actualizarmod")
      */
-    public function actualizarmodAction(Request $request){
+    public function actualizarmodAction(Request $request, $id){
         $fechaactual = new \DateTime();
         $em= $this->getDoctrine()->getManager();
         $rep=$this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $auxmod = $rep->find($id);
         if($request->isMethod("POST")){
             $auxid = $request->get('idmodulo');
-            if($res=$rep->findOneBy(array('idmodulo'=>$auxid))){
+            if($auxmod){
                 $auxnombre=$request->get('nombremodulo');
                 $auxfechai=$request->get('fini');
                 $auxfechaf=$request->get('ffin');
@@ -104,15 +105,19 @@ class ModulosNivelesController extends Controller{
                     $mod->setFechafin($auxfechaf);
                     $em->persist($mod);
                     $em->flush();
-                    return new JsonResponse(array("mensaje"=>'si'));
+                    return $this->redirectToRoute('gmodulos');
                 }else{
-                    return new JsonResponse(array("mensaje"=>'no'));
+                   $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
+                   return $this->redirectToRoute('gmodulos');
                 }
             }else{
                 throw $this->createNotFoundException('No se obtuvo resultados de la busqueda a BD');
             }
+        }else{
+            return $this->render('AppBundle:admin/gmodulosniveles:formupdatemodulo.html.twig',array('modulo'=>$auxmod,'id'=>$id));
         }
     }
+
     
 
 
@@ -153,6 +158,10 @@ class ModulosNivelesController extends Controller{
         }
 
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+    }
+
+    private function mensajeflash($m){
+        $this->get('session')->getFlashBag()->add('mensaje',''.$m);
     }
 
 
