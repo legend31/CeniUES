@@ -82,6 +82,42 @@ class ModulosNivelesController extends Controller{
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
 
     }
+
+    //FUNCION ENCARGADA DE MODIFICAR DATOS DE UN MODULO
+    /**
+     * @Route("/admin/updatemod/{id}", name="actualizarmod")
+     */
+    public function actualizarmodAction(Request $request, $id){
+        $fechaactual = new \DateTime();
+        $em= $this->getDoctrine()->getManager();
+        $rep=$this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $auxmod = $rep->find($id);
+        if($request->isMethod("POST")){
+            $auxid = $request->get('idmodulo');
+            if($auxmod){
+                $auxnombre=$request->get('nombremodulo');
+                $auxfechai=$request->get('fini');
+                $auxfechaf=$request->get('ffin');
+                if($auxfechai>$fechaactual){
+                    $mod = new Modulo();
+                    $mod->setNombremodulo($auxnombre);
+                    $mod->setFechainicio($auxfechai);
+                    $mod->setFechafin($auxfechaf);
+                    $em->persist($mod);
+                    $em->flush();
+                    return $this->redirectToRoute('gmodulos');
+                }else{
+                   $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
+                   return $this->redirectToRoute('gmodulos');
+                }
+            }else{
+                throw $this->createNotFoundException('No se obtuvo resultados de la busqueda a BD');
+            }
+        }else{
+            return $this->render('AppBundle:admin/gmodulosniveles:formupdatemodulo.html.twig',array('modulo'=>$auxmod,'id'=>$id));
+        }
+    }
+
     
 
 
@@ -122,6 +158,10 @@ class ModulosNivelesController extends Controller{
         }
 
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+    }
+
+    private function mensajeflash($m){
+        $this->get('session')->getFlashBag()->add('mensaje',''.$m);
     }
 
 
