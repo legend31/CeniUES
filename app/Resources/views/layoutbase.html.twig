@@ -2,16 +2,21 @@
 
 {% block tittle %} Ventana principal {% endblock %}
 
-{% block body %}
+{% block docente %}
     <div class="wrapper">
         <header class="main-header">
+
             <!--Logo-->
             <div class="logo">
-            <a href="{{ path('principal') }}"> <!--<span class="logo-lg active"-->
-                <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
-                <!--<b>CENIUES</b>-->
-            <!--</span>-->
-            </a>
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <a href="{{ path('principal') }}">
+                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                    </a>
+                {% elseif is_granted('ROLE_DOCENTE') %}
+                    <a href="{{ path('dprincipal') }}">
+                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                    </a>
+                {% endif %}
             </div>
             <!--Fin de Logo-->
 
@@ -32,7 +37,7 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Nombre de Usuario: {{ app.user }}</span>
+                                <span class="hidden-xs">Bienvenido {{ app.user }}</span>
                             </a>
 
                             <!--Menu de opciones de usuario-->
@@ -45,18 +50,6 @@
                                         <p>
                                             <small>Member since Nov. 2012</small>
                                         </p>
-                                    </li>
-                                    <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
                                     </li>
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
@@ -99,7 +92,7 @@
                             <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>Nombre de Usuario</p>
+                            <p>{{ app.user }}</p>
                             <a href="#">
                                 <i class="fa fa-circle text-success">
                                 </i>
@@ -114,6 +107,7 @@
                     <ul class="sidebar-menu">
                         <li class="header">OPCIONES DE NAVEGACION</li>
 
+                    {% if is_granted('ROLE_ADMINISTRADOR')  %}
                         <!--Menu para gestion de los fechas-->
                         <li class="treeview">
                             <a href="#">
@@ -299,7 +293,9 @@
                             <!--Finaliza Sub-Menu de Gestionar Matricula-->
                         </li>
                         <!--Finaliza Gestionar Matricula-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Gestionar Alumnos-->
                         <li class="treeview">
                             <a href="#">
@@ -327,7 +323,9 @@
                             <!--Finaliza Sub-Menu Gestionar Alumno-->
                         </li>
                         <!--Finaliza Gestionar Alumnos-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Gestionar Secciones-->
                         <li class="treeview">
                             <a href="#">
@@ -348,7 +346,9 @@
                             <!--Finaliza Sub-Menu Gestionar Secciones-->
                         </li>
                         <!--Finaliza Gestionar Secciones-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Gestionar Notas-->
                         <li class="treeview">
                             <a href="">
@@ -412,7 +412,9 @@
                             <!--Finaliza Sub-Menu Disponiblidad de Horas-->
                         </li>
                         <!--Finaliza Disponibilidad de horas-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Generacion de Estadisticas-->
                         <li class="treeview">
                             <a href="#">
@@ -447,7 +449,9 @@
                             <!--Finaliza Sub-Menu de Generacion de Estadisticas-->
                         </li>
                         <!--Finaliza Generacion de Estadisticas-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Generacion de Reportes-->
                         <li class="treeview">
                             <a href="#">
@@ -524,7 +528,9 @@
                             </ul>
                         </li>
                         <!--Finaliza Generacion de Reportes-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Gestion de Modulos y Niveles-->
                         <li class="treeview">
                             <a href="#">
@@ -552,6 +558,7 @@
                             </ul>
                             <!--Finaliza Sub-Menu de Gestion de Modulos y Niveles-->
                         </li>
+                    {% endif %}
 
                         <!--Finaliza Gestion de Modulos-->
                     </ul>
@@ -573,9 +580,10 @@
 
                 <!--Contenido pricipal-->
                 <section class="content">
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
                     <!--Inicia Primera fila de opciones-->
                     <div class="row">
-                        <!--Opcion1-->
+                        <!--Opcion1 Gestionar Fechas-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-aqua">
@@ -593,7 +601,7 @@
                         </div>
                         <!--Fin Opcion1-->
 
-                        <!--Opcion 2-->
+                        <!--Opcion 2 Gestionar Docentes-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-fuchsia-active">
@@ -611,25 +619,25 @@
                         </div>
                         <!--Fin Opcion 2-->
 
-                        <!--Opcion 3-->
+                        <!--Inicia Opcion 3 Secciones-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
-                            <div class="small-box bg-green">
+                            <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <h3>Niveles</h3>
-                                    <p>Asignar docentes</p>
+                                    <h3>Secciones</h3>
+                                    <p>Gestionar</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="fa fa-list-alt"></i>
+                                    <i class="fa fa-cube"></i>
                                 </div>
-                                <a  href="{{ path('docn') }}" class="small-box-footer">
+                                <a  href="{{ path('secHome') }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
                         </div>
-                        <!--Fin Opcion 3-->
+                        <!--Finaliza Opcion 3-->
 
-                        <!--Opcion 4 -->
+                        <!--Opcion 4 Gestionar Evaluaciones-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-olive">
@@ -649,29 +657,15 @@
 
                     </div>
                     <!--Finaliza Primera Fila de Opciones-->
+                {% endif %}
 
+                {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                     <!--Inicia Segunda Fila de Opciones-->
                     <div class="row">
-                        <!--Inicia Opcion 5-->
+                        <!--Inicia Opcion 5 Alumnos-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-red-active">
-                                <div class="inner">
-                                    <h3>Matricula</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-user-plus"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 5-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-orange">
                                 <div class="inner">
                                     <h3>Alumnos</h3>
                                     <p>Gestionar</p>
@@ -684,25 +678,27 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Inicia Opcion 6-->
+                        <!--Finaliza Opcion 5-->
+
+                        <!--Inicia Opcion 6 Definir Horario-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
-                            <div class="small-box bg-purple">
+                            <div class="small-box bg-lime-active">
                                 <div class="inner">
-                                    <h3>Secciones</h3>
+                                    <h3>Definir Horario</h3>
                                     <p>Gestionar</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="fa fa-cube"></i>
+                                    <i class="fa fa-clock-o"></i>
                                 </div>
-                                <a  href="{{ path('secHome') }}" class="small-box-footer">
+                                <a  href="#" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
                         </div>
                         <!--Finaliza Opcion 6-->
 
-                        <!--Inicia la Opcion 7-->
+                        <!--Inicia la Opcion 7 Notas-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-teal-active">
@@ -719,46 +715,8 @@
                             </div>
                         </div>
                         <!--Finaliza la Opcion 7-->
-                    </div>
-                    <!--Finaliza Segunda Fila de Opciones-->
 
-                    <!--Inicia Tercerea Fila de Opciones-->
-                    <div class="row">
                         <!--Inicia Opcion 8-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-lime-active">
-                                <div class="inner">
-                                    <h3>Definir Horario</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 8-->
-
-                        <!--Inicia Opcion 9-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-light-blue-gradient">
-                                <div class="inner">
-                                    <h3>Estadisticas</h3>
-                                    <p>Obtener</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-pie-chart"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 9-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-yellow">
@@ -774,7 +732,51 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Inicia Opcion 10-->
+                        <!--Finaliza Opcion 8-->
+                    </div>
+                    <!--Finaliza Segunda Fila de Opciones-->
+                    {% endif %}
+
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <!--Inicia Tercerea Fila de Opciones-->
+                    <div class="row">
+                        <!--Inicia opcion 9 Matricula-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Matricula</h3>
+                                    <p>Gestionar</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin opcion 9-->
+
+                        <!--Opcion 10 Asignar Docentes en Nivel-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-orange">
+                                <div class="inner">
+                                    <h3>Niveles</h3>
+                                    <p>Asignar docentes</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <a  href="{{ path('docn') }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion 10-->
+
+                        <!--Inicia opcion 11-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-gray">
@@ -790,9 +792,28 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Finaliza Opcion 10-->
+                        <!--Finaliza Opcion 11-->
+
+                        <!--Inicia Opcion 12 Estadisitcas-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-light-blue-gradient">
+                                <div class="inner">
+                                    <h3>Estadisticas</h3>
+                                    <p>Obtener</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 12-->
                     </div>
                     <!--Finaliza Tercera Fila de Opciones-->
+                {% endif %}
                 </section>
                 <!--Fin de contenido principal-->
             {% endblock %}

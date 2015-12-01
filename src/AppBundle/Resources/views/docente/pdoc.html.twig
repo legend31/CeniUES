@@ -1,67 +1,388 @@
-{% extends "::layoutbase.html.twig" %}
+{% extends "::pbase.html.twig" %}
 
-{% block title %} Gestionar docente {% endblock %}
+{% block tittle %} Ventana principal {% endblock %}
 
-{% block principal %}
-    <!--Cabecera de la seccion principal-->
-    <section class="content-header">
-        <h1>Gestion de Docentes</h1>
-        <ol class="breadcrumb"></ol>
-    </section>
-    <!-- Fin de cabecera de seccion principal-->
-
-    <!--Inicio de contenido-->
-    <section class="content">
-        <!--Inicia Primera fila de opciones-->
-        <div class="row">
-            <!--Opcion1-->
-            <div class="col-lg-3 col-xs-6">
-                <!--Small box-->
-                <div class="small-box bg-green disabled">
-                    <div class="inner">
-                        <h3>Agregar</h3>
-                        <p>Nuevo docente</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-user-plus"></i>
-                    </div>
-                    <a  href="{{ path('agregarD') }}" class="small-box-footer">
-                        Click para acceder
-                    </a>
-                </div>
+{% block body %}
+    <div class="wrapper">
+        <header class="main-header">
+            <!--Logo-->
+            <div class="logo">
+                <a href="{{ path('dprincipal') }}"> <!--<span class="logo-lg active"-->
+                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                    <!--<b>CENIUES</b>-->
+                    <!--</span>-->
+                </a>
             </div>
+            <!--Fin de Logo-->
 
-            <div class="col-lg-3 col-xs-6">
-                <!--Small box-->
-                <div class="small-box bg-blue disabled">
-                    <div class="inner">
-                        <h3>Consultar</h3>
-                        <p>Docente</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-search"></i>
-                    </div>
-                    <a  href="{{ path('consultarD') }}" class="small-box-footer">
-                        Click para acceder
-                    </a>
+            <!--Barra de Navegacion-->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!--Boton de Notificaciones-->
+                        <!-- <li class="dropdown notifications-menu open">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                 <i class="fa fa-bell-o"></i>
+                                 <span class="label label-warning">10</span>
+                             </a>
+                         </li>
+                         <!--Fin de Boton de Notificaciones -->
+
+                        <!--Boton de opciones de usuario-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">Usuario: {{ app.user }}</span>
+                            </a>
+
+                            <!--Menu de opciones de usuario-->
+                            {% block BotonOpUsuarioSuperior %}
+
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+                                        <p>
+                                            <small>Member since Nov. 2012</small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Body -->
+                                    <li class="user-body">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            {% endblock %}
+                            <!--Fin del menu de opciones de usuario-->
+                        </li>
+                        <!--Fin de opciones de usuario-->
+
+                        <!--Inicio de Boton de configuracion-->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar">
+                                <i class="fa fa-gears"></i>
+                            </a>
+                        </li>
+                        <!--Fin de Boton de configuracion-->
+                    </ul>
                 </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red disabled">
-                    <div class="inner">
-                        <h3>Eliminar</h3>
-                        <p>Docente</p>
+            </nav>
+
+        </header>
+
+        <!--Columna Izquierda, de logo y barra de navegacion-->
+        <aside class="main-sidebar">
+            <!--Estilo de barra lateral-->
+            <section class="sidebar">
+
+                <!--Barra de navegacion seccion de usuario-->
+                {% block seccionUsuarioLateral %}
+
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="pull-left info">
+                            <p>{{ app.user }}</p>
+                            <a href="#">
+                                <i class="fa fa-circle text-success">
+                                </i>
+                                Cuenta Docente
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-user-times"></i>
+                {% endblock %}
+
+                {% block opcionesMenuLateral %}
+                    <!--Opciones de menus-->
+                    <ul class="sidebar-menu">
+                        <li class="header">OPCIONES DE NAVEGACION</li>
+
+                        <!--Inicia Gestionar Alumnos-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-mortar-board"></i>
+                                <span>Gestionar Alumnos</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Alumnos-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="{{ path('antiguo') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Registrar Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path('alBuscar') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Alumno
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Gestionar Alumno-->
+                        </li>
+                        <!--Finaliza Gestionar Alumnos-->
+
+                        <!--Inicia Gestionar Notas-->
+                        <li class="treeview">
+                            <a href="">
+                                <i class="fa fa-pencil-square"></i>
+                                <span>Gestionar Notas</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Gestionar Notas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="{{ path('ingresarnotas') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Administrar Notas
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path('consultarnotas') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Notas
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!--Finaliza Sub-Menu Gestionar Notas-->
+                        </li>
+                        <!--Finaliza Gestionar Notas-->
+
+                        <!--Inicia Gestionar Disponibilidad de horas-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-clock-o"></i>
+                                <span>Gestionar Horas Disponibles</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu Disponiblidad de Horas-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Ingresar Horas Disponibles
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Modificar Horas Disponibles
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Consultar Horas Asignadas
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--Finaliza Sub-Menu Disponiblidad de Horas-->
+                        </li>
+                        <!--Finaliza Disponibilidad de horas-->
+
+                        <!--Inicia Generacion de Reportes-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-file-text"></i>
+                                <span>Reportes</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <!--Inicia Sub-Menu de Generacion de Reportes-->
+                            <ul class="treeview-menu" style="display: none;">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Distribuciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path("documentoD") }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Listado de Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Distribucion de Docentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ path("ainscritos") }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Alumnos por nivel
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Record Notas por Alumno
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Notas de Evaluaciones
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Certificados
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Listados de Asistencia
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i>
+                                        Notas de Alumnos
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--Finaliza Generacion de Reportes-->
+                    </ul>
+                {% endblock %}
+            </section>
+        </aside>
+        <!--Fin de la barra de navegacion lateral-->
+
+        <!--Captura de contenidos seccion que captura los contenidos de la UI (importante: permite visualizar todos los elementos)-->
+        <div class="content-wrapper" style="min-height: 1036px;">
+
+            {% block principal %}
+                <!--Cabecera de contenidos-->
+                <section class="content-header">
+                    <h1>Principal</h1>
+                    <ol class="breadcrumb"></ol>
+                </section>
+                <!--Final de la cabecera de contenidos-->
+
+                <!--Contenido pricipal-->
+                <section class="content">
+
+                    <!--Inicia Fila de Opciones Docente-->
+                    <div class="row">
+
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-orange">
+                                <div class="inner">
+                                    <h3>Alumnos</h3>
+                                    <p>Gestionar</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-mortar-board"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+
+                        <!--Inicia la Opcion 2-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-teal-active">
+                                <div class="inner">
+                                    <h3>Notas</h3>
+                                    <p>Gestionar</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pencil-square"></i>
+                                </div>
+                                <a  href="{{ path("notasprincipal") }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza la Opcion 2-->
+
+                        <!--Inicia Opcion 3-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-lime-active">
+                                <div class="inner">
+                                    <h3>Definir Horario</h3>
+                                    <p>Gestionar</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 3-->
+
+                        <!--Inicia Opcion 4-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>Reportes</h3>
+                                    <p>Obtener</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-file-text"></i>
+                                </div>
+                                <a  href="{{ path('rhome') }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 4-->
                     </div>
-                    <a href="{{ path('eliminarD') }}" class="small-box-footer">
-                        Click para acceder
-                    </a>
-                </div>
-            </div>
+                    <!--Finaliza Fila de Opciones Docente-->
+                </section>
+                <!--Fin de contenido principal-->
+            {% endblock %}
         </div>
-    </section>
-    <!--Fin de contenido-->
+        <!--Fin de la captura de contenidos-->
+    </div>
+
+    {% block javascript2 %}
+    {% endblock %}
 {% endblock %}

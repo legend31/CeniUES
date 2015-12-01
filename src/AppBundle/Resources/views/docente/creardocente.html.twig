@@ -47,6 +47,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="form_fechanacimiento" class="col-sm-3 control-label"> Fecha de Nacimiento</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="form_fechanacimiento" name="fdoc" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="form_direcciondocente" class="col-sm-3 control-label"> Direcci&oacute;n de residencia </label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" required>
@@ -57,6 +63,13 @@
                         <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_direcciondocente" class="col-sm-3 control-label"> Correo electr&oacute;nico </label>
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" id="form_email" name="edoc" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
                             <span class="form-control-feedback"></span>
                         </div>
                     </div>

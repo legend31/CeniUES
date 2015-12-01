@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Docente;
+use AppBundle\Entity\Usuario;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,17 +50,35 @@ class DocenteController extends Controller
     {
         if($request->isMethod("POST")){
             $em=$this->getDoctrine()->getManager();
-            $d=new Docente();
+            //Creando nuevo docente
+            $d = new Docente();
             $d->setNombredocente($request->get("ndoc"));
             $d->setApellidodocente($request->get("adoc"));
             $d->setDui($request->get("ddoc"));
             $d->setDirecciondocente($request->get("ddoc"));
             $d->setCarnetdocente($request->get("cdoc"));
             $d->setTelefono($request->get("tdoc"));
+            $d->setFechanacimiento(new \DateTime($request->get("fdoc")));
             $d->setEstado(1);
 
             $em->persist($d);
             $em->flush();
+
+            //Creando usuario docente
+            $u = new Usuario();
+            $u->setNomusuario($request->get("cdoc"));
+            $u->setIsactive(1);
+            $u->setTipoUsuariotipoUsuario($em->getRepository('AppBundle:TipoUsuario')->find(3));
+            $u->setEmailusuario($request->get("edoc"));
+            //Cifra la contraseñ
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($u);
+            $password = $encoder->encodePassword($request->get("cdoc"), $u->getSalt());
+            $u->setPassword($password);
+
+            $em->persist($u);
+            $em->flush();
+
             return $this->redirectToRoute('dhome');
         }
         else {
