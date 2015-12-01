@@ -3,13 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Nivel;
-use Proxies\__CG__\AppBundle\Entity\Modulo;
+use AppBundle\Entity\Modulo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
+
 
 class ModulosNivelesController extends Controller{
     //funcion encargada de redirigir al sub menu de las gestion de modulos y niveles
@@ -49,7 +50,6 @@ class ModulosNivelesController extends Controller{
             "fechainicio"=>$mod->getFechainicio()->format('Y-m-d'),
             "fechafin"=>$mod->getFechafin()->format('Y-m-d'),
             "duracion"=>$mod->getDuracion()));
-
     }
 
     //FUNCION ENCARGADA DE GENERAR LA VISTA PARA INGRESAR UN NUEVO NIVEL
@@ -69,18 +69,35 @@ class ModulosNivelesController extends Controller{
         $repmod = $this->getDoctrine()->getRepository('AppBundle:Modulo');
         //Verifico el envio de form
         if($request->isMethod("POST")){
-            //$auxmod= new Modulo();
-            //$auxmod = $repmod->findOneBy(".'$request->get('nombreMod')'.");
-
-            $mod = new Modulo();
-            $mod->setNombremodulo($request->get('nombreMod'));
-            $em->persist($mod);
-            $em->flush();
-            return $this->redirectToRoute('newmodulo');
-
-        }
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
-
+            $auxnombre=$request->get('nombreMod');
+            $auxfini = $request->get('fini');
+            $auxffin = $request->get('ffin');
+            $fechai = date_create_from_format('Y-m-d',$auxfini);
+            $fechaf = date_create_from_format('Y-m-d',$auxffin);
+            $modulos = $repmod->findOneBy(array('nombremodulo'=>$auxnombre,'fechainicio'=>$fechai));
+            if($modulos == null) {
+                $var = strtotime($auxffin) - strtotime($auxfini);
+                if ($var > 0) {
+                    $dif = intval($var / 60 / 60 / 24);
+                    $mod = new Modulo();
+                    $mod->setNombremodulo($auxnombre);
+                    $mod->setFechainicio($fechai);
+                    $mod->setFechafin($fechaf);
+                    $mod->setDuracion($dif);
+                    $em->persist($mod);
+                    $em->flush();
+                    $this->mensajeflash('Modulo ingresado con exito');
+                    return $this->redirectToRoute('gmodulos');
+                } else {
+                    $this->mensajeflash('No se pudo ingresar modulo: la Fecha inicio debe ser menor que la la Fecha final' . $var);
+                    return $this->redirectToRoute('newmodulo');
+                }
+            }else{
+                $this->mensajeflash('No se pudo ingresar modulo: Hay un modulo con el mismo nombre y con la misma fecha de inicio almacenado');
+                return $this->redirectToRoute('newmodulo');
+            }
+        }//return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
+        return;
     }
 
     //FUNCION ENCARGADA DE MODIFICAR DATOS DE UN MODULO
@@ -88,23 +105,26 @@ class ModulosNivelesController extends Controller{
      * @Route("/admin/updatemod/{id}", name="actualizarmod")
      */
     public function actualizarmodAction(Request $request, $id){
-        $fechaactual = new \DateTime();
+        //$fechaactual = new \DateTime();
         $em= $this->getDoctrine()->getManager();
         $rep=$this->getDoctrine()->getRepository('AppBundle:Modulo');
         $auxmod = $rep->find($id);
         if($request->isMethod("POST")){
-            $auxid = $request->get('idmodulo');
+            //$auxid = $request->get('idmodulo');
             if($auxmod){
                 $auxnombre=$request->get('nombremodulo');
                 $auxfechai=$request->get('fini');
                 $auxfechaf=$request->get('ffin');
-                if($auxfechai>$fechaactual){
-                    $mod = new Modulo();
-                    $mod->setNombremodulo($auxnombre);
-                    $mod->setFechainicio($auxfechai);
-                    $mod->setFechafin($auxfechaf);
-                    $em->persist($mod);
+                $fechai = date_create_from_format('Y-m-d',$auxfechai);
+                $fechaf = date_create_from_format('Y-m-d',$auxfechaf);
+                $var = strtotime($auxfechai)-strtotime("now");
+                if($var>0){
+                    $auxmod->setNombremodulo($auxnombre);
+                    $auxmod->setFechainicio($fechai);
+                    $auxmod->setFechafin($fechaf);
+                    $em->persist($auxmod);
                     $em->flush();
+                    $this->mensajeflash('Modulo actualizado correctamente');
                     return $this->redirectToRoute('gmodulos');
                 }else{
                    $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
@@ -118,8 +138,25 @@ class ModulosNivelesController extends Controller{
         }
     }
 
-    
-
+    //FUNCION ENCARGADA DE ELIMINAR UN MODULO
+    /**
+     * @Route("/admin/deletemod/{id}", name="deletemod")
+     */
+    public function deletemodAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $auxmod = $rep->find($id);
+        $auxnivel = $auxmod->getNivelnivel()->get('nombrenivel');
+        if($auxnivel==null){
+            $em->remove($auxmod);
+            $em->flush();
+            $this->mensajeflash('Modulo eliminado de forma exitosa');
+            return $this->redirectToRoute('gmodulos');
+        }else{
+            $this->mensajeflash('No se puede eliminar el modulo ya que tiene niveles asignados');
+            return $this->redirectToRoute('gmodulos');
+        }
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
