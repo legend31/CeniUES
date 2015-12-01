@@ -7,6 +7,7 @@ function inicio() {
     $("#form_direcciondocente").keyup(validarDireccion);
     $("#form_telefonodocente").keyup(validarTelefono);
     $("#form_carnetdocente").keyup(validarCarnet);
+    $("#form_email").keyup(validarEmail);
 }
 
 function validarCarnet() {
@@ -89,6 +90,19 @@ function validarTelefono() {
     else {
         $("#form_telefonodocente").parent().attr("class","col-sm-6 has-error has-feedback");
         $("#form_telefonodocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        return false;
+    }
+}
+
+function validarEmail() {
+    var valor= document.getElementById("form_email").value;
+    if(valor.indexOf('@')>0 && valor.indexOf('.') > 0 && (valor.length-valor.indexOf('.') > 2)) {
+        $("#form_email").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+    }
+    else {
+        $("#form_email").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
 }

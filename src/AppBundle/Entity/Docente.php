@@ -349,12 +349,12 @@ class Docente
             $this->segundoapellidodocente = $apellido[1];
         }
         else {
-            $this->primerapellidodocente = $apellido;
+            $this->primerapellidodocente = $apellidos;
             $this->segundoapellidodocente = null;
         }
         return $this;
     }
-    //Nada
+
     /**
      * Set carnetdocente
      *

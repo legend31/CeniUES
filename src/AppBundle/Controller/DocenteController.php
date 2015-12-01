@@ -87,7 +87,7 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/cdocente", name="consultarD")
+     * @Route("/admin/cdocente", name="consultarD")
      */
     public function consultarDocenteAction()
     {
@@ -95,7 +95,7 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/mdocente", name="modificarD")
+     * @Route("/admin/mdocente", name="modificarD")
      */
     public function modificarDocenteAction()
     {
@@ -105,7 +105,7 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/dnivel", name="docn")
+     * @Route("/admin/dnivel", name="docn")
      */
     public function docenteNivelAction()
     {
@@ -123,29 +123,8 @@ class DocenteController extends Controller
         return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes)));
     }
 
-    /*/**
-     * @Route("/idocente", name="insertarD")
-     */
-    /*public function insertarDocenteAction(Request $request)
-    {
-        $em=$this->getDoctrine()->getEntityManager();
-        if($request->isMethod("POST")){
-            $d=new Docente();
-            $d->setNombredocente($request->get("ndoc"));
-            $d->setApellidodocente($request->get("adoc"));
-            $d->setDui($request->get("ddoc"));
-            $d->setDirecciondocente($request->get("ddoc"));
-            $d->setCarnetdocente($request->get("cdoc"));
-            $d->setTelefono($request->get("tdoc"));
-
-            $em->persist($d);
-            $em->flush();
-            return $this->redirectToRoute('dhome');
-        }
-    }*/
-
     /**
-     * @Route("/edocente", name="eliminarD")
+     * @Route("/admin/edocente", name="eliminarD")
      */
     public function eliminarDocenteAction(Request $request)
     {
@@ -155,7 +134,7 @@ class DocenteController extends Controller
         $em->flush();
         return $this->redirectToRoute('dhome');
     }
-    //Nada
+
     /**
      * @Route("/ldocente", name="documentoD")
      */
@@ -172,7 +151,7 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/detallesD", name="detallesD")
+     * @Route("/admin/detallesD", name="detallesD")
      */
     public function detallesPorCarnetAction(){
         $request = $this->get('request');
