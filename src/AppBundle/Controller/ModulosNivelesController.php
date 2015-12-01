@@ -138,8 +138,25 @@ class ModulosNivelesController extends Controller{
         }
     }
 
-    
-
+    //FUNCION ENCARGADA DE ELIMINAR UN MODULO
+    /**
+     * @Route("/admin/deletemod/{id}", name="deletemod")
+     */
+    public function deletemodAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $auxmod = $rep->find($id);
+        $auxnivel = $auxmod->getNivelnivel()->get('nombrenivel');
+        if($auxnivel==null){
+            $em->remove($auxmod);
+            $em->flush();
+            $this->mensajeflash('Modulo eliminado de forma exitosa');
+            return $this->redirectToRoute('gmodulos');
+        }else{
+            $this->mensajeflash('No se puede eliminar el modulo ya que tiene niveles asignados');
+            return $this->redirectToRoute('gmodulos');
+        }
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
 /*Seccion dedicada para la gestion de niveles*/
