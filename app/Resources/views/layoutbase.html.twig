@@ -31,7 +31,6 @@
                                  <span class="label label-warning">10</span>
                              </a>
                          </li>
-                         <!--Fin de Boton de Notificaciones -->
 
                         <!--Boton de opciones de usuario-->
                         <li class="dropdown user user-menu">
@@ -83,24 +82,6 @@
         <aside class="main-sidebar">
             <!--Estilo de barra lateral-->
             <section class="sidebar">
-
-                <!--Barra de navegacion seccion de usuario-->
-                {% block seccionUsuarioLateral %}
-
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p>{{ app.user }}</p>
-                            <a href="#">
-                                <i class="fa fa-circle text-success">
-                                </i>
-                                " Online"
-                            </a>
-                        </div>
-                    </div>
-                {% endblock %}
 
                 {% block opcionesMenuLateral %}
                     <!--Opciones de menus-->
