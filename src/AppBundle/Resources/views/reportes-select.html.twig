@@ -1,6 +1,6 @@
 {% extends '::layoutbase.html.twig' %}
 {% block title %}
-    Matricula Antiguo Ingreso
+    Graficos de Pastel
 {% endblock %}
 {% block principal%}
     <script src="{{ asset('libs/highcharts/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
@@ -13,13 +13,13 @@
         <h2 >Programa para ni&ntildeos CENIUES</h2>
         <h4 class="pull-right">Fecha : 25/11/2015</h4>
         <hr>
-        <form class="form-inline contact_form" method="post" action="{{ path('reg') }}">
+        <form class="form-inline contact_form" method="post" action="{{ path('graf') }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="selectGrafico">Grafico</label>
                 <div class="col-sm-4">
                     <select id ="selectGrafico"name="grafico">
-                            <option value="aprob">Aprobados</option>
-                            <option value="act">Activos</option>
+                            <option value="aprob" {% if selected =='aprob' %}selected{% endif %}>Aprobados</option>
+                            <option value="act" {% if selected =='act' %}selected{% endif %}>Activos</option>
                             <option value="not">Notas</option>
                     </select>
                 </div>
@@ -28,8 +28,9 @@
                 <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
                 <div class="col-sm-4">
                     <select id ="selectNivel"name="nivel">
+                        <option value="0">En CENIUES</option>
                         {% for n in niveles %}
-                        <option value="{{ n.idnivel }}">{{ n.nombrenivel }}</option>
+                        <option value="{{ n.idnivel }}" {% if selectedNivel== n.idnivel%}selected{% endif %}>{{ n.nombrenivel }}</option>
                         {% endfor %}
                     </select>
                 </div>

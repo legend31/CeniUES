@@ -9,84 +9,117 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Docente;
+use AppBundle\Entity\Usuario;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DocenteController extends Controller
 {
     /**
-     * @Route("/docentes", name="dhome")
+     * @Route("/admin/docentes", name="dhome")
      */
-    public function docenteHomeAction()
+    public function docenteHomeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+        $em = $this->getDoctrine()->getManager();
 
-        if(!$docentes)
-        {
-            throw $this->createNotFoundException('No se encontro ningun docente');
-        }
-
-        return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
-        //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
-    }
-
-    /**
-     * @Route("/adocente", name="agregarD")
-     */
-    public function agregarDocenteAction()
-    {
-        return $this->render('AppBundle:docente:creardocente.html.twig');
-        /*$html = $this->container->get('templating')->render('AppBundle:docente:creardocente.html.twig', array('TituloPagina' => 'Agregar Docente', 'form' => $form->createView()));
-
-        return new Response($html);*/
-    }
-    /**
-     * @Route("/busqueda", name="docBuscar")
-     */
-    public function buscarDocenteAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $search = $request->get("carnet");
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
-        if($request->isMethod("POST"))
-        {
-            $docentes = $em->getRepository('AppBundle:Docente')->find($search);
-            if($docentes) {
-                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes' => $docentes)));
+        if($request->isMethod("POST")) {
+            $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("carnet"));
+            $docente = array($docentes);
+            if(!$docentes)
+            {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
             }
-            else
-                throw $this->createNotFoundException('No se encontro ningun docente');
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente, 'mensaje'=>null));
         }
-        else
-            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+        else {
+            $docentes = $em->getRepository('AppBundle:Docente')->findAll();
+            if($request->get('estado') == 1) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>1 )));
+            }
+            elseif($request->get('estado') == 2) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>2 )));
+            }
+            elseif(!$docentes)
+            {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
+            }
+            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>null)));
+        }
     }
 
     /**
-     * @Route("/cdocente", name="consultarD")
+     * @Route("/admin/adocentes", name="agregarD")
+     */
+    public function agregarDocenteAction(Request $request)
+    {
+        if($request->isMethod("POST")){
+            $em=$this->getDoctrine()->getManager();
+
+            //Verificar existencia de docente
+            if($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
+                return $this->redirectToRoute('dhome', array('estado'=>1));
+            }
+
+            //Creando nuevo docente
+            $d = new Docente();
+            $d->setNombredocente($request->get("ndoc"));
+            $d->setApellidodocente($request->get("adoc"));
+            $d->setDui($request->get("ddoc"));
+            $d->setDirecciondocente($request->get("ddoc"));
+            $d->setCarnetdocente($request->get("cdoc"));
+            $d->setTelefono($request->get("tdoc"));
+            $d->setFechanacimiento(new \DateTime($request->get("fdoc")));
+            $d->setEstado(1);
+
+            $em->persist($d);
+            $em->flush();
+
+            //Creando usuario docente
+            $u = new Usuario();
+            $u->setNomusuario($request->get("cdoc"));
+            $u->setIsactive(1);
+            $u->setTipoUsuariotipoUsuario($em->getRepository('AppBundle:TipoUsuario')->find(3));
+            $u->setEmailusuario($request->get("edoc"));
+            //Cifra la contraseñ
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($u);
+            $password = $encoder->encodePassword($request->get("cdoc"), $u->getSalt());
+            $u->setPassword($password);
+
+            $em->persist($u);
+            $em->flush();
+
+            return $this->redirectToRoute('dhome', array('estado'=>2));
+        }
+        else {
+            return $this->render('AppBundle:docente:creardocente.html.twig');
+        }
+    }
+
+    /**
+     * @Route("/admin/cdocente", name="consultarD")
      */
     public function consultarDocenteAction()
     {
         return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
-        /*$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
-
-        return new Response($html);*/
     }
 
     /**
-     * @Route("/mdocente", name="modificarD")
+     * @Route("/admin/mdocente", name="modificarD")
      */
-    public function modificarDocenteAction()
+    public function modificarDocenteAction(Request $request)
     {
-        //$html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
+        $em = $this->getDoctrine()->getManager();
+        $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
-        return new Response();
+        return new Response($html);
     }
 
     /**
-     * @Route("/dnivel", name="docn")
+     * @Route("/admin/dnivel", name="docn")
      */
     public function docenteNivelAction()
     {
@@ -105,28 +138,7 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/idocente", name="insertarD")
-     */
-    public function insertarDocenteAction(Request $request)
-    {
-        $em=$this->getDoctrine()->getEntityManager();
-        if($request->isMethod("POST")){
-            $d=new Docente();
-            $d->setNombredocente($request->get("ndoc"));
-            $d->setApellidodocente($request->get("adoc"));
-            $d->setDui($request->get("ddoc"));
-            $d->setDirecciondocente($request->get("ddoc"));
-            $d->setCarnetdocente($request->get("cdoc"));
-            $d->setTelefono($request->get("tdoc"));
-
-            $em->persist($d);
-            $em->flush();
-            return $this->redirectToRoute('dhome');
-        }
-    }
-
-    /**
-     * @Route("/edocente", name="eliminarD")
+     * @Route("/admin/edocente", name="eliminarD")
      */
     public function eliminarDocenteAction(Request $request)
     {
@@ -136,7 +148,7 @@ class DocenteController extends Controller
         $em->flush();
         return $this->redirectToRoute('dhome');
     }
-    //Nada
+
     /**
      * @Route("/ldocente", name="documentoD")
      */
@@ -150,5 +162,23 @@ class DocenteController extends Controller
             throw $this->createNotFoundException('No se encontro ningun docente');
         }
         return new Response($this->container->get('templating')->render('AppBundle:reportes:listadoDocentes.html.twig', array('TituloPagina' => 'Docentes inscritos', 'form' => $docentes)));
+    }
+
+    /**
+     * @Route("/admin/detallesD", name="detallesD")
+     */
+    public function detallesPorCarnetAction(){
+        $request = $this->get('request');
+        $carnet = $request->get('carnetdocente');
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Docente');
+        $docente = $repo->findOneBy(array('carnetdocente'=>$carnet));
+
+        return new JsonResponse(array("carnetdoc"=>$docente->getCarnetdocente(),
+            "nombre"=>$docente->getNombredocente(),
+            "apellido"=>$docente->getApellidodocente(),
+            "dui"=>$docente->getDui(),
+            "direccion"=>$docente->getDirecciondocente(),
+            "fnac"=>$docente->getFechanacimiento()->format('Y-m-d'),
+            "ntel"=>$docente->getTelefono()));
     }
 }

@@ -10,6 +10,7 @@ use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Padre;
 use AppBundle\Entity\Responsable;
 use AppBundle\Entity\Resultadoevaluacion;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,34 +56,51 @@ class MatriculaController extends Controller
      */
     public function alumnoInsertAction(Request $request){
         $em = $this->getDoctrine()->getEntityManager();
+        $duplicado=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
         //Validando el envio del formulario
         if($request->isMethod("POST")) {
-            $al = new Alumno();
-            $al->setCarnetalumno(strtoupper($request->get("carnet")));
-            $al->setPrimernombrealumno($request->get("primer_nombre"));
-            $al->setPrimerapellidoalumno($request->get("primer_apellido"));
-            $al->setSegundonombrealumno($request->get("segundo_nombre"));
-            $al->setSegundoapellidoalumno($request->get("segundo_apellido"));
-            $al->setFechanacimiento(new \DateTime($request->get("fecha_nacimiento")));
-            $al->setDireccioncasa("xx");
-            $al->setTelefonocasa("xx");
-            $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->findOneBy(array('nombrepadre'=>$request->get('padre'))));
-            $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->findOneBy(array('nombreresponsable'=>$request->get("responsable"))));
-
-            // Transformar la Edad
-            $fecha=$al->getFechanacimiento()->format('Y-m-d H:i:s');
-            $segundos=strtotime('now') - strtotime($fecha);
-            //Para hacerlo dias
-            $edad=intval($segundos/60/60/24/365);
-            // ******************
-            $al->setEdad($edad);
-
-            $em->persist($al);
-            $em->flush();
-            if($request->get("origen")=="nuevo")
+            if($duplicado){
+                $this->MensajeFlash('fracaso','Alumno ya esta registrado en CENIUES');
                 return $this->redirectToRoute('antiguo');
-            else
-                return $this->redirectToRoute('examencolocacion');
+            }
+            else{
+                $al = new Alumno();
+                $al->setCarnetalumno(strtoupper($request->get("carnet")));
+                $al->setPrimernombrealumno($request->get("primer_nombre"));
+                $al->setPrimerapellidoalumno($request->get("primer_apellido"));
+                $al->setSegundonombrealumno($request->get("segundo_nombre"));
+                $al->setSegundoapellidoalumno($request->get("segundo_apellido"));
+                $al->setFechanacimiento(new \DateTime($request->get("fecha_nacimiento")));
+                $al->setDireccioncasa("xx");
+                $al->setTelefonocasa("xx");
+                $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->findOneBy(array('nombrepadre'=>$request->get('padre'))));
+                $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->findOneBy(array('nombreresponsable'=>$request->get("responsable"))));
+
+                // Transformar la Edad
+                $fecha=$al->getFechanacimiento()->format('Y-m-d H:i:s');
+                $segundos=strtotime('now') - strtotime($fecha);
+                //Para hacerlo dias
+                $edad=intval($segundos/60/60/24/365);
+                // ******************
+                $al->setEdad($edad);
+                //Creo el usuario
+                $user=new Usuario();
+                $user->setTipoUsuariotipoUsuario($em->getRepository('AppBundle:TipoUsuario')->find(1));
+                $user->setNomusuario($request->get("carnet"));
+                $user->setEmailusuario($request->get("email"));
+                $user->setIsactive(1);
+                //Cifra la contraseña
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($request->get("carnet"), $user->getSalt());
+                $user->setPassword($password);
+
+                $em->persist($al);
+                $em->persist($user);
+                $em->flush();
+            }
+            $this->MensajeFlash('exito','Alumno Ingresado exitosamente!');
+            return $this->redirectToRoute('antiguo');
         }
         return $this->render('AppBundle:formularios:alumno-inline.html.twig');
 
