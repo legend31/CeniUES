@@ -22,6 +22,9 @@ class FechaController extends  Controller{
         return $this->render('AppBundle:admin/fechas:fechasModulos.html.twig');
     }
 
+    //funcion declarada para poder obtener los modulos y llenar los combobox corresponsi
+    public function obtenermodAction(){}
+
     /**
      * @Route("/fechaniv", name="fechaniv")
      */

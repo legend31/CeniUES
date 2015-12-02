@@ -62,7 +62,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute("principal");
         }else{
             if(true == $this->get('security.authorization_checker')->isGranted('ROLE_DOCENTE')){
-                return $this->redirectToRoute("docprincipal");
+                return $this->redirectToRoute('principal');
             }else{
                 return $this->redirectToRoute("login");
             }
