@@ -12,6 +12,7 @@ use AppBundle\Entity\Docente;
 use AppBundle\Entity\Usuario;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,17 +30,23 @@ class DocenteController extends Controller
             $docente = array($docentes);
             if(!$docente)
             {
-                throw $this->createNotFoundException('No se encontro ningun docente');
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
             }
-            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente));
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente, 'mensaje'=>null));
         }
         else {
             $docentes = $em->getRepository('AppBundle:Docente')->findAll();
-            if(!$docentes)
-            {
-                throw $this->createNotFoundException('No se encontro ningun docente');
+            if($request->get('estado') == 1) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>1 )));
             }
-            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes)));
+            elseif($request->get('estado') == 2) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>2 )));
+            }
+            elseif(!$docentes)
+            {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
+            }
+            return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>null)));
         }
     }
 
@@ -50,6 +57,12 @@ class DocenteController extends Controller
     {
         if($request->isMethod("POST")){
             $em=$this->getDoctrine()->getManager();
+
+            //Verificar existencia de docente
+            if($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
+                return $this->redirectToRoute('dhome', array('estado'=>1));
+            }
+
             //Creando nuevo docente
             $d = new Docente();
             $d->setNombredocente($request->get("ndoc"));
@@ -79,7 +92,7 @@ class DocenteController extends Controller
             $em->persist($u);
             $em->flush();
 
-            return $this->redirectToRoute('dhome');
+            return $this->redirectToRoute('dhome', array('estado'=>2));
         }
         else {
             return $this->render('AppBundle:docente:creardocente.html.twig');
@@ -97,8 +110,9 @@ class DocenteController extends Controller
     /**
      * @Route("/admin/mdocente", name="modificarD")
      */
-    public function modificarDocenteAction()
+    public function modificarDocenteAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
 
         return new Response($html);
@@ -164,7 +178,7 @@ class DocenteController extends Controller
             "apellido"=>$docente->getApellidodocente(),
             "dui"=>$docente->getDui(),
             "direccion"=>$docente->getDirecciondocente(),
-            "fnac"=>$docente->getFechanacimiento(),
+            "fnac"=>$docente->getFechanacimiento()->format('Y-m-d'),
             "ntel"=>$docente->getTelefono()));
     }
 }

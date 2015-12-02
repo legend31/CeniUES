@@ -1,388 +1,122 @@
-{% extends "::pbase.html.twig" %}
+{% extends "::layoutbase.html.twig" %}
 
-{% block tittle %} Ventana principal {% endblock %}
+{% block title %} Modificar Docente {% endblock %}
 
-{% block body %}
-    <div class="wrapper">
-        <header class="main-header">
-            <!--Logo-->
-            <div class="logo">
-                <a href="{{ path('dprincipal') }}"> <!--<span class="logo-lg active"-->
-                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
-                    <!--<b>CENIUES</b>-->
-                    <!--</span>-->
-                </a>
-            </div>
-            <!--Fin de Logo-->
-
-            <!--Barra de Navegacion-->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <!--Boton de Notificaciones-->
-                        <!-- <li class="dropdown notifications-menu open">
-                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                 <i class="fa fa-bell-o"></i>
-                                 <span class="label label-warning">10</span>
-                             </a>
-                         </li>
-                         <!--Fin de Boton de Notificaciones -->
-
-                        <!--Boton de opciones de usuario-->
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Usuario: {{ app.user }}</span>
-                            </a>
-
-                            <!--Menu de opciones de usuario-->
-                            {% block BotonOpUsuarioSuperior %}
-
-                                <ul class="dropdown-menu">
-                                    <!-- User image -->
-                                    <li class="user-header">
-                                        <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
-                                        <p>
-                                            <small>Member since Nov. 2012</small>
-                                        </p>
-                                    </li>
-                                    <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            {% endblock %}
-                            <!--Fin del menu de opciones de usuario-->
-                        </li>
-                        <!--Fin de opciones de usuario-->
-
-                        <!--Inicio de Boton de configuracion-->
-                        <li>
-                            <a href="#" data-toggle="control-sidebar">
-                                <i class="fa fa-gears"></i>
-                            </a>
-                        </li>
-                        <!--Fin de Boton de configuracion-->
-                    </ul>
-                </div>
-            </nav>
-
-        </header>
-
-        <!--Columna Izquierda, de logo y barra de navegacion-->
-        <aside class="main-sidebar">
-            <!--Estilo de barra lateral-->
-            <section class="sidebar">
-
-                <!--Barra de navegacion seccion de usuario-->
-                {% block seccionUsuarioLateral %}
-
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+{% block principal %}
+    <section class="content-header">
+        <h1>
+            Nuevo docente<br>
+            <small>Digite los datos que se le solicitan en el siguiente formulario:</small>
+        </h1><br>
+        <!-- INICIO -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos personales</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('agregarD') }}">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="form_nombredocente" class="col-sm-3 control-label">Nombre</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control letras" id="form_nombredocente" name="ndoc" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
                         </div>
-                        <div class="pull-left info">
-                            <p>{{ app.user }}</p>
-                            <a href="#">
-                                <i class="fa fa-circle text-success">
-                                </i>
-                                Cuenta Docente
+                        <div class="form-group">
+                            <label for="form_apellidodocente" class="col-sm-3 control-label">Apellido</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_dui" class="col-sm-3 control-label"> DUI </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" maxlength=10 onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_carnetdocente" class="col-sm-3 control-label"> Carnet </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" maxlength=7 pattern="[A-Z]{2}[0-9]{5}" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_fechanacimiento" class="col-sm-3 control-label"> Fecha de Nacimiento</label>
+                            <div class="col-sm-6">
+                                <input type="date" class="form-control" id="form_fechanacimiento" name="fdoc" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_direcciondocente" class="col-sm-3 control-label"> Direcci&oacute;n de residencia </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form_direcciondocente" class="col-sm-3 control-label"> Correo electr&oacute;nico </label>
+                            <div class="col-sm-6">
+                                <input type="email" class="form-control" id="form_email" name="edoc" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
+                                <span class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-0 col-sm-2">
+                                <button class="btn bg-green-gradient" id="validar" type="submit"><i class="fa fa-save"> Guardar</i></button>
+                            </div>
+                            <a class="btn btn-default bg-red-gradient" href="{{ path('dhome') }}">
+                                <i class="fa fa-close"></i> Cancelar
                             </a>
                         </div>
                     </div>
-                {% endblock %}
-
-                {% block opcionesMenuLateral %}
-                    <!--Opciones de menus-->
-                    <ul class="sidebar-menu">
-                        <li class="header">OPCIONES DE NAVEGACION</li>
-
-                        <!--Inicia Gestionar Alumnos-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-mortar-board"></i>
-                                <span>Gestionar Alumnos</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-
-                            <!--Inicia Sub-Menu Gestionar Alumnos-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="{{ path('antiguo') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Registrar Alumno
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path('alBuscar') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Modificar Alumno
-                                    </a>
-                                </li>
-                            </ul>
-                            <!--Finaliza Sub-Menu Gestionar Alumno-->
-                        </li>
-                        <!--Finaliza Gestionar Alumnos-->
-
-                        <!--Inicia Gestionar Notas-->
-                        <li class="treeview">
-                            <a href="">
-                                <i class="fa fa-pencil-square"></i>
-                                <span>Gestionar Notas</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-
-                            <!--Inicia Sub-Menu Gestionar Notas-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="{{ path('ingresarnotas') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Administrar Notas
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path('consultarnotas') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Notas
-                                    </a>
-                                </li>
-
-                            </ul>
-                            <!--Finaliza Sub-Menu Gestionar Notas-->
-                        </li>
-                        <!--Finaliza Gestionar Notas-->
-
-                        <!--Inicia Gestionar Disponibilidad de horas-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-clock-o"></i>
-                                <span>Gestionar Horas Disponibles</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-
-                            <!--Inicia Sub-Menu Disponiblidad de Horas-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Ingresar Horas Disponibles
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Modificar Horas Disponibles
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Horas Asignadas
-                                    </a>
-                                </li>
-                            </ul>
-                            <!--Finaliza Sub-Menu Disponiblidad de Horas-->
-                        </li>
-                        <!--Finaliza Disponibilidad de horas-->
-
-                        <!--Inicia Generacion de Reportes-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-file-text"></i>
-                                <span>Reportes</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-
-                            <!--Inicia Sub-Menu de Generacion de Reportes-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Distribuciones
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path("documentoD") }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Listado de Docentes
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Distribucion de Docentes
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path("ainscritos") }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Alumnos por nivel
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Record Notas por Alumno
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Notas de Evaluaciones
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Certificados
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Listados de Asistencia
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Notas de Alumnos
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <!--Finaliza Generacion de Reportes-->
-                    </ul>
-                {% endblock %}
-            </section>
-        </aside>
-        <!--Fin de la barra de navegacion lateral-->
-
-        <!--Captura de contenidos seccion que captura los contenidos de la UI (importante: permite visualizar todos los elementos)-->
-        <div class="content-wrapper" style="min-height: 1036px;">
-
-            {% block principal %}
-                <!--Cabecera de contenidos-->
-                <section class="content-header">
-                    <h1>Principal</h1>
-                    <ol class="breadcrumb"></ol>
-                </section>
-                <!--Final de la cabecera de contenidos-->
-
-                <!--Contenido pricipal-->
-                <section class="content">
-
-                    <!--Inicia Fila de Opciones Docente-->
-                    <div class="row">
-
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-orange">
-                                <div class="inner">
-                                    <h3>Alumnos</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-mortar-board"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-
-                        <!--Inicia la Opcion 2-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-teal-active">
-                                <div class="inner">
-                                    <h3>Notas</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-pencil-square"></i>
-                                </div>
-                                <a  href="{{ path("notasprincipal") }}" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza la Opcion 2-->
-
-                        <!--Inicia Opcion 3-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-lime-active">
-                                <div class="inner">
-                                    <h3>Definir Horario</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 3-->
-
-                        <!--Inicia Opcion 4-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-yellow">
-                                <div class="inner">
-                                    <h3>Reportes</h3>
-                                    <p>Obtener</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-file-text"></i>
-                                </div>
-                                <a  href="{{ path('rhome') }}" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 4-->
-                    </div>
-                    <!--Finaliza Fila de Opciones Docente-->
-                </section>
-                <!--Fin de contenido principal-->
-            {% endblock %}
+                </form>
+            </div><!-- /.box -->
         </div>
-        <!--Fin de la captura de contenidos-->
-    </div>
+    </section>
 
     {% block javascript2 %}
+        <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+        <script>
+            $(".letras").keypress(function (key) {
+                window.console.log(key.charCode)
+                if ((key.charCode < 97 || key.charCode > 122)//letras mayusculas
+                        && (key.charCode < 65 || key.charCode > 90) //letras minusculas
+                        && (key.charCode != 45) //retroceso
+                        && (key.charCode != 241) //ñ
+                        && (key.charCode != 209) //Ñ
+                        && (key.charCode != 32) //espacio
+                        && (key.charCode != 225) //á
+                        && (key.charCode != 233) //é
+                        && (key.charCode != 237) //í
+                        && (key.charCode != 243) //ó
+                        && (key.charCode != 250) //ú
+                        && (key.charCode != 193) //Á
+                        && (key.charCode != 201) //É
+                        && (key.charCode != 205) //Í
+                        && (key.charCode != 211) //Ó
+                        && (key.charCode != 218) //Ú
+                )
+                    return false;
+            });
+        </script>
     {% endblock %}
 {% endblock %}
