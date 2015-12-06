@@ -4,6 +4,18 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
+                    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                        <br>
+                        <div class="alert alert-success fade in">
+                        <span class="close" data-dismiss="alert">
+                            &times;
+                        </span>
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+            <div class="row">
+                <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ingreso de Nivel</h3>
@@ -16,21 +28,13 @@
                                 </div>
                                 <br>
                                 <div class="form-group col-sm-12">
-                                    <label>Nombre de Nivel</label>
+                                    <label>Nombre de Modulo</label>
                                     <br>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default">Nivel</button>
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            {% for modulo in mod %}
-                                            <li><a href="#">{{ modulo.nombremodulo }}</a></li>
-                                            <li class="divider"></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                    <select id="selectmodulo" name="selectmodulo">
+                                        {% for modulo in mod %}
+                                            <option value="{{ modulo.idmodulo }}">{{ modulo.nombremodulo }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <br>
                                 <div class="form-group col-sm-6">

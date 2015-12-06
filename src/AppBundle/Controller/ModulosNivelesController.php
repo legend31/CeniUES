@@ -177,7 +177,7 @@ class ModulosNivelesController extends Controller{
      */
     public function newNivelAction(){
         $repo = $this->getDoctrine()->getRepository('AppBundle:Modulo');
-        $fecha = strtotime('now');
+        $fecha = date('Y-m-d');
         $mod = $repo->modulosxfecha($fecha);
         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
     }
@@ -189,16 +189,30 @@ class ModulosNivelesController extends Controller{
     public function agregarNivelAction(Request $request){
         $em= $this->getDoctrine()->getManager();
         $niv = $em->getRepository('AppBundle:Nivel');
-        if($request->isMethod("POST")){
-            $niv= new Nivel();
-            $niv->setNombrenivel($request->get("nombreNivel"));
-            $em->persist($niv);
-            $em->flush();
-
+        $res = $niv->prueba(7,3);
+        $res2 = var_dump(implode($res,array()));
+        $this->mensajeflash('valor'.$res2);
+        return $this->redirectToRoute('newnivel');
+        /*if($request->isMethod("POST")){
+            $auxfini = $request->get('fini');
+            $auxffin = $request->get('ffin');
+            $duracion = strtotime($auxffin)-strtotime($auxfini);
+            $fechai = date_create_from_format('Y-m-d',$auxfini);
+            $fechaf = date_create_from_format('Y-m-d',$auxffin);
+            if($duracion>0) {
+                $auxmod = $em->getRepository('AppBundle:Modulo')->findBy($request->get('selectmodulo'));
+                $niv = new Nivel();
+                $niv->setNombrenivel($request->get("nombreNivel"));
+                $em->persist($niv);
+                $em->flush();
+            }else{
+                $this->mensajeflash('No se pudo ingresar nivel la fecha de finalizacion debe ser mayor que la de inicio');
+                $this->redirectToRoute('newnivel');
+            }
             return $this->redirectToRoute('newnivel');
         }
 
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');*/
     }
 
     private function mensajeflash($m){

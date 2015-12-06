@@ -18,4 +18,12 @@ class NivelRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('carnet',1 )
             ->getResult();
     }
+
+    /*public function prueba($nota,$nivel){
+        return $this->getEntityManager()->createQuery(
+            'SELECT COUNT(ra.alumnoCarnetalumno) FROM AppBundle:Recordalumno ra, AppBundle:Record r
+             INNER JOIN r.recordalumnorecordalumno rai
+             WHERE ra.notafinal = :nota AND r.nivelnivel = :nivel'
+        )->setParameter('nota',$nota)->setParameter('nivel',$nivel)->getResult();
+    }*/
 }
