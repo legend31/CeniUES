@@ -74,7 +74,7 @@ class ModulosNivelesController extends Controller{
             $auxffin = $request->get('ffin');
             $fechai = date_create_from_format('Y-m-d',$auxfini);
             $fechaf = date_create_from_format('Y-m-d',$auxffin);
-            $modulos = $repmod->findOneBy(array('nombremodulo'=>$auxnombre,'fechainicio'=>$fechai));
+            $modulos = $repmod->buscarmodulos1($fechai,$auxnombre);
             if($modulos == null) {
                 $var = strtotime($auxffin) - strtotime($auxfini);
                 if ($var > 0) {
@@ -93,7 +93,7 @@ class ModulosNivelesController extends Controller{
                     return $this->redirectToRoute('newmodulo');
                 }
             }else{
-                $this->mensajeflash('No se pudo ingresar modulo: Hay un modulo con el mismo nombre y con la misma fecha de inicio almacenado');
+                $this->mensajeflash('No se pudo ingresar modulo: Hay un modulo con el mismo nombre o con la misma fecha de inicio almacenado verificar fechas de fiinalizacion de ultimo modulo');
                 return $this->redirectToRoute('newmodulo');
             }
         }//return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
@@ -176,7 +176,10 @@ class ModulosNivelesController extends Controller{
      * @Route("/admin/newnivel", name="newnivel")
      */
     public function newNivelAction(){
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $fecha = strtotime('now');
+        $mod = $repo->modulosxfecha($fecha);
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
     }
 
     //FUNCION ENCARGADA DE INGRESAR EL NIVEL ESCRITO EN PANTALLA
@@ -185,6 +188,7 @@ class ModulosNivelesController extends Controller{
      */
     public function agregarNivelAction(Request $request){
         $em= $this->getDoctrine()->getManager();
+        $niv = $em->getRepository('AppBundle:Nivel');
         if($request->isMethod("POST")){
             $niv= new Nivel();
             $niv->setNombrenivel($request->get("nombreNivel"));
