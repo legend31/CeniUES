@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Seccion;
 use Ob\HighchartsBundle\Highcharts\Highchart;
@@ -10,13 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RecordController extends Controller
+class RecordController extends DSIController
 {
     /**
      * @Route("/aprobadosGrafico",name="graficoAprobados")
      */
     public function aprobadosAction()
     {
+        //Creando y configurando el grafico
         $ob = new Highchart();
         $ob->chart->renderTo('linechart');
         $ob->title->text('Porcentaje de Aprobados/Reporobados');
@@ -26,7 +28,7 @@ class RecordController extends Controller
             'dataLabels'    => array('enabled' => true,'format'=>'<b>{point.name}</b>: {point.percentage:.1f} %'),
             'showInLegend'  => true
         ));
-        //Logica
+        //Logica de los datos
         $em=$this->getDoctrine()->getManager();
         $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1));
         $total=0;
@@ -126,8 +128,9 @@ class RecordController extends Controller
      */
     public function graficosAction(Request $request){
         $em=$this->getDoctrine()->getManager();
-        $niveles=$em->getRepository('AppBundle:Nivel')->findAll();
 
+        //$niveles=$em->getRepository('AppBundle:Nivel')->findAll();
+        $niveles=$this->obtenerNivelesActivos();
         $ob=$this->graficoAprobados(0);
         if($request->isMethod("POST")){
             if($request->get('grafico')=='aprob') {
@@ -157,34 +160,11 @@ class RecordController extends Controller
         return $ob;
     }
     private  function graficoAprobados($nivel){
-        /*$ob=$this->graficoPastel();
-        $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados');
-        //Logica
-        $em=$this->getDoctrine()->getManager();
-        $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1));
-        $total=0;
-        $aprob=0;
-        foreach($matricula as $mat)
-        {
-            $record_A=$em->getRepository('AppBundle:Recordalumno')->findOneBy(array('alumnoCarnetalumno'=>$mat->getAlumnoCarnetalumno()));
-            if($record_A)
-            {
-                if($record_A->getNotafinal()>=7)
-                    $aprob++;
-            }
-            $total++;
-        }
-        $prom=round($aprob/$total,2);
-        $np=1-$prom;
-        //Data a Enviar
-        $data = array(
-            array('Alumnos Aprobados '.$aprob, $prom),
-            array('Alumnos Reprobados '.($total-$aprob), $np),
-        );
-        $ob->series(array(array('type' => 'pie','name' => 'Porcentaje', 'data' => $data)));
-        return $ob;*/
         $ob=$this->graficoPastel();
-        $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados');
+        if($nivel==0)
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en CENIUES ');
+        else
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en Nivel '.$nivel);
         //Logica
         $em=$this->getDoctrine()->getManager();
         if($nivel==0)

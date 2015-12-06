@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Detalleevaluacion;
 use AppBundle\Entity\Matricula;
 use AppBundle\Entity\Alumno;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MatriculaController extends Controller
+class MatriculaController extends DSIController
 {
     /**
      * @Route("/desma",name="desma")
@@ -113,6 +114,7 @@ class MatriculaController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         if($request->isMethod("POST")){
             $padre=$em->getRepository('AppBundle:Padre')->findOneBy(array('nombrepadre'=>$request->get("nombreP")));
+            //Validacion del padre
             if($padre)
             {
                 $this->MensajeFlash('fracaso',"Padres ya se encuentran en sistema!");
@@ -199,7 +201,8 @@ class MatriculaController extends Controller
      */
     public function matriculaAntiguaAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
-        $nivel=$em->getRepository('AppBundle:Nivel')->findAll();
+        //$nivel=$em->getRepository('AppBundle:Nivel')->findAll();
+        $nivel=$this->obtenerNivelesActivos();
         //Formulario
         if($request->isMethod("POST"))
         {
@@ -243,7 +246,8 @@ class MatriculaController extends Controller
     public function examenColocacionAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         //Para el combo del formulario
-        $niveles=$em->getRepository('AppBundle:Nivel')->nivelesColocacion();
+        //$niveles=$em->getRepository('AppBundle:Nivel')->nivelesColocacion();
+        $niveles=$this->obtenerNivelesActivos();
         $eva=$em->getRepository('AppBundle:Evaluacion')->findAll();
         if($request->isMethod("POST")){
             $mat=$em->getRepository('AppBundle:Matricula')->verificarMatricula($request->get('carnet'),$request->get('recibo'));
@@ -278,6 +282,7 @@ class MatriculaController extends Controller
         }
         return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig',array('niveles'=>$niveles));
     }
+    //JSon que uso para el Autocompletado
     /**
      * @Route("/json")
      */
@@ -327,7 +332,6 @@ class MatriculaController extends Controller
      * @Route("/fecha")
      */
     public function FechaAction(){
-
         $fecha="1992-03-31 00:00:00";
         $segundos=strtotime('now') - strtotime($fecha);
         $diferencia_dias=intval($segundos/60/60/24/365);
@@ -335,57 +339,4 @@ class MatriculaController extends Controller
         return new Response();
     }
 
-    //Metodos Privados
-    public function MensajeFlash($nombre,$mensaje){
-        $this->get('session')->getFlashBag()->add(
-            ''.$nombre,
-            ''.$mensaje
-        );
-    }
-    //Funciones privadas de Ingreso por Examen de colocacion
-    private  function ingresarNotas($em,$carnet,$eva,$nota,$detalle){
-        $alumno=$em->getRepository('AppBundle:Alumno')->findOneBy(array('carnetalumno'=>$carnet));
-        //Creacion del resultado
-        $resultado=new Resultadoevaluacion();
-        $resultado->setAlumnoCarnetalumno($alumno);
-        $resultado->setDetalleevaluaciondetalleevaluacion($detalle);
-        $resultado->setEvaluacionevaluacion($eva);
-        //la nota del formulario
-        $resultado->setNota($nota);
-        //Peristencia
-        $em->persist($detalle);
-        $em->persist($resultado);
-        $em->flush();
-    }
-    private function crearDetalle($em,$n,$modulo){
-        //Docente
-        $docente=$em->getRepository('AppBundle:Docente')->find("DC00002");
-        //Verificando el modulo
-
-        $nivel=$em->getRepository('AppBundle:Nivel')->find($n);
-        //creacion del detalle de evaluacion
-        $resul=$em->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('docenteCarnetdocente'=>$docente,'modulomodulo'=>$modulo,'nivelnivel'=>$nivel));
-        if($resul)
-            return $resul;
-        else{
-            $detalle=new Detalleevaluacion();
-            $detalle->setDocenteCarnetdocente($docente);
-            $detalle->setModulomodulo($modulo);
-            $detalle->setNivelnivel($nivel);
-            //persistencia
-            $em->persist($detalle);
-            $em->flush();
-            $resul=$em->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('docenteCarnetdocente'=>$docente,'modulomodulo'=>$modulo,'nivelnivel'=>$nivel));
-            return $resul;
-        }
-    }
-    private  function crearRecord($em,$eva,$request,$modulo){
-        $n=$request->get('nivel');
-        for($i=1;$i<$n;$i++){
-            $detalle=$this->crearDetalle($em,$i,$modulo);
-            foreach($eva as $evaluaciones){
-                $this->ingresarNotas($em,$request->get('carnet'),$evaluaciones,$request->get('nota'),$detalle);
-            }
-        }
-    }
 }

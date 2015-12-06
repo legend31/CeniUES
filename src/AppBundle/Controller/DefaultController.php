@@ -88,4 +88,11 @@ class DefaultController extends Controller
             }
         }
     }
+    /**
+     * @Route("buscarM")
+     */
+    public  function buscarM(){
+        $moduloActivo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo(new \DateTime("now"));
+        return $this->render('AppBundle:seccion:niveles-activos.html.twig',array('moduloActivo'=>$moduloActivo));
+    }
 }

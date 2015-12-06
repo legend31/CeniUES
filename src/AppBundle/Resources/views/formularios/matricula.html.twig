@@ -45,7 +45,7 @@
                 <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
                 <div class="col-sm-4">
                     <select id ="selectNivel"name="nivel">
-                        {% for item in niveles %}
+                        {% for item in niveles.nivelnivel %}
                             <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
                         {% endfor %}
                     </select>
