@@ -1,37 +1,75 @@
 $(document).on("ready", inicio);
 
+/**
+ * Para validar campo debes crear la llama en la funcion inicio, entre las comillas meter despues del # el id del input que quieres
+ * validar si el campo tiene un formato existente solo llamar a la funcion correspondiente dentro del metodo keyup()
+ * para formar la funcion solo concatenar a la palabra 'validar' el campo que nos interes con la primera letra mayuscula, asi para
+ * validar un nombre validarNombre, un correo validarEmail, un carnet validarCarnet; el apellido tambien puede ser validado con
+ * el metodo de validarNombre su el metodo que quieres validar no existe crearlo :v att. Fredy
+ */
+
 function inicio() {
+    /*Nombres Generales Para validar*/
+    $("#nombre").keyup(validarNombre);
+    $("#apellido").keyup(validarNombre);
+    $("#dui").keyup(validarDui);
+    $("#carnet").keyup(validarCarnet);
+    $("#direccion").keyup(validarDireccion);
+    $("#telefono").keyup(validarTelefono);
+    $("#email").keyup(validarEmail);
+
+    /*Funciones Fredy*/
     $("#form_nombredocente").keyup(validarNombre);
-    $("#form_apellidodocente").keyup(validarApellidos);
+    $("#form_apellidodocente").keyup(validarNombre);
     $("#form_dui").keyup(validarDui);
+    $("#form_carnetdocente").keyup(validarCarnet);
     $("#form_direcciondocente").keyup(validarDireccion);
     $("#form_telefonodocente").keyup(validarTelefono);
-    $("#form_carnetdocente").keyup(validarCarnet);
     $("#form_email").keyup(validarEmail);
-    $("#carnet").keyup(validCar);
+    $("#carnetB").keyup(validarCarnetBusqueda);
+
+    /*Funciones Fer*/
+    $("#inputPadre").keyup(validarNombre);
+    $("#inputMadre").keyup(validarNombre);
+    $("#inputNombre").keyup(validarNombre);
+    $("#momjob").keyup(validarDireccion);
+    $("#inputTrabajoP").keyup(validarDireccion);
+    $("#inTelPadre").keyup(validarTelefono);
+    $("#momtel").keyup(validarTelefono);
+    $("#inputRecibo").keyup(validarRecibo);
+    $("#form_Carnet").keyup(validarCarnet);
+    $("#inputP").keyup(validarNombre);
+    $("#inputtel").keyup(validarTelefono);
+    $("#inputCarnet").keyup(validarCarnet);
+    $("#inputPrimer").keyup(validarNombre);
+    $("#inputSegundo").keyup(validarNombre);
+    $("#inputPrimerApe").keyup(validarNombre);
+    $("#inputSegApe").keyup(validarNombre);
+    $("#inputRespon").keyup(validarNombre);
+    $("#inputPa").keyup(validarNombre);
+    $("#inputNota").keyup(validarNota);
+
+    /*Funciones William*/
 }
 
-function validCar() {
-    var valor= document.getElementById("carnet").value;
-    var caracteres;
-    var numeros;
-    if(valor.length<=7) {
-        caracteres = valor.substring(0,1);
-        numeros = valor.substring(2,7);
-    }
-    if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
-        $("#carnet").parent().attr("class","input-group has-success has-feedback");
-        $("#carnet").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+function validarNombre() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+
+    if(valor.length < 3) {
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        return false;
     }
     else {
-        $("#carnet").parent().attr("class","input-group has-error has-feedback");
-        $("#carnet").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
-        return false;
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
 }
 
 function validarCarnet() {
-    var valor= document.getElementById("form_carnetdocente").value;
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
     var caracteres;
     var numeros;
     if(valor.length<=7) {
@@ -39,90 +77,115 @@ function validarCarnet() {
         numeros = valor.substring(2,7);
     }
     if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
-        $("#form_carnetdocente").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_carnetdocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_carnetdocente").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_carnetdocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
 }
 
-function validarNombre() {
-    var valor= document.getElementById("form_nombredocente").value;
-    if(valor.length < 3) {
-        $("#form_nombredocente").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_nombredocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
-        return false;
+function validarCarnetBusqueda() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    var caracteres;
+    var numeros;
+    if(valor.length<=7) {
+        caracteres = valor.substring(0,1);
+        numeros = valor.substring(2,7);
+    }
+    if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
+        $("#"+id).parent().attr("class","input-group has-success");
     }
     else {
-        $("#form_nombredocente").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_nombredocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
-    }
-}
-
-function validarApellidos() {
-    var valor= document.getElementById("form_apellidodocente").value;
-    if(valor.length < 3) {
-        $("#form_apellidodocente").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_apellidodocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        $("#"+id).parent().attr("class","input-group has-error");
         return false;
-    }
-    else {
-        $("#form_apellidodocente").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_apellidodocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
-    }
-}
-
-function validarDireccion() {
-    var valor= document.getElementById("form_direcciondocente").value;
-    if(valor.length == 0) {
-        $("#form_direcciondocente").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_direcciondocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
-        return false;
-    }
-    else {
-        $("#form_direcciondocente").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_direcciondocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
 }
 
 function validarDui() {
-    var valor= document.getElementById("form_dui").value;
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
     if(valor[8]=='-' && valor.length==10 ) {
-        $("#form_dui").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_dui").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_dui").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_dui").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
 }
 
-function validarTelefono() {
-    var valor= document.getElementById("form_telefonodocente").value;
-    if(valor[4]=='-' && valor.length==9 ) {
-        $("#form_telefonodocente").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_telefonodocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+function validarDireccion() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    if(valor.length == 0) {
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        return false;
     }
     else {
-        $("#form_telefonodocente").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_telefonodocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+    }
+}
+
+function validarTelefono() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    if(valor[4]=='-' && valor.length==9 ) {
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+    }
+    else {
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
 }
 
 function validarEmail() {
-    var valor= document.getElementById("form_email").value;
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
     if(valor.indexOf('@')>0 && valor.indexOf('.') > 0 && (valor.length-valor.indexOf('.') > 2)) {
-        $("#form_email").parent().attr("class","col-sm-6 has-success has-feedback");
-        $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_email").parent().attr("class","col-sm-6 has-error has-feedback");
-        $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
+    }
+}
+
+function validarRecibo() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    if(valor[0]=='R' && valor[1]=='-' && valor.length==6) {
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+    }
+    else {
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        return false;
+    }
+}
+
+function validarNota() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+
+    if(valor >= 0.00 && valor <= 10.00) {
+        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+        return false;
+    }
+    else {
+        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
     }
 }
