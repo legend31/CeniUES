@@ -28,7 +28,7 @@ class DocenteController extends Controller
         if($request->isMethod("POST")) {
             $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("carnet"));
             $docente = array($docentes);
-            if(!$docente)
+            if(!$docentes)
             {
                 return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
             }
@@ -41,6 +41,12 @@ class DocenteController extends Controller
             }
             elseif($request->get('estado') == 2) {
                 return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>2 )));
+            }
+            elseif($request->get('estado') == 4) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>4 )));
+            }
+            elseif($request->get('estado') == 5) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>5 )));
             }
             elseif(!$docentes)
             {
@@ -83,7 +89,7 @@ class DocenteController extends Controller
             $u->setIsactive(1);
             $u->setTipoUsuariotipoUsuario($em->getRepository('AppBundle:TipoUsuario')->find(3));
             $u->setEmailusuario($request->get("edoc"));
-            //Cifra la contraseñ
+            //Cifra la contraseña
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($u);
             $password = $encoder->encodePassword($request->get("cdoc"), $u->getSalt());
@@ -108,14 +114,61 @@ class DocenteController extends Controller
     }
 
     /**
-     * @Route("/admin/mdocente", name="modificarD")
+     * @Route("/admin/mdocente/{carnet}", name="modificarD")
      */
-    public function modificarDocenteAction(Request $request)
+    public function modificarDocenteAction(Request $request, $carnet)
     {
         $em = $this->getDoctrine()->getManager();
-        $html = $this->container->get('templating')->render('AppBundle:docente:cruddocente.html.twig', array('TituloPagina' => 'Consultar Docente','form' => $form->createView()));
+        if($request->isMethod("POST")) {
+            //verificar existencia
+            if($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
+                return $this->redirectToRoute('dhome', array('estado'=>4));
+            }
 
-        return new Response($html);
+            //Actualizando docente
+            $d = $em->getRepository('AppBundle:Docente')->find($carnet);
+            $d->setNombredocente($request->get("ndoc"));
+            $d->setApellidodocente($request->get("adoc"));
+            $d->setDui($request->get("ddoc"));
+            $d->setDirecciondocente($request->get("ddoc"));
+            $d->setCarnetdocente($request->get("cdoc"));
+            $d->setTelefono($request->get("tdoc"));
+            $d->setFechanacimiento(new \DateTime($request->get("fdoc")));
+            $d->setEstado(1);
+
+            $em->persist($d);
+            $em->flush();
+
+            //Modificando usuario docente
+            if($this->getDoctrine()->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$request->get("cdoc")))) {
+                $u = $em->getRepository('AppBundle:Usuario')->findOneBy(array('carnetdocente'=>$carnet));
+            }
+            else { //crear usuario si no existe
+                $u = new Usuario();
+            }
+
+            $u->setNomusuario($request->get("cdoc"));
+            $u->setIsactive(1);
+            $u->setTipoUsuariotipoUsuario($em->getRepository('AppBundle:TipoUsuario')->find(3));
+            $u->setEmailusuario($request->get("edoc"));
+            //Cifra la contraseña
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($u);
+            $password = $encoder->encodePassword($request->get("cdoc"), $u->getSalt());
+            $u->setPassword($password);
+
+            $em->persist($u);
+            $em->flush();
+
+            return $this->redirectToRoute('dhome', array('estado'=>5));
+        }
+        else {
+            $docentes = $em->getRepository('AppBundle:Docente')->findOneBy(array('carnetdocente'=>$request->get("carnet")));
+            $email = $this->getDoctrine()->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$request->get("carnet")));
+            $html = $this->container->get('templating')->render('AppBundle:docente:pdoc.html.twig', array('docente' => $docentes, 'correo' => $email, 'carnet' => $carnet));
+
+            return new Response($html);
+        }
     }
 
     /**
@@ -123,18 +176,46 @@ class DocenteController extends Controller
      */
     public function docenteNivelAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $docentes = $em->getRepository('AppBundle:Docente')->findAll('primernombredocente');
+        $em = $this->getDoctrine()->getManager();
+        $docentes = $em->getRepository('AppBundle:Docente')->findAll();
         $locales = $em->getRepository('AppBundle:Local')->findAll();
         $niveles = $em->getRepository('AppBundle:Nivel')->findAll();
-        $seccion = $em->getRepository('AppBundle:Seccion')->findAll();
+        $secciones = $em->getRepository('AppBundle:Seccion')->findAll();
+        $clases = $em->getRepository('AppBundle:Clase')->findAll();
 
-        if(!$docentes||!$locales||!$niveles)
+        if(!$docentes)
         {
-            throw $this->createNotFoundException('No se encontro ningun dato relacionado');
+            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>1)));
+        }
+        elseif(!$locales||!$niveles)
+        {
+            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>2)));
+        }
+        elseif(!$niveles)
+        {
+            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>3)));
+        }
+        elseif(!$secciones)
+        {
+            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>4)));
+        }
+        elseif(!$clases)
+        {
+            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>5)));
         }
 
-        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes)));
+        /*foreach($docentes as $docente){
+            foreach($locales as $local) {
+                foreach($niveles as $nivel) {
+                    foreach($secciones as $seccion) {
+                        foreach($clases as $clase){
+                        }
+                    }
+                }
+            }
+        }*/
+
+        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>null)));
     }
 
     /**
@@ -143,7 +224,7 @@ class DocenteController extends Controller
     public function eliminarDocenteAction(Request $request)
     {
         $id = $request->get("carnet");
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         $em->persist($id);
         $em->flush();
         return $this->redirectToRoute('dhome');
@@ -173,12 +254,14 @@ class DocenteController extends Controller
         $repo = $this->getDoctrine()->getRepository('AppBundle:Docente');
         $docente = $repo->findOneBy(array('carnetdocente'=>$carnet));
 
-        return new JsonResponse(array("carnetdoc"=>$docente->getCarnetdocente(),
+        $envio = array("carnetdoc"=>$docente->getCarnetdocente(),
             "nombre"=>$docente->getNombredocente(),
             "apellido"=>$docente->getApellidodocente(),
             "dui"=>$docente->getDui(),
             "direccion"=>$docente->getDirecciondocente(),
             "fnac"=>$docente->getFechanacimiento()->format('Y-m-d'),
-            "ntel"=>$docente->getTelefono()));
+            "ntel"=>$docente->getTelefono());
+
+        return new JsonResponse($envio);
     }
 }

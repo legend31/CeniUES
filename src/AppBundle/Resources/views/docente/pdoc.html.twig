@@ -4,82 +4,88 @@
 
 {% block principal %}
     <section class="content-header">
-        <h1>
-            Nuevo docente<br>
-            <small>Digite los datos que se le solicitan en el siguiente formulario:</small>
-        </h1><br>
+        <h1>Modificar docente {{ docente.carnetdocente }}</h1><br>
         <!-- INICIO -->
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="box box-success">
+            <div class="box box-warning">
                 <div class="box-header with-border">
                     <h3 class="box-title">Datos personales</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('agregarD') }}">
+                <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('modificarD',{'carnet':carnet}) }}">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="form_nombredocente" class="col-sm-3 control-label">Nombre</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control letras" id="form_nombredocente" name="ndoc" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control letras" id="form_nombredocente" name="ndoc" value="{{ docente.nombredocente }}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.getNombreDocente }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_apellidodocente" class="col-sm-3 control-label">Apellido</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" value="{{ docente.apellidodocente }}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.getApellidoDocente }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_dui" class="col-sm-3 control-label"> DUI </label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" maxlength=10 onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" value="{{ docente.dui }}" maxlength=10 onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.getDui }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_carnetdocente" class="col-sm-3 control-label"> Carnet </label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" maxlength=7 pattern="[A-Z]{2}[0-9]{5}" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" value="{{ docente.carnetdocente }}" maxlength=7 pattern="[A-Z]{2}[0-9]{5}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.getCarnetDocente }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_fechanacimiento" class="col-sm-3 control-label"> Fecha de Nacimiento</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <input type="date" class="form-control" id="form_fechanacimiento" name="fdoc" required>
                             </div>
+                            <span class="text-red"> </span>
                         </div>
                         <div class="form-group">
                             <label for="form_direcciondocente" class="col-sm-3 control-label"> Direcci&oacute;n de residencia </label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" value="{{ docente.direcciondocente }}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.direcciondocente }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" value="{{ docente.telefono }}" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red"> {{ docente.telefono }}* </span>
                         </div>
                         <div class="form-group">
                             <label for="form_direcciondocente" class="col-sm-3 control-label"> Correo electr&oacute;nico </label>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" id="form_email" name="edoc" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
+                            <div class="col-sm-4">
+                                <input type="email" class="form-control" id="form_email" name="edoc" value="{% if correo %}{{ correo.emailusuario }} {% endif %}" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
                                 <span class="form-control-feedback"></span>
                             </div>
+                            <span class="text-red">{% if correo %}{{ correo.emailusuario }}* {% endif %}</span>
                         </div>
+                        <span class="help-block text-red"> * valores actuales</span>
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
                         <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
                         <div class="form-group">
                             <div class="col-sm-offset-0 col-sm-2">
-                                <button class="btn bg-green-gradient" id="validar" type="submit"><i class="fa fa-save"> Guardar</i></button>
+                                <button class="btn bg-green-gradient" id="validar" type="submit"><i class="fa fa-save"> Actualizar</i></button>
                             </div>
                             <a class="btn btn-default bg-red-gradient" href="{{ path('dhome') }}">
                                 <i class="fa fa-close"></i> Cancelar
@@ -94,7 +100,7 @@
     {% block javascript2 %}
         <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
         <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+        <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion2.js') }}"></script>
         <script>
             $(".letras").keypress(function (key) {
                 window.console.log(key.charCode)

@@ -13,7 +13,7 @@
                             <div class="input-group" style="width: 350px;">
                                 <form role="form" method="post" action="{{ path('dhome') }}">
                                     <div class="input-group" style="width: 250px;">
-                                        <input type="text" name="carnet" id="carnet" class="form-control input-sm pull-right" placeholder="Buscar">
+                                        <input type="text" name="carnet" id="carnet" class="form-control input-sm pull-right" placeholder="Buscar" maxlength="7" pattern="[A-Z]{2}[0-9]{5}">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i></button>
                                         </div>
@@ -38,13 +38,23 @@
                         </div>
                     {% elseif mensaje == 3 %}
                         <div class="alert alert-warning alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                             <h4><i class="icon fa fa-warning"></i> No se encontro ning&uacute;n docente</h4>
+                        </div>
+                    {% elseif mensaje == 4 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser actualizado por que ya existe uno con el mismo c&oacute;digo.
+                        </div>
+                    {% elseif mensaje == 5 %}
+                        <div class="alert alert-success alert-dismissable">
+                            <h4><i class="icon fa fa-check"></i> Docente actualizado</h4>
+                            El docente fue actualizado correctamente.
                         </div>
                     {% endif %}
 
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
+                            {% if mensaje != 3 %}
                             <thead>
                                     <th>Carnet</th>
                                     <th>Apellidos</th>
@@ -54,7 +64,6 @@
                                     <th>Opciones</th>
                             </thead>
                             <tbody>
-                            {% if mensaje != 3 %}
                                 {% for entity in docentes %}
                                     <tr>
                                         <td>{{ entity.carnetdocente }}</td>
@@ -64,7 +73,7 @@
                                         <td>{{ entity.getTelefono }}</td>
                                         <td>
                                             <div class="fc-button-group">
-                                                <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.carnetdocente }})">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.getCarnetDocente }})">
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
@@ -72,38 +81,16 @@
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
 
-                                                <a class="btn btn-default">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#eliminar" onclick="">
                                                     <i class="fa fa-close"></i>
-                                                </a>
+                                                </span>
                                             </div>
-                                            <!--<div class="fc-button-group">
-                                                <button class="btn btn-default btn-sm" onclick="" data-targett="#detalles-modal" data-toggle="modal"><i class="fa fa-eye"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-target="#eliminar" data-toggle="modal" title="" data-original-title="Eliminar"><i class="fa fa-trash"></i></button>
-
-                                                <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria_hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4>Eliminar docente</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                &iquest;Est&aacute; seguro que desea eliminar al docente ?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a class="btn btn-default bg-red-gradient" href="#"> Eliminar </a>
-                                                                <a class="btn btn-default pull-right" data-dismiss="modal"> Cancelar </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>-->
                                         </td>
                                     </tr>
                                 {% endfor %}
-                            {% endif %}
                             </tbody>
+
+                            {% endif %}
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -196,19 +183,41 @@
      </div>
     <!-- Fin Modal Detalles-->
 
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria_hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Eliminar docente</h4>
+                </div>
+                <div class="modal-body">
+                    &iquest;Est&aacute; seguro que desea eliminar al docente?
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default bg-red-gradient" href="{{ path('eliminarD') }}"> Eliminar </a>
+                    <a class="btn btn-default pull-right eliminar" data-dismiss="modal"> Cancelar </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin modal eliminar -->
+
     <!-- fIN modales -->
 {% endblock %}
 
 {% block javascript2 %}
-    <!--<script href="https://code.jquery.com/jquery.js"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/boostrap.min.js') }}"></script>-->
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
     <script>
-        function detallesDocentes(id){
+        function detallesDocentes(car){
             $.ajax({
                 url:'{{ path('detallesD') }}',
                 type: 'POST',
-                data: { carnet:id },
+                data: {carnetdocente:car},
                 success:function(response){
+
                     $('#carnet').val(response.carnetdoc);
                     $('#nombres').val(response.nombre);
                     $('#apellidos').val(response.apellido);
@@ -219,5 +228,10 @@
                 }
             })
         }
+    </script>
+    <script>
+            $('#delete').on('show.bs.modal', function(e) {
+                $(this).find('.eliminar').attr("href", $(e.relatedTarget).data('href'));
+            });
     </script>
 {% endblock %}

@@ -8,26 +8,6 @@ function inicio() {
     $("#form_telefonodocente").keyup(validarTelefono);
     $("#form_carnetdocente").keyup(validarCarnet);
     $("#form_email").keyup(validarEmail);
-    $("#carnet").keyup(validCar);
-}
-
-function validCar() {
-    var valor= document.getElementById("carnet").value;
-    var caracteres;
-    var numeros;
-    if(valor.length<=7) {
-        caracteres = valor.substring(0,1);
-        numeros = valor.substring(2,7);
-    }
-    if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
-        $("#carnet").parent().attr("class","input-group has-success has-feedback");
-        $("#carnet").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
-    }
-    else {
-        $("#carnet").parent().attr("class","input-group has-error has-feedback");
-        $("#carnet").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
-        return false;
-    }
 }
 
 function validarCarnet() {
@@ -39,11 +19,11 @@ function validarCarnet() {
         numeros = valor.substring(2,7);
     }
     if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
-        $("#form_carnetdocente").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_carnetdocente").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_carnetdocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_carnetdocente").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_carnetdocente").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_carnetdocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
@@ -52,12 +32,12 @@ function validarCarnet() {
 function validarNombre() {
     var valor= document.getElementById("form_nombredocente").value;
     if(valor.length < 3) {
-        $("#form_nombredocente").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_nombredocente").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_nombredocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
     else {
-        $("#form_nombredocente").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_nombredocente").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_nombredocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
 }
@@ -65,12 +45,12 @@ function validarNombre() {
 function validarApellidos() {
     var valor= document.getElementById("form_apellidodocente").value;
     if(valor.length < 3) {
-        $("#form_apellidodocente").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_apellidodocente").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_apellidodocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
     else {
-        $("#form_apellidodocente").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_apellidodocente").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_apellidodocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
 }
@@ -78,12 +58,12 @@ function validarApellidos() {
 function validarDireccion() {
     var valor= document.getElementById("form_direcciondocente").value;
     if(valor.length == 0) {
-        $("#form_direcciondocente").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_direcciondocente").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_direcciondocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
     else {
-        $("#form_direcciondocente").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_direcciondocente").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_direcciondocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
 }
@@ -91,11 +71,11 @@ function validarDireccion() {
 function validarDui() {
     var valor= document.getElementById("form_dui").value;
     if(valor[8]=='-' && valor.length==10 ) {
-        $("#form_dui").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_dui").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_dui").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_dui").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_dui").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_dui").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
@@ -104,11 +84,11 @@ function validarDui() {
 function validarTelefono() {
     var valor= document.getElementById("form_telefonodocente").value;
     if(valor[4]=='-' && valor.length==9 ) {
-        $("#form_telefonodocente").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_telefonodocente").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_telefonodocente").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_telefonodocente").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_telefonodocente").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_telefonodocente").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
@@ -117,11 +97,11 @@ function validarTelefono() {
 function validarEmail() {
     var valor= document.getElementById("form_email").value;
     if(valor.indexOf('@')>0 && valor.indexOf('.') > 0 && (valor.length-valor.indexOf('.') > 2)) {
-        $("#form_email").parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#form_email").parent().attr("class","col-sm-4 has-success has-feedback");
         $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#form_email").parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#form_email").parent().attr("class","col-sm-4 has-error has-feedback");
         $("#form_email").parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
