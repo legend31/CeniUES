@@ -78,7 +78,7 @@
                                         <td>{{ entity.getTelefono }}</td>
                                         <td>
                                             <div class="fc-button-group">
-                                                <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.getCarnetDocente }})">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.dui }})">
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
@@ -205,9 +205,10 @@
                 </div>
                 <div class="modal-body">
                     &iquest;Est&aacute; seguro que desea deshabilitar al docente <b name="carac" id="elim"></b>?
+                    <input type="text" name="crnE" id="crnE" value="" readonly hidden>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-default bg-red-gradient eliminado" href="{{ path('eliminarD',{'carnet': 'CR11005'}) }}"> Eliminar </a>
+                    <button class="btn btn-default bg-red-gradient" id="eliminar" type="submit"><i class="fa fa-save"> Eliminar</i></button>
                     <a class="btn btn-default pull-right" data-dismiss="modal"> Cancelar </a>
                 </div>
             </div>
@@ -224,17 +225,16 @@
     <!--<script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>-->
     <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
     <script>
-        function detallesDocentes(car){
+        function detallesDocentes(dui){
             $.ajax({
                 url:'{{ path('detallesD') }}',
                 type: 'POST',
-                data: {carnetdocente:car},
+                data: { duidocente:dui },
                 success:function(response){
-
                     $('#carnet').val(response.carnetdoc);
                     $('#nombres').val(response.nombre);
                     $('#apellidos').val(response.apellido);
-                    $('#dui').val(response.dui);
+                    $('#dui').val(response.duidoc);
                     $('#address').val(response.direccion);
                     $('#fnacim').val(response.fnac);
                     $('#ntelef').val(response.ntel);
@@ -244,6 +244,7 @@
         $(document).on("click", ".btn",function () {
             var carD = $(this).data('id');
             $("#elim").text(carD);
+            $("#crnE").attr("value",carD);
         });
     </script>
 {% endblock %}

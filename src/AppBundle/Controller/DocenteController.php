@@ -233,8 +233,7 @@ class DocenteController extends Controller
      */
     public function eliminarDocenteAction(Request $request)
     {
-        $id = $request->get("carnet");
-        var_dump($id);
+        $id = $request->get("crnE");
         $em=$this->getDoctrine()->getManager();
         $docente = $em->getRepository('AppBundle:Docente')->find($id);
         $docente->setEstado(0);
@@ -273,16 +272,16 @@ class DocenteController extends Controller
     /**
      * @Route("/admin/detallesD", name="detallesD")
      */
-    public function detallesPorCarnetAction(){
-        $request = $this->get('request');
-        $carnet = $request->get('carnetdocente');
-        $repo = $this->getDoctrine()->getRepository('AppBundle:Docente');
-        $docente = $repo->findOneBy(array('carnetdocente'=>$carnet));
+    public function detallesPorCarnetAction(Request $request){
+        $dui = $request->get('duidocente');
+        $em = $this->getDoctrine()->getManager();
+        //$repo = $em->getRepository('AppBundle:Docente');
+        $docente = $em->getRepository('AppBundle:Docente')->findOneBy(array('dui'=>$dui));
 
         $envio = array("carnetdoc"=>$docente->getCarnetdocente(),
             "nombre"=>$docente->getNombredocente(),
             "apellido"=>$docente->getApellidodocente(),
-            "dui"=>$docente->getDui(),
+            "duidoc"=>$docente->getDui(),
             "direccion"=>$docente->getDirecciondocente(),
             "fnac"=>$docente->getFechanacimiento()->format('Y-m-d'),
             "ntel"=>$docente->getTelefono());
