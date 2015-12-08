@@ -32,7 +32,7 @@ class DocenteController extends Controller
             {
                 return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
             }
-            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente, 'mensaje'=>null));
+            return $this->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docente, 'mensaje'=>10));
         }
         else {
             $docentes = $em->getRepository('AppBundle:Docente')->findAll();
@@ -108,9 +108,19 @@ class DocenteController extends Controller
     /**
      * @Route("/admin/cdocente", name="consultarD")
      */
-    public function consultarDocenteAction()
+    public function consultarDocenteAction(Request $request)
     {
-        return new Response($this->container->get('templating')->render('AppBundle:docente:buscardocente.html.twig'));
+        if($request->isMethod("POST")) {
+            $em = $this->getDoctrine()->getManager();
+            $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("parB"));
+            $docente = array($docentes);
+            if(!$docentes)
+            {
+                return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docentes ));
+            }
+            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docente));
+        }
+        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
     }
 
     /**
@@ -224,8 +234,23 @@ class DocenteController extends Controller
     public function eliminarDocenteAction(Request $request)
     {
         $id = $request->get("carnet");
+        var_dump($id);
         $em=$this->getDoctrine()->getManager();
-        $em->persist($id);
+        $docente = $em->getRepository('AppBundle:Docente')->find($id);
+        $docente->setEstado(0);
+        $em->flush();
+        return $this->redirectToRoute('dhome');
+    }
+
+    /**
+     * @Route("/admin/adocente", name="activarD")
+     */
+    public function activarDocenteAction(Request $request)
+    {
+        $id = $request->get("carnet");
+        $em=$this->getDoctrine()->getManager();
+        $docente = $em->getRepository('AppBundle:Docente')->find($id);
+        $docente->setEstado(1);
         $em->flush();
         return $this->redirectToRoute('dhome');
     }
@@ -263,5 +288,55 @@ class DocenteController extends Controller
             "ntel"=>$docente->getTelefono());
 
         return new JsonResponse($envio);
+    }
+
+    /**
+     * @Route("/defHor", name="definirH")
+     */
+    public function definirHorarioAction(Request $request) {
+        if($request->isMethod("POST")) {
+            $em = $this->getDoctrine()->getManager();
+            if($this->get('security.authorization_checker')->isGranted('ROLE_ADMINISTRADOR')) {
+                $buscar = $em->getRepository("AppBundle:Docente")->find($request->get('parB'));
+                if(!$buscar) {
+                    return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>'2'));
+                }
+                $envio = $buscar->getCarnetdocente();
+                return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>$envio));
+            }
+            else {
+                return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>null));
+            }
+        }
+        elseif($this->get('security.authorization_checker')->isGranted('ROLE_DOCENTE')) {
+            return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>'1'));
+        }
+        else {
+            return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>null));
+        }
+    }
+
+    /**
+     * @Route("/gHor", name="guardarH")
+     */
+    public function guardarHorarioAction(Request $request) {
+        if($request->isMethod("POST")) {
+            $em = $this->getDoctrine()->getManager();
+            $d = $em->getRepository("AppBundle:Docente")->find($request->get('crnt'));
+            if(!$d) {
+                return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>'4'));
+            }
+            $hm = $request->get('horS').":".$request->get('minS')."-am";
+            $hv = $request->get('hor2').":".$request->get('min2')."-pm";
+            $sabD = $request->get('sabD');
+            $domD = $request->get('domD');
+            $d->setDiasD($hm." ".$hv);
+            $d->setHorasD($sabD." ".$domD);
+            $em->flush();
+            return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>'3'));
+        }
+        else {
+            return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>null));
+        }
     }
 }

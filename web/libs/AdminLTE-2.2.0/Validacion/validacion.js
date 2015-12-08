@@ -27,6 +27,7 @@ function inicio() {
     $("#form_telefonodocente").keyup(validarTelefono);
     $("#form_email").keyup(validarEmail);
     $("#carnetB").keyup(validarCarnetBusqueda);
+    $("#carnetH").keyup(validarCarnetH);
 
     /*Funciones Fer*/
     $("#inputPadre").keyup(validarNombre);
@@ -101,6 +102,24 @@ function validarCarnetBusqueda() {
     }
     else {
         $("#"+id).parent().attr("class","input-group has-error");
+        return false;
+    }
+}
+
+function validarCarnetH() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    var caracteres;
+    var numeros;
+    if(valor.length<=7) {
+        caracteres = valor.substring(0,1);
+        numeros = valor.substring(2,7);
+    }
+    if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
+        $("#"+id).parent().attr("class","col-md-3 input-group has-success");
+    }
+    else {
+        $("#"+id).parent().attr("class","col-md-3 input-group has-error");
         return false;
     }
 }
