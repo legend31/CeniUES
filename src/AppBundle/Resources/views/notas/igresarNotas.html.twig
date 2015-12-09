@@ -25,14 +25,14 @@
                         <h3 class="box-title">Administrar Notas</h3>
                     </div>
 
-                    <form role="form">
+                    <form role="form" method="POST" action="{{ path("ingresarnotas") }}">
                         <div class="box-body">
                             <div class="form-group col-sm-12">
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
+
                                         <label>Nivel</label>
-                                        <select class="form-control" id="snivel">
+                                        <select class="form-control" id="snivel" name="snivel">
                                             {% for nivel in niveles %}
                                                 <option value="{{ nivel.idnivel }}">{{ nivel.nombrenivel }}</option>
                                             {% endfor %}
@@ -44,7 +44,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Clase</label>
-                                        <select class="form-control" id="sclase">
+                                        <select class="form-control" id="sclase" name="sclase">
 
                                         </select>
                                     </div>
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <button class="btn btn-info"><a href="{{ path("desplegarnotas") }}"></a>Buscar</button>
+                                            <button class="btn btn-info" type="submit">Buscar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -60,6 +60,7 @@
                         </div>
                     </form>
 
+                    {% if alumnos is defined%}
                     <div class="col-xs-12">
                         <div class="box">
 
@@ -84,16 +85,17 @@
 
                                     </thead>
                                     <tbody>
-
+                                    {% for alumno in alumnos %}
                                     <tr>
                                         <td>1</td>
-                                        <td>Carlos Lopez</td>
+                                        <td>{{ alumno.nombre }}</td>
                                         <td><div contenteditable="true">6.00</div></td>
                                         <td><div contenteditable="true">9.00</div></td>
                                         <td><div contenteditable="true">7.00</div></td>
                                         <td><div contenteditable="true">8.50</div></td>
                                         <td><div contenteditable="true">7.00</div></td>
                                     </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
@@ -101,6 +103,7 @@
                             <!--Finaliza Cuerpo de tabla-->
                         </div>
                     </div>
+                    {% endif %}
 
 
                     <div class="box-footer">
@@ -126,7 +129,7 @@
                         idniv : $(this).val()
                     };
 
-                    $.post("{{ path('ingresarnotas') }}",datos,function(response){
+                    $.post("{{ path('js') }}",datos,function(response){
 
                         var $comboclase = $('#sclase');
 
@@ -134,6 +137,8 @@
 
                         $.each(response,function(i,val){
                             $comboclase.append("<option>"+val+"</option>");
+                            /*var hora = $('#sclase').val();
+                            alert(hora);*/
                         });
                     },'json');
                 }else{
@@ -145,4 +150,5 @@
             });
         });
     </script>
+
 {% endblock %}
