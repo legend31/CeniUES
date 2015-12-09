@@ -71,6 +71,66 @@ class Docente
     private $estado;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="diasDisponibles", type="string", length=25, nullable=true)
+     */
+    private $diasDisponible;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="horasDisponible", type="string", length=25, nullable=true)
+     */
+    private $horasDisponible;
+
+    /**
+     * Set horasDisponible
+     *
+     * @param string $horasDisponible
+     *
+     * @return Docente
+     */
+    public function setHorasD($horasDisponible)
+    {
+        $this->horasDisponible = $horasDisponible;
+        return $this;
+    }
+
+    /**
+     * Get horasDisponible
+     *
+     * @return string
+     */
+    public function getHorasD()
+    {
+        return $this->horasDisponible;
+    }
+
+    /**
+     * Set diasDisponible
+     *
+     * @param string $diasDisponible
+     *
+     * @return Docente
+     */
+    public function setDiasD($diasDisponible)
+    {
+        $this->diasDisponible = $diasDisponible;
+        return $this;
+    }
+
+    /**
+     * Get diasDisponible
+     *
+     * @return string
+     */
+    public function getDiasD()
+    {
+        return $this->diasDisponible;
+    }
+
+    /**
      * Set estado
      *
      * @param integer $estado
@@ -80,7 +140,6 @@ class Docente
     public function setEstado($estado)
     {
         $this->estado = $estado;
-
         return $this;
     }
 
