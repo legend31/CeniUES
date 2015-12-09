@@ -56,8 +56,10 @@
                     <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
                     <div class="col-sm-4">
                         <select id ="selectNivel"name="nivel">
+                            {% set i=0 %}
                             {% for item in niveles.nivelnivel %}
-                                <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                                {% if i!=0 %}<option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>{% endif %}
+                                {% set i=i+1 %}
                             {% endfor %}
                         </select>
                     </div>

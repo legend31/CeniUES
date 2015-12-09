@@ -17,6 +17,46 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!--Impresion de errores-->
+                        <!--Docente no existen-->
+                        {% if error == 1 %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4><i class="icon fa fa-ban"></i> Docentes no existen</h4>
+                                <b>Error</b> no existe ning&uacute;n docente dentro del sistema.
+                            </div>
+
+                        <!--locales no definidos-->
+                        {% elseif error == 2 %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4><i class="icon fa fa-ban"></i> Locales no definidos</h4>
+                                <b>Error</b> debe definir locales para poder asignar donde se impartiran las clases.
+                            </div>
+
+                        <!--niveles no creados-->
+                        {% elseif error == 3 %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4><i class="icon fa fa-ban"></i> Niveles no definidos</h4>
+                                <b>Error</b> debe definir niveles.
+                            </div>
+
+                        <!--secciones no definidas-->
+                        {% elseif error == 4 %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4><i class="icon fa fa-ban"></i> Secciones no definidos</h4>
+                                <b>Error</b> no se pueden definir docentes si no existen secciones para clases.
+                            </div>
+
+                        <!--clases-->
+                        {% elseif error == 5 %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <h4><i class="icon fa fa-ban"></i> Clases no definidos</h4>
+                                <b>Error</b> no se han encontrado grupos de clases en el sistema.
+                            </div>
+
+                        {% endif %}
+                        <!--Fin impresion de errores-->
+
                     </div><!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
@@ -70,9 +110,4 @@
             </div>
         </div>
     </section>
-{% endblock %}
-
-{% block javascript2 %}
-    <script href="https://code.jquery.com/jquery.js"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/boostrap.min.js') }}"></script>
 {% endblock %}

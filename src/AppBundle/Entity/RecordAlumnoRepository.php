@@ -13,9 +13,10 @@ class RecordAlumnoRepository extends \Doctrine\ORM\EntityRepository
     public function numeroNotas($nota)
     {
         return $this->getEntityManager()->createQuery(
-            'SELECT COUNT(r.idrecordalumno)FROM AppBundle:Recordalumno r WHERE r.notafinal = :nota'
+            'SELECT COUNT(r.idrecordalumno)FROM AppBundle:Recordalumno r WHERE r.notafinal >= :nota AND r.notafinal < :notaA'
         )
             ->setParameter('nota',$nota )
+            ->setParameter('notaA',$nota+1 )
             ->getSingleScalarResult();
     }
     public function conNota($nota)

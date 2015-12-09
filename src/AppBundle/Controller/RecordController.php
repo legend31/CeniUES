@@ -99,13 +99,16 @@ class RecordController extends DSIController
         ));*/
     }
     /**
-     * @route("/lineaGrafica/{nivel}",name="graficoAlumno")
-     */
-    public function linealAction($nivel){
+ * @route("/lineaGrafica/{nivel}/{mod}",name="graficoAlumno")
+ */
+    public function linealAction($nivel,$mod){
         //El id es el Nivel
         $em=$this->getDoctrine()->getManager();
-        $niveles=$em->getRepository('AppBundle:Nivel')->findAll();
+        //$niveles=$em->getRepository('AppBundle:Nivel')->findAll();
+        //$niveles=$this->obtenerNivelesActivos();
+        $niveles=$em->getRepository('AppBundle:Modulo')->find($mod);
         $records=$em->getRepository('AppBundle:Record')->findAll();
+        $modulos=$em->getRepository('AppBundle:Modulo')->findAll();
         for($i=1;$i<11;$i++) {
             $c=0;
             if($nivel==0)
@@ -114,14 +117,15 @@ class RecordController extends DSIController
             {
                 foreach ($records as $re){
                     //Para todos los niveles
-                    if($re->getNivelnivel()->getIdnivel()==$nivel&&$re->getRecordalumnorecordalumno()->getNotafinal()==$i)
+                    $notaAlumno=$re->getRecordalumnorecordalumno()->getNotafinal();
+                    if($re->getNivelnivel()->getIdnivel()==$nivel&&$notaAlumno>=$i&&$notaAlumno<($i+1))
                         if($em->getRepository('AppBundle:Matricula')->findOneBy(array('nivelnivel'=>$re->getNivelnivel(),'esactivo'=>1,'alumnoCarnetalumno'=>$re->getRecordalumnorecordalumno()->getAlumnoCarnetalumno())))
                             $c++;
                 }
                 $notas[]=$c;
             }
         }
-        return $this->render('AppBundle:record:linea.html.twig',array('datos'=>json_encode($notas,JSON_NUMERIC_CHECK),'niveles'=>$niveles,'selectedNivel'=>$nivel));
+        return $this->render('AppBundle:record:linea.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$mod,'datos'=>json_encode($notas,JSON_NUMERIC_CHECK),'niveles'=>$niveles,'selectedNivel'=>$nivel));
     }
     /**
      * @Route("/graficos",name="graf")
@@ -130,6 +134,7 @@ class RecordController extends DSIController
         $em=$this->getDoctrine()->getManager();
 
         //$niveles=$em->getRepository('AppBundle:Nivel')->findAll();
+        //Modulo
         $niveles=$this->obtenerNivelesActivos();
         $ob=$this->graficoAprobados(0);
         if($request->isMethod("POST")){
@@ -139,7 +144,7 @@ class RecordController extends DSIController
             }
             if($request->get('grafico')=='act'){
                 $ob=$this->graficaActivos();
-                return $this->render('AppBundle::reportes-select.html.twig',array('niveles'=>$niveles,'chart' => $ob,'selected'=>'act'));
+                return $this->render('AppBundle::reportes-select.html.twig',array('niveles'=>$niveles,'chart' => $ob,'selected'=>'act','selectedNivel'=>$request->get('nivel')));
             }
             if($request->get('grafico')=='not'){
                 return $this->redirectToRoute('graficoAlumno',array('nivel'=>$request->get('nivel')));
@@ -147,6 +152,32 @@ class RecordController extends DSIController
         }
         return $this->render('AppBundle::reportes-select.html.twig',array('niveles'=>$niveles,'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel')));
 
+    }
+    /**
+     * @Route("/graficos2",name="graf2")
+     */
+    public function graficos2Action(Request $request){
+        $em=$this->getDoctrine()->getManager();
+        //Modulo
+        $modulos=$em->getRepository('AppBundle:Modulo')->findAll();
+        $ob=new Highchart();
+        if($request->isMethod("POST")){
+            $niveles=$em->getRepository('AppBundle:Modulo')->find($request->get('modulo'));
+            if($request->get('grafico')=='aprob') {
+                $ob=$this->graficoAprobados($request->get('nivel'));
+                return $this->render('AppBundle::reportes-select.html.twig', array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles' => $niveles, 'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel')));
+            }
+            if($request->get('grafico')=='act'){
+                $ob=$this->graficaActivos();
+                return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'act','selectedNivel'=>$request->get('nivel')));
+            }
+            if($request->get('grafico')=='not'){
+                return $this->redirectToRoute('graficoAlumno',array('nivel'=>$request->get('nivel'),'mod'=>$request->get('modulo')));
+            }
+            return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel')));
+
+        }
+        return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>'','niveles'=>'','chart' => $ob,'selected'=>'','selectedNivel'=>''));
     }
     private function graficoPastel(){
         $ob = new Highchart();

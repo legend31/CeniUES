@@ -1,5 +1,7 @@
 <?php
 namespace AppBundle\Clases;
+use AppBundle\Entity\Detalleevaluacion;
+use AppBundle\Entity\Resultadoevaluacion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DSIController extends Controller
 {
