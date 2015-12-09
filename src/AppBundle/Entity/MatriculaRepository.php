@@ -79,7 +79,8 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
              INNER JOIN AppBundle:Clase d WITH d.nivelnivel c
              WHERE c.nombrenivel = :nivel AND d.horario = :horario')->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();*/
         return $em->createQuery(
-            "SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(b.primernombrealumno,'-'),b.segundonombrealumno),'-'),b.primerapellidoalumno),'-'),b.segundoapellidoalumno) AS nombre
+            "SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(b.primernombrealumno,' '),b.segundonombrealumno),' '),b.primerapellidoalumno),' '),b.segundoapellidoalumno) AS nombre,
+             b.carnetalumno
              FROM AppBundle:Matricula a
              JOIN a.alumnoCarnetalumno b
              JOIN a.nivelnivel c

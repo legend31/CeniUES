@@ -66,7 +66,7 @@
 
                             <!--Inicia Cabecera de tabla-->
                             <div class="box-header">
-                                <h3 class="box-title">Listado de Notas para el Nivel 1 Prueba</h3>
+                                <h3 class="box-title">Listado de Notas de Alumnos CENIUES</h3>
                             </div>
                             <!--Finaliza Cabecera de tabla-->
 
@@ -74,7 +74,7 @@
                             <div class="box-body table-responsive">
                                 <table class="table table-bordered table-hover dataTable">
                                     <thead>
-                                    <th>No</th>
+                                    <th>CARNET</th>
                                     <th>ESTUDIANTE</th>
                                     <th>EV.1</th>
                                     <th>EV.2</th>
@@ -87,7 +87,7 @@
                                     <tbody>
                                     {% for alumno in alumnos %}
                                     <tr>
-                                        <td>1</td>
+                                        <td>{{ alumno.carnetalumno }}</td>
                                         <td>{{ alumno.nombre }}</td>
                                         <td><div contenteditable="true">6.00</div></td>
                                         <td><div contenteditable="true">9.00</div></td>
