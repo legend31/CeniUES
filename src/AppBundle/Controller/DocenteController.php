@@ -145,6 +145,9 @@ class DocenteController extends Controller
                     $pnombre = $nombre[0];
                     $snombre = $nombre[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primernombredocente'=>$pnombre, 'segundonombredocente'=>$snombre));
+                    if(!$docente) {
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                    }
                 }
                 else {
                     $pnombre = $nombre[0];
@@ -166,6 +169,9 @@ class DocenteController extends Controller
                     $pape = $ape[0];
                     $sape = $ape[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primerapellidodocente'=>$pape, 'segundoapellidodocente'=>$sape));
+                    if(!$docente) {
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                    }
                 }
                 else {
                     $pape = $ape[0];
