@@ -451,6 +451,7 @@ class DocenteController extends Controller
                 return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>'no encuentra'));
             }
             else {
+                //si encuentra docente lo deshabilita
                 $docente->setEstado(0);
                 $em->flush();
                 return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>'elim'));
