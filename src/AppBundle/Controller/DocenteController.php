@@ -127,7 +127,7 @@ class DocenteController extends Controller
         if($request->isMethod("POST")) {
             $em = $this->getDoctrine()->getManager();
             $busquedaPor = $request->get("selS");
-            $docentes = null;
+            $docentes = 'no encuentra';
             if($busquedaPor == 'carnet') {
                 $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("parB"));
                 $docente = array($docentes);
@@ -145,6 +145,9 @@ class DocenteController extends Controller
                     $pnombre = $nombre[0];
                     $snombre = $nombre[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primernombredocente'=>$pnombre, 'segundonombredocente'=>$snombre));
+                    if(!$docente) {
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
+                    }
                 }
                 else {
                     $pnombre = $nombre[0];
@@ -152,7 +155,7 @@ class DocenteController extends Controller
                     if(!$docente) {
                         $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundonombredocente'=>$pnombre));
                         if(!$docente) {
-                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                         }
                     }
                 }
@@ -166,6 +169,9 @@ class DocenteController extends Controller
                     $pape = $ape[0];
                     $sape = $ape[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primerapellidodocente'=>$pape, 'segundoapellidodocente'=>$sape));
+                    if(!$docente) {
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
+                    }
                 }
                 else {
                     $pape = $ape[0];
@@ -173,14 +179,14 @@ class DocenteController extends Controller
                     if(!$docente) {
                         $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundoapellidodocente'=>$pape));
                         if(!$docente) {
-                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                         }
                     }
                 }
             }
             if(!$docentes)
             {
-                return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docentes ));
+                return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra' ));
             }
             return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docente));
         }
@@ -195,8 +201,17 @@ class DocenteController extends Controller
         $em = $this->getDoctrine()->getManager();
         if($request->isMethod("POST")) {
             //verificar existencia
-            if($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
-                return $this->redirectToRoute('dhome', array('estado'=>4));
+            if($carnet != $request->get("cdoc")) {
+                if ($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
+                    return $this->redirectToRoute('dhome', array('estado' => 1));
+                }
+            }
+            $newDui = $request->get('ddoc');
+            $buscarDui = $em->getRepository('AppBundle:Docente')->find($carnet);
+            if($buscarDui->getDui() != $newDui) {
+                if($em->getRepository('AppBundle:Docente')->findOneBy(array('dui'=>$newDui))) {
+                    return $this->redirectToRoute('dhome', array('estado' => 7));
+                }
             }
 
             //Actualizando docente
@@ -204,7 +219,7 @@ class DocenteController extends Controller
             $d->setNombredocente($request->get("ndoc"));
             $d->setApellidodocente($request->get("adoc"));
             $d->setDui($request->get("ddoc"));
-            $d->setDirecciondocente($request->get("ddoc"));
+            $d->setDirecciondocente($request->get("rdoc"));
             $d->setCarnetdocente($request->get("cdoc"));
             $d->setTelefono($request->get("tdoc"));
             $d->setFechanacimiento(new \DateTime($request->get("fdoc")));
@@ -215,7 +230,7 @@ class DocenteController extends Controller
 
             //Modificando usuario docente
             if($this->getDoctrine()->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$request->get("cdoc")))) {
-                $u = $em->getRepository('AppBundle:Usuario')->findOneBy(array('carnetdocente'=>$carnet));
+                $u = $em->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$carnet));
             }
             else { //crear usuario si no existe
                 $u = new Usuario();
@@ -400,6 +415,49 @@ class DocenteController extends Controller
         }
         else {
             return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>null));
+        }
+    }
+
+    /**
+     * @Route("/modifD", name="modD2")
+     */
+    public function modificarDocenteLateralAction(Request $request){
+        if($request->isMethod("POST")) {
+            $em = $this->getDoctrine()->getManager();
+            $carnet = $request->get('carnet');
+            $docente = $em->getRepository('AppBundle:Docente')->find($carnet);
+            if(!$docente) {
+                return $this->render('@App/docente/modifcarDLateral.html.twig', array('modif'=>'no encuentra'));
+            }
+            else {
+                $email = $this->getDoctrine()->getRepository('AppBundle:Usuario')->findOneBy(array('nomusuario'=>$request->get("carnet")));
+                return $this->render('@App/docente/pdoc.html.twig', array('docente' => $docente, 'correo' => $email, 'carnet' => $request->get('carnet')));
+            }
+        }
+        else {
+            return $this->render('@App/docente/modifcarDLateral.html.twig', array('modif'=>null));
+        }
+    }
+
+    /**
+     * @Route("/elimD", name="elimL2")
+     */
+    public function eliminarLateralAction(Request $request){
+        if($request->isMethod("POST")) {
+            $em = $this->getDoctrine()->getManager();
+            $carnet = $request->get('carnet');
+            $docente = $em->getRepository('AppBundle:Docente')->find($carnet);
+            if(!$docente) {
+                return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>'no encuentra'));
+            }
+            else {
+                $docente->setEstado(0);
+                $em->flush();
+                return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>'elim'));
+            }
+        }
+        else {
+            return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>null));
         }
     }
 }
