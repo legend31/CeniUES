@@ -127,7 +127,7 @@ class DocenteController extends Controller
         if($request->isMethod("POST")) {
             $em = $this->getDoctrine()->getManager();
             $busquedaPor = $request->get("selS");
-            $docentes = null;
+            $docentes = 'no encuentra';
             if($busquedaPor == 'carnet') {
                 $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("parB"));
                 $docente = array($docentes);
@@ -146,7 +146,7 @@ class DocenteController extends Controller
                     $snombre = $nombre[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primernombredocente'=>$pnombre, 'segundonombredocente'=>$snombre));
                     if(!$docente) {
-                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                     }
                 }
                 else {
@@ -155,7 +155,7 @@ class DocenteController extends Controller
                     if(!$docente) {
                         $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundonombredocente'=>$pnombre));
                         if(!$docente) {
-                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                         }
                     }
                 }
@@ -170,7 +170,7 @@ class DocenteController extends Controller
                     $sape = $ape[1];
                     $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primerapellidodocente'=>$pape, 'segundoapellidodocente'=>$sape));
                     if(!$docente) {
-                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                        return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                     }
                 }
                 else {
@@ -179,14 +179,14 @@ class DocenteController extends Controller
                     if(!$docente) {
                         $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundoapellidodocente'=>$pape));
                         if(!$docente) {
-                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra'));
                         }
                     }
                 }
             }
             if(!$docentes)
             {
-                return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docentes ));
+                return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>'no encuentra' ));
             }
             return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docente));
         }
