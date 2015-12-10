@@ -5,7 +5,9 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% block stylesheets %}
-        <link href="{{ asset('bundles/app/css/jquery-ui.min.css') }}" rel="stylesheet" type="text/css">
+        {% block calendario %} <!-- Fredy -->
+        {% endblock %}
+        <link href="{{ asset('libs/AdminLTE-2.2.0/plugins/jQueryUI/jquery-ui.min.js') }}" rel="stylesheet" type="text/css">
         {# Aqui van los estilos de boostrap#}
         <!-- Llamamos al  Bootstrap -->
         <link href="{{ asset('libs/AdminLTE-2.2.0/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -24,7 +26,7 @@
 
         <link href="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}" rel="stylesheet">
 
-        <link href="{{ asset('bundles/app/css/jquery-ui.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('libs/AdminLTE-2.2.0/plugins/jQueryUI/jquery-ui.min.js') }}" rel="stylesheet" type="text/css">
 
         <link href="{{ asset('views/alertify.core.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('views/alertify.default.css') }}" rel="stylesheet" type="text/css" media="all" />
@@ -42,8 +44,9 @@
     <!--Script de jQuery-->
     <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}" type="text/javascript"></script>
 
-    <!-- Fer -->
-    <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <!-- Fer --><!-- no reconocia este query asi que los modifique, comente el que esta originalmente att: Fredy -->
+    <!-- asset('bundles/app/js/jquery-ui.min.js') -->
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQueryUI/jquery-ui.min.js') }}" type="text/javascript"></script>
 
     <!--Scritp de Bootstrap-->
     <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>

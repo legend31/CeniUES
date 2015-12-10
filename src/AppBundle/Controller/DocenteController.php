@@ -48,6 +48,12 @@ class DocenteController extends Controller
             elseif($request->get('estado') == 5) {
                 return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>5 )));
             }
+            elseif($request->get('estado') == 6) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>6 )));
+            }
+            elseif($request->get('estado') == 7) {
+                return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>7 )));
+            }
             elseif(!$docentes)
             {
                 return new Response($this->container->get('templating')->render('AppBundle:docente:gestionarDocente.html.twig', array('docentes'=>$docentes, 'mensaje'=>3 )));
@@ -65,8 +71,16 @@ class DocenteController extends Controller
             $em=$this->getDoctrine()->getManager();
 
             //Verificar existencia de docente
-            if($em->getRepository('AppBundle:Docente')->find($request->get("cdoc"))) {
+            $vCarnet = $em->getRepository('AppBundle:Docente')->find($request->get("cdoc"));
+            $vDui = $em->getRepository('AppBundle:Docente')->findOneBy(array('dui'=>$request->get("ddoc")));
+            if($vCarnet && $vDui) {
+                return $this->redirectToRoute('dhome', array('estado'=>6));
+            }
+            elseif($vCarnet){
                 return $this->redirectToRoute('dhome', array('estado'=>1));
+            }
+            elseif($vDui) {
+                return $this->redirectToRoute('dhome', array('estado'=>7));
             }
 
             //Creando nuevo docente
@@ -112,8 +126,58 @@ class DocenteController extends Controller
     {
         if($request->isMethod("POST")) {
             $em = $this->getDoctrine()->getManager();
-            $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("parB"));
-            $docente = array($docentes);
+            $busquedaPor = $request->get("selS");
+            $docentes = null;
+            if($busquedaPor == 'carnet') {
+                $docentes = $em->getRepository('AppBundle:Docente')->find($request->get("parB"));
+                $docente = array($docentes);
+            }
+            elseif($busquedaPor == 'dui') {
+                $docentes = $em->getRepository('AppBundle:Docente')->findOneBy(array('dui'=>$request->get("parB")));
+                $docente = array($docentes);
+            }
+            elseif($busquedaPor == 'nombredocente') {
+                $docentes = true;
+                $nombres = $request->get("parB");
+                $nombre = explode(' ', $nombres);
+                $cuenta = count($nombre);
+                if($cuenta > 1 && $nombre[1] != ''){
+                    $pnombre = $nombre[0];
+                    $snombre = $nombre[1];
+                    $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primernombredocente'=>$pnombre, 'segundonombredocente'=>$snombre));
+                }
+                else {
+                    $pnombre = $nombre[0];
+                    $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primernombredocente'=>$pnombre));
+                    if(!$docente) {
+                        $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundonombredocente'=>$pnombre));
+                        if(!$docente) {
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                        }
+                    }
+                }
+            }
+            elseif($busquedaPor == 'apellidodocente') {
+                $docentes = true;
+                $apellidos = $request->get("parB");
+                $ape = explode(' ', $apellidos);
+                $cuenta = count($ape);
+                if($cuenta > 1 && $ape[1] != ''){
+                    $pape = $ape[0];
+                    $sape = $ape[1];
+                    $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primerapellidodocente'=>$pape, 'segundoapellidodocente'=>$sape));
+                }
+                else {
+                    $pape = $ape[0];
+                    $docente = $em->getRepository('AppBundle:Docente')->findBy(array('primerapellidodocente'=>$pape));
+                    if(!$docente) {
+                        $docente = $em->getRepository('AppBundle:Docente')->findBy(array('segundoapellidodocente'=>$pape));
+                        if(!$docente) {
+                            return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>null));
+                        }
+                    }
+                }
+            }
             if(!$docentes)
             {
                 return $this->render('AppBundle:docente:buscardocente.html.twig', array('docentes'=>$docentes ));

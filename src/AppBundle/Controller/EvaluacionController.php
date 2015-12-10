@@ -22,7 +22,7 @@ class EvaluacionController extends Controller
      */
     public function evaluacionHomeAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $evaluaciones = $em->getRepository('AppBundle:Evaluacion')->findAll();
 
         if(!$evaluaciones)
@@ -30,7 +30,7 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encontro ninguna evaluacion');
         }
 
-        return new Response($this->container->get('templating')->render('AppBundle:evaluacion:evaluacionPrincipal.html.twig', array('evaluaciones'=>$evaluaciones)));
+        return $this->render('AppBundle:evaluacion:evalPrincipal.html.twig');
         //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
     }
 

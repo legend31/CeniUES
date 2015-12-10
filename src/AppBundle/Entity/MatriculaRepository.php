@@ -96,4 +96,14 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
              JOIN AppBundle:Clase d WITH d.nivelnivel=c
              WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();
     }
+    public function prueba($nivel,$horario){
+        $em = $this->getEntityManager();
+        return $em->createQuery(
+            "SELECT b.carnetalumno
+             FROM AppBundle:Matricula a
+             JOIN a.alumnoCarnetalumno b
+             JOIN a.nivelnivel c
+             JOIN AppBundle:Clase d WITH d.nivelnivel=c
+             WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();
+    }
 }

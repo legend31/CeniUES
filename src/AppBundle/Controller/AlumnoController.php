@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Detalleevaluacion;
 use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -209,5 +210,6 @@ class AlumnoController extends DSIController
         $em->flush();
         $this->MensajeFlash('exito','Alumno Eliminado Exitosamente');
         return $this->redirectToRoute('alBuscar');
+
     }
 }

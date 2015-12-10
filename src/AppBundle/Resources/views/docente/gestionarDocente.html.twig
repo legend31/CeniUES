@@ -33,7 +33,7 @@
                     {% if mensaje == 1 %}
                         <div class="alert alert-danger alert-dismissable">
                             <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
-                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno con el mismo c&oacute;digo.
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno con el mismo carnet.
                         </div>
                     {% elseif mensaje == 2 %}
                         <div class="alert alert-success alert-dismissable">
@@ -53,6 +53,16 @@
                         <div class="alert alert-success alert-dismissable">
                             <h4><i class="icon fa fa-check"></i> Docente actualizado</h4>
                             El docente fue actualizado correctamente.
+                        </div>
+                    {% elseif mensaje == 6 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno con el mismo carnet y DUI.
+                        </div>
+                    {% elseif mensaje == 7 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno asociado al mismo DUI.
                         </div>
                     {% endif %}
 
