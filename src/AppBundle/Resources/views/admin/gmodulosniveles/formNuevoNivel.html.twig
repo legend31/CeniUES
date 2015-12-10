@@ -3,6 +3,19 @@
     {% block principal %}
         <section class="content">
             <div class="row">
+                <div class="col-xs-5">
+                    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                        <br>
+                        <div class="alert alert-success fade in">
+                        <span class="close" data-dismiss="alert">
+                            &times;
+                        </span>
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">

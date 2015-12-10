@@ -3,6 +3,19 @@
 {% block principal %}
     <!--Inicia contenido de la UI-->
     <section class="content">
+         <div class="row">
+            <div class="col-xs-6">
+                {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                    <br>
+                    <div class="alert alert-success fade in">
+                    <span class="close" data-dismiss="alert">
+                    &times;
+                    </span>
+                    {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+         </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -35,15 +48,15 @@
                                     <td>
 
                                         <div class="fc-button-group">
-                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-niveless-modal" onclick="">
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#ver-niveles-modal" onclick="obtenerNiveles({{ niveles.idnivel }})">
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
-                                            <a class="btn btn-default">
+                                            <a class="btn btn-default" href="{{ path('updatenivel', {'id': niveles.idnivel}) }}">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
 
-                                            <a class="btn btn-default">
+                                            <a class="btn btn-default" href="{{ path('deletenivel', {'id': niveles.idnivel}) }}">
                                                 <i class="fa fa-close"></i>
                                             </a>
                                         </div>
@@ -64,4 +77,94 @@
         </div>
     </section>
     <!--Finaliza contenido de la UI-->
+
+
+
+    <div class="modal fade" id="ver-niveles-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="fa fa-close" data-dismiss="modal" aria-hidden="true"></button>-->
+                    <h4 class="modal-title"><i class="box-title">Informacion Nivel</i></h4>
+                    <label></label>
+                    <!--<input type="text" id="nombre" name="mombre" />-->
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Id Nivel</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="idnivel" name="idmodulo" class="">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Nombre Nivel</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="nombrenivel" name="nombremodulo" class="">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Fecha Inicio</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="fini" name="fini" class="">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Fecha Fin</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="ffin" name="ffin" class="">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Duracion</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="duracio" name="duracion" class="">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- /.modal1 -->
+{% endblock %}
+
+{% block javascript2 %}
+            <script>
+
+                function obtenerNiveles(id){
+
+                    $.ajax({
+                        url:'{{ path('infoniv') }}',
+                        type: 'POST',
+                        data: {idmodulo:id},
+                        success:function(response){
+                            var date = new Date();
+
+                            $('#idnivel').val(response.idmod);
+                            $('#nombrenivel').val(response.nombremod);
+                            $('#fini').val(response.fechainicio.toLocaleString());
+                            //$('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            //$('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            $('#ffin').val(response.fechafin.toLocaleString());
+                            $('#duracio').val(response.duracion+" Meses");
+
+                        }
+
+                    })
+                }
+
+            </script>
 {% endblock %}
