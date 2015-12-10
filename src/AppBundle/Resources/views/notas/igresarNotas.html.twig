@@ -76,11 +76,13 @@
                                     <thead>
                                     <th>CARNET</th>
                                     <th>ESTUDIANTE</th>
-                                    <th>EV.1</th>
-                                    <th>EV.2</th>
+                                    {% for e in evaluacion %}
+                                    <th>{{ e.nombreevaluacion }}</th>
+                                    <!--<th>EV.2</th>
                                     <th>EV.3</th>
                                     <th>EV.4</th>
-                                    <th>EV.5</th>
+                                    <th>EV.5</th>-->
+                                    {% endfor %}
                                     <td>NOTA FINAL</td>
 
                                     </thead>
@@ -89,11 +91,12 @@
                                     <tr>
                                         <td>{{ alumno.carnetalumno }}</td>
                                         <td>{{ alumno.nombre }}</td>
-                                        <td><div contenteditable="true">6.00</div></td>
-                                        <td><div contenteditable="true">9.00</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
-                                        <td><div contenteditable="true">8.50</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
+                                        {% for notaal in notas %}
+                                            {#{% if nota.nota == null %}
+                                            {% set nota = notaal|merge({'nota':'0'}) %}#}
+                                        <td><div contenteditable="true">{{ notaal.nota }}</div></td>
+                                        {#{% endif %}#}
+                                        {% endfor %}
                                     </tr>
                                     {% endfor %}
 
