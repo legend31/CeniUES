@@ -8,7 +8,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Ingreso de Nivel</h3>
                         </div>
-                        <form role="form" method="post" action="{{ path("nnivel") }}">
+                        <form role="form" method="post" action="{{ path("newnivel") }}">
                             <div class="box-body">
                                 <div class="form-group col-sm-12">
                                     <label>Nombre de Nivel</label>
@@ -16,21 +16,13 @@
                                 </div>
                                 <br>
                                 <div class="form-group col-sm-12">
-                                    <label>Nombre de Nivel</label>
+                                    <label>Nombre de Modulo</label>
                                     <br>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default">Nivel</button>
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            {% for modulo in mod %}
-                                            <li><a href="#">{{ modulo.nombremodulo }}</a></li>
-                                            <li class="divider"></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                    {% for modulo in mod %}
+                                    <select class="form-control" id="smodulo" name="smodulo">
+                                        <option>{{ modulo.nombremodulo }}</option>
+                                    </select>
+                                    {% endfor %}
                                 </div>
                                 <br>
                                 <div class="form-group col-sm-6">

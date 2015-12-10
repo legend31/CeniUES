@@ -175,31 +175,40 @@ class ModulosNivelesController extends Controller{
     /**
      * @Route("/admin/newnivel", name="newnivel")
      */
-    public function newNivelAction(){
+    public function newNivelAction(Request $request){
         $repo = $this->getDoctrine()->getRepository('AppBundle:Modulo');
-        $fecha = strtotime('now');
+        $fecha = new \DateTime('now');
         $mod = $repo->modulosxfecha($fecha);
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
-    }
-
-    //FUNCION ENCARGADA DE INGRESAR EL NIVEL ESCRITO EN PANTALLA
-    /**
-     * @Route("/admin/nnivel", name="nnivel")
-     */
-    public function agregarNivelAction(Request $request){
         $em= $this->getDoctrine()->getManager();
         $niv = $em->getRepository('AppBundle:Nivel');
         if($request->isMethod("POST")){
-            $niv= new Nivel();
-            $niv->setNombrenivel($request->get("nombreNivel"));
-            $em->persist($niv);
-            $em->flush();
-
-            return $this->redirectToRoute('newnivel');
+            $auxfechai = $request->get('fini');
+            $auxfechaf = $request->get('ffin');
+            $fechai = date_create_from_format('Y-m-d',$auxfechai);
+            $fechafin = date_create_from_format('Y-m-d',$auxfechaf);
+            $selmodulo = $request->get('smodulo');
+            if(!$selmodulo == null){
+                $auxmod = $repo->buscarmodulos1($auxfechai,$auxfechaf,$selmodulo);
+                if($auxmod) {
+                    $niv = new Nivel();
+                    $niv->setNombrenivel($request->get("nombreNivel"));
+                    $niv->setFechainicio($fechai);
+                    $niv->setFechafin($fechafin);
+                    $em->persist($niv);
+                    $em->flush();
+                    $auxmod->addNivelnivel($niv);
+                    $em->flush();
+                    $this->mensajeflash('Nivel ingresado de forma exitosa');
+                    return $this->redirectToRoute('newnivel');
+                }
+                $this->mensajeflash('No se puede ingresar el nivel ya que sus fechas no corresponde con las del modulo');
+                return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
+            }
         }
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
 
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');
     }
+
 
     private function mensajeflash($m){
         $this->get('session')->getFlashBag()->add('mensaje',''.$m);
