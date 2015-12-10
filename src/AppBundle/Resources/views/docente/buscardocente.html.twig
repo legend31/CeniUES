@@ -1,6 +1,6 @@
 {% extends "::layoutbase.html.twig" %}
 
-{% block title %} Gestionar docentes {% endblock %}
+{% block title %} Buscar docentes {% endblock %}
 
 {% block principal %}
     <section class="content">
@@ -19,10 +19,10 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <select class="form-control select2 select2-hidden-accessible" name="selS" tabindex="-1" aria-hidden="true">
-                                            <option selected="selected">Carnet</option>
-                                            <option>DUI</option>
-                                            <option>Nombre</option>
-                                            <option>Apellido</option>
+                                            <option value="carnet" selected="selected">Carnet</option>
+                                            <option value="dui">DUI</option>
+                                            <option value="nombredocente">Nombre</option>
+                                            <option value="apellidodocente">Apellido</option>
                                         </select>
                                     </div><!-- /.form-group -->
                                 </div><!-- /.col -->
@@ -35,66 +35,77 @@
                             </div><!-- /.row -->
                         </div>
                     </form>
+                    {% if docentes is null %}
+                    <div class="alert alert-warning alert-dismissable">
+                        <h4><i class="icon fa fa-warning"></i> No se encontro docente asociado con el parametro ingresado.</h4>
+                    </div>
+                    <br>
+                    {% endif %}
                     {% if docentes is not null %}
                     <div class="box-body table-responsive no-padding">
                         {% for entity in docentes %}
+                            <div class="box-header">
+                                <h3 align="center"><small>Docente: </small><i>{{ entity.carnetdocente }}</i></h3>
+                            </div>
+                        <form class="form-horizontal contact-form" role="form">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label for="form_nombredocente" class="col-sm-3 control-label">Nombre</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control letras" id="form_nombredocente" name="ndoc" value="{{ entity.getNombredocente }}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_nombredocente" name="ndoc" value="{{ entity.getNombredocente }}" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_apellidodocente" class="col-sm-3 control-label">Apellido</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" value="{{ entity.getApellidodocente }}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" value="{{ entity.getApellidodocente }}" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_dui" class="col-sm-3 control-label"> DUI </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" maxlength=10 value="{{ entity.getDui }}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" maxlength=10 value="{{ entity.getDui }}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_carnetdocente" class="col-sm-3 control-label"> Carnet </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" maxlength=7 value="{{ entity.carnetdocente }}" pattern="[A-Z]{2}[0-9]{5}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" maxlength=7 value="{{ entity.carnetdocente }}" pattern="[A-Z]{2}[0-9]{5}" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_fechanacimiento" class="col-sm-3 control-label"> Fecha de Nacimiento</label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="form_fechanacimiento" name="fdoc" value="{{ entity.Fechanacimiento }}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_fechanacimiento" name="fdoc" value="{% if entity.Fechanacimiento %}{{ entity.Fechanacimiento.format("Y-m-d") }}{% endif %}" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_direcciondocente" class="col-sm-3 control-label"> Direcci&oacute;n de residencia </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" value="{{ entity.getTelefono }}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" value="{{ entity.getTelefono }}" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="form_direcciondocente" class="col-sm-3 control-label"> Correo electr&oacute;nico </label>
-                                        <div class="col-sm-6">
-                                            <input type="email" class="form-control" id="form_email" name="edoc" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
+                                        <div class="col-sm-4">
+                                            <input type="email" class="form-control" id="form_email" name="edoc" disabled>
                                             <span class="form-control-feedback"></span>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                         {% endfor %}
                     </div><!-- /.box-body -->
                     {% endif %}
