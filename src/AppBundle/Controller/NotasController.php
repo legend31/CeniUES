@@ -57,11 +57,18 @@ class NotasController extends Controller{
 
             }
             return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));*/
-        $al=new Alumno();
-        $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find(3);
-        $det=$this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel'=>$n));
-        $res=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion'=>$det));
-        return $this->render("AppBundle:notas:igresarNotas.html.twig",array('alumnos'=>$res,'al'=>$al));
+        $niv = $this->getDoctrine()->getRepository('AppBundle:Nivel')->findAll();
+        if($request->isMethod('POST')){
+            $nivel = $request->get('snivel');
+            $horario = $request->get('sclase');
+            $al= $this->getDoctrine()->getRepository('AppBundle:Matricula')->prueba($nivel,$horario);
+            $alComparar=new Alumno();
+            $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel);
+            $det=$this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel'=>$n));
+            $res=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion'=>$det));
+            return $this->render("AppBundle::notas.html.twig",array('alumnos'=>$res,'al'=>$alComparar,'niveles'=>''));
+        }
+        return $this->render("AppBundle::notas.html.twig",array('alumnos'=>'','al'=>'','niveles'=>$niv));
     }
 
 
