@@ -59,10 +59,12 @@ class MatriculaController extends DSIController
     public function matriculaNuevoAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         //Formulario
+        $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+        $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
         if($request->isMethod("POST"))
         {
             $mat=$em->getRepository('AppBundle:Matricula')->verificarMatricula($request->get('carnet'),$request->get('recibo'));
-            $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+
             $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
             //Validando q haya un modulo o que el alumno no esta ya matriculado
             if($mat){
@@ -86,7 +88,7 @@ class MatriculaController extends DSIController
                 return $this->redirectToRoute('matnuevo');
             }
         }
-        return $this->render('AppBundle:formularios:matricula-nvo.html.twig');
+        return $this->render('AppBundle:formularios:matricula-nvo.html.twig',array('modulo'=>$modulo));
     }
     /**
      * @Route("/matriculaantiguo",name="matantiguo")
@@ -102,11 +104,7 @@ class MatriculaController extends DSIController
             $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
             $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
             //Validando q haya un modulo o que el alumno no esta ya matriculado
-            if(!$modulo){
-                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
-                return $this->redirectToRoute('matantiguo');
-            }
-            elseif($mat){
+            if($mat){
                 $this->MensajeFlash('error',"Alumno/Recibo ya matriculado en modulo!");
                 return $this->redirectToRoute('matantiguo');
             }

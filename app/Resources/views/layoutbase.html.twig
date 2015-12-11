@@ -198,47 +198,7 @@
                         </li>
                         <!--Finaliza Gestionar Docentes en Niveles-->
 
-                        <!--Inicia Gestionar Evaluaciones-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-check-square"></i>
-                                <span>Gestionar Evaluaciones</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
 
-                            <!--Inicia Sub-Menu Gestionar Evaluaciones-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="{{ path('agreval') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Ingresar Evaluacion
-                                    </a>
-                                </li>
-<!-- Aqui Es donde Joahm toco -->
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Evaluacion
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Eliminar Evaluacion
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Actualizar Evaluacion
-                                    </a>
-                                </li>
-                                <!--Finaliza Sub-menu Gestionar Evaluaciones-->
-                            </ul>
-                        </li>
-                        <!--Finaliza Gestionar Evaluaciones-->
 
                         <!--Inicia Gestionar Matricula-->
                         <li class="treeview">
@@ -726,7 +686,7 @@
                                 <div class="icon">
                                     <i class="fa fa-user-plus"></i>
                                 </div>
-                                <a  href="#" class="small-box-footer">
+                                <a  href="{{ path('desma') }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>

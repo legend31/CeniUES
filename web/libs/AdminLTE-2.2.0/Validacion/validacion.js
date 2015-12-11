@@ -142,6 +142,17 @@ function validarCarnetH() {
         return false;
     }
 }
+function validarNotas() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    if(valor>0&&valor<=10) {
+        $("#"+id).parent().attr("class","col-md-3 input-group has-success");
+    }
+    else {
+        $("#"+id).parent().attr("class","col-md-3 input-group has-error");
+        return false;
+    }
+}
 
 function validarDui() {
     var id = $(this).attr('id').toString();

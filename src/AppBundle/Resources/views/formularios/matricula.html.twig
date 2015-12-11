@@ -32,20 +32,20 @@
         <form class="form-horizontal contact_form" method="post" action="{{ path('matantiguo') }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <input id="inputFecha" class="form-control" type="date" name="fecha" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" required maxlength="6" pattern="[R]{1}[-]{1}[0-9]{1,}">
                     <span class="form-control-feedback"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <select id ="selectNivel"name="nivel">
                         {% set i=0 %}
                         {% for item in niveles.nivelnivel %}
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" maxlength="7" required pattern="[A-Z]{2}[0-9]{5}" />
                     <span class="form-control-feedback"></span>
                 </div>
@@ -68,7 +68,7 @@
             </div>
         </form>
         {% else %}
-           <h3>No es Periodo de Inscripcion!!<h3>
+           <h2>No es Periodo de Inscripcion!!<h3>
         {% endif %}
     </div>
     <script>
@@ -83,5 +83,4 @@
     </script>
     <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
 {% endblock %}

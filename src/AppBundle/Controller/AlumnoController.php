@@ -5,11 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Detalleevaluacion;
+use AppBundle\Entity\Padre;
+use AppBundle\Entity\Responsable;
 use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class AlumnoController extends DSIController
 {
@@ -98,10 +101,8 @@ class AlumnoController extends DSIController
 
                 $em->persist($p);
                 $em->flush();
-                if ($request->get("origen") == "padrenuevo")
-                    return $this->redirectToRoute('antiguo');
-                else
-                    return $this->redirectToRoute('examencolocacion');
+                $this->MensajeFlash('exito','Padre Ingresado exitosamente!');
+                return $this->redirectToRoute('antiguo');
             }
         }
         return $this->redirectToRoute('antiguo');
@@ -112,17 +113,22 @@ class AlumnoController extends DSIController
     public function responInsertAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
         if($request->isMethod("POST")){
-            $res=new Responsable();
-            $res->setNombreresponsable($request->get("nombre"));
-            $res->setParentesco($request->get("parentesco"));
-            $res->setTelefono($request->get("tel"));
-
-            $em->persist($res);
-            $em->flush();
-            if($request->get("origen")=="nuevo")
+            $res=$em->getRepository('AppBundle:Responsable')->findOneBy(array('nombreresponsable'=>$request->get("nombre")));
+            if($res){
+                $this->MensajeFlash('fracaso','Responsable ya Registrado en el sistema!');
                 return $this->redirectToRoute('antiguo');
-            else
-                return $this->redirectToRoute('examencolocacion');
+            }
+            else{
+                $res=new Responsable();
+                $res->setNombreresponsable($request->get("nombre"));
+                $res->setParentesco($request->get("parentesco"));
+                $res->setTelefono($request->get("tel"));
+
+                $em->persist($res);
+                $em->flush();
+                $this->MensajeFlash('exito','Responsable Insertado exitosamente!');
+                return $this->redirectToRoute('antiguo');
+            }
         }
         return $this->render('AppBundle:formularios:responsable-inline.html.twig');
     }
@@ -176,7 +182,7 @@ class AlumnoController extends DSIController
             $em->persist($res);
             $em->flush();
             //Mensaje Flash
-            $this->MensajeFlash('Modificacion exitosa');
+            $this->MensajeFlash('exito','Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:responsable-mod.html.twig',array('responsable'=>$res,'id'=>$id));
