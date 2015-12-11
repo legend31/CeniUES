@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Modulo;
+use Proxies\__CG__\AppBundle\Entity\Matricula;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -175,49 +176,139 @@ class ModulosNivelesController extends Controller{
     /**
      * @Route("/admin/newnivel", name="newnivel")
      */
-    public function newNivelAction(){
+    public function newNivelAction(Request $request){
         $repo = $this->getDoctrine()->getRepository('AppBundle:Modulo');
-        $fecha = date('Y-m-d');
+        $fecha = new \DateTime('now');
         $mod = $repo->modulosxfecha($fecha);
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
-    }
-
-    //FUNCION ENCARGADA DE INGRESAR EL NIVEL ESCRITO EN PANTALLA
-    /**
-     * @Route("/admin/nnivel", name="nnivel")
-     */
-    public function agregarNivelAction(Request $request){
         $em= $this->getDoctrine()->getManager();
         $niv = $em->getRepository('AppBundle:Nivel');
-        $res = $niv->prueba(7,3);
-        $res2 = var_dump(implode($res,array()));
-        $this->mensajeflash('valor'.$res2);
-        return $this->redirectToRoute('newnivel');
-        /*if($request->isMethod("POST")){
-            $auxfini = $request->get('fini');
-            $auxffin = $request->get('ffin');
-            $duracion = strtotime($auxffin)-strtotime($auxfini);
-            $fechai = date_create_from_format('Y-m-d',$auxfini);
-            $fechaf = date_create_from_format('Y-m-d',$auxffin);
-            if($duracion>0) {
-                $auxmod = $em->getRepository('AppBundle:Modulo')->findBy($request->get('selectmodulo'));
-                $niv = new Nivel();
-                $niv->setNombrenivel($request->get("nombreNivel"));
-                $em->persist($niv);
-                $em->flush();
+        if($request->isMethod("POST")){
+            $auxfechai = $request->get('fini');
+            $auxfechaf = $request->get('ffin');
+            $fechai = date_create_from_format('Y-m-d',$auxfechai);
+            $fechafin = date_create_from_format('Y-m-d',$auxfechaf);
+            $selmodulo = $request->get('smodulo');
+            $var = strtotime($auxfechaf) - strtotime($auxfechai);
+            if($var > 0){
+                if (!$selmodulo == null) {
+                    $auxmod = $repo->buscarmodulos1($auxfechai, $auxfechaf, $selmodulo);
+                    $auxniv = $niv->findOneBy(array("fechainicio"=>$fechai,"fechafin"=>$fechafin));
+                    if(!$auxniv) {
+                        if ($auxmod) {
+                            $dif = intval($var / 60 / 60 / 24);
+                            $niv = new Nivel();
+                            $niv->setNombrenivel($request->get("nombreNivel"));
+                            $niv->setFechainicio($fechai);
+                            $niv->setFechafin($fechafin);
+                            $niv->setDuracion($dif);
+                            $em->persist($niv);
+                            $em->flush();
+                            $auxmod->addNivelnivel($niv);
+                            $em->flush();
+                            $this->mensajeflash('Nivel ingresado de forma exitosa');
+                            return $this->redirectToRoute('newnivel');
+                        }else{
+                            $this->mensajeflash('No se puede ingresar el nivel ya que sus fechas no corresponde con las del modulo');
+                            return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
+                        }
+                    }else{
+                        $this->mensajeflash('Ya existe un nivel para las fechas ingresadas');
+                        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
+                    }
+                }
             }else{
-                $this->mensajeflash('No se pudo ingresar nivel la fecha de finalizacion debe ser mayor que la de inicio');
-                $this->redirectToRoute('newnivel');
+                $this->mensajeflash('Fecha de Inicio debe ser menor que la Fecha fin');
+                return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
             }
-            return $this->redirectToRoute('newnivel');
         }
+        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig',array('mod'=>$mod));
 
-        return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig');*/
     }
+
+    //FUNCION ENCARGADA DE ACTUALIZAR UN NIVEL
+    /**
+     * @Route("/admin/updatenivel/{id}", name="updatenivel")
+     */
+    public function updatenivelAction(Request $request,$id){
+        $em1 = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $auxniv = $em->find($id);
+        if($request->isMethod('POST')){
+            if($auxniv){
+                $auxnombre=$request->get('nombrenivel');
+                $auxfechai=$request->get('fini');
+                $auxfechaf=$request->get('ffin');
+                $fechai = date_create_from_format('Y-m-d',$auxfechai);
+                $fechaf = date_create_from_format('Y-m-d',$auxfechaf);
+                $var = strtotime($auxfechai)-strtotime("now");
+                if($var>0){
+                    $auxniv->setNombrenivel($auxnombre);
+                    $auxniv->setFechainicio($fechai);
+                    $auxniv->setFechafin($fechaf);
+                    $em1->persist($auxniv);
+                    $em1->flush();
+                    $this->mensajeflash('Modulo actualizado correctamente');
+                    return $this->redirectToRoute('gniveles');
+                }else{
+                    $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
+                    return $this->redirectToRoute('gniveles');
+                }
+            }else{
+                throw $this->createNotFoundException('No se obtuvo resultados de la busqueda a BD');
+            }
+        }else{
+            return $this->render('AppBundle:admin/gmodulosniveles:formupdatenivel.html.twig',array("nivel"=>$auxniv, "id"=>$id));
+        }
+    }
+
+    //FUNCION ENCARGADA DE ELIMINAR UN NIVEL
+    /**
+     * @Route("/admin/deletenivel/{id}", name="deletenivel")
+     */
+    public function deletenivelAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $repnivel = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $repmatricula = $this->getDoctrine()->getRepository('AppBundle:Matricula');
+        $auxniv = $repnivel->find($id);
+        $auxmatricula = $repmatricula->findOneBy(array("nivelnivel"=>$id));
+
+        $auxfechanivel = $auxniv->getFechainicio();
+        $fechaactual = new \DateTime("now");
+
+        if($auxfechanivel>$fechaactual) {
+            if ($auxmatricula == null) {
+                $em->remove($auxniv);
+                $em->flush();
+                $this->mensajeflash('Nivel eliminado de forma exitosa');
+                return $this->redirectToRoute('gniveles');
+            } else {
+                $this->mensajeflash('No se puede eliminar el nivel ya que tiene alumnos inscritos en el');
+                return $this->redirectToRoute('gniveles');
+            }
+        }else{
+            $this->mensajeflash('No se puede eliminar el nivel ya que esta ya ha iniciado o finalizado');
+            return $this->redirectToRoute('gniveles');
+        }
+    }
+
 
     private function mensajeflash($m){
         $this->get('session')->getFlashBag()->add('mensaje',''.$m);
     }
 
+    /**
+     * @Route("/admin/infonivel", name="infoniv")
+     */
+    public function obtenernivporidAction(){
+        $request = $this->get('request');
+        $idpasado = $request->get('idmodulo');
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niv = $repo->findOneBy(array('idnivel'=>$idpasado));
 
+        return new JsonResponse(array("idmod"=>$niv->getIdnivel(),
+            "nombremod"=>$niv->getNombrenivel(),
+            "fechainicio"=>$niv->getFechainicio()->format('Y-m-d'),
+            "fechafin"=>$niv->getFechafin()->format('Y-m-d'),
+            "duracion"=>$niv->getDuracion()));
+    }
 }
