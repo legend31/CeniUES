@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Clase;
 use AppBundle\Entity\Detalleevaluacion;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotasController extends Controller{
+class NotasController extends DSIController{
     /**
      * @Route("/notasprincipal", name="notasprincipal")
      */
@@ -23,20 +24,50 @@ class NotasController extends Controller{
     /**
      * @Route("/ingresarnotas", name="ingresarnotas")
      */
-    public function ingresarNotas(Request $request){
-        $rep = $this->getDoctrine()->getRepository('AppBundle:Nivel');
-        $niv = $rep->findAll();
-        $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula');
+    public function ingresarNotasAction(Request $request){
+        $em=$this->getDoctrine()->getManager();
+        $niv = $this->obtenerNivelesActivos();
+        $alumnos=$this->getDoctrine()->getRepository('AppBundle:Alumno')->findAll();
+        //Si se envio el formulario
         if($request->isMethod('POST')){
-            $nivel = $request->get('snivel');
-            $horario = $request->get('sclase');
-            $al= $mat->listadoAlumnos($nivel,$horario);
-            //$repres = $this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion');
-            //$this->mensajeflash('Modulo actualizado correctamente'.$nivel);
-            return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv));
-        }else{
-            return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
+            //Si se hace la consulta
+            if($request->request->has('con'))
+            {
+                $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($request->get('snivel'));
+                $det=$this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel'=>$n));
+                $res=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion'=>$det,'alumnoCarnetalumno'=>$request->get('carnet')));
+                if($res) {
+                    $alComparar=new Alumno();
+                    return $this->render("AppBundle::notaslista.html.twig", array('alumnos' => $res, 'al' => $alComparar, 'niveles' => $niv,
+                        'alumnosL'=>$alumnos,'selectedN'=>$request->get('snivel'),'selectedA'=>$request->get('carnet')));
+                }
+            }
+            elseif($request->request->has('mod')){
+                $keys=$request->request->keys();
+                foreach($keys as $k){
+                    //Verifico si es una de las llaves q busco
+                    if (strpos($k,'n-') !== false) {
+                       $aux[]=explode("-",$k);
+                        $llaves[]=$k;
+                    }
+                }
+                $i=0;
+                foreach($aux as $a){
+                    $alumno=$em->getRepository('AppBundle:Alumno')->find($aux[0][4]);
+                    $det=$em->getRepository('AppBundle:Detalleevaluacion')->find($aux[0][2]);
+                    $eva=$em->getRepository('AppBundle:Evaluacion')->find($aux[$i][1]);
+                    //Obtengo el resultado
+                    $resultado=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findOneBy(array('evaluacionevaluacion'=>$eva,'alumnoCarnetalumno'=>$alumno,'detalleevaluaciondetalleevaluacion'=>$det));
+                    $resultado->setNota($request->get($llaves[$i]));
+                    $em->flush();
+                    $i++;
+                }
+                $this->MensajeFlash('exito','Modificacion Exitosa');
+                return $this->redirectToRoute('ingresarnotas');
+            }
+
         }
+        return $this->render("AppBundle::notaslista.html.twig",array('alumnos'=>'','al'=>'','alumnosL'=>$alumnos,'niveles'=>$niv,'selectedN'=>'','selectedA'=>''));
 
     }
 
@@ -72,12 +103,6 @@ class NotasController extends Controller{
     }
 
 
-
-    private function mensajeflash($m){
-        $this->get('session')->getFlashBag()->add('mensaje',''.$m);
-    }
-
-
     //FUNCION ENCARGADA DE AUTOCOMPLETAR UN SELECT EN BASE A OTRO
     /**
      * @Route("/js", name="js")
@@ -97,5 +122,8 @@ class NotasController extends Controller{
             return new Response();
 
         }
+    }
+    private function modificarNotas(){
+
     }
 }

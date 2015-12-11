@@ -41,7 +41,9 @@
                                             <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
                                                 {#recorro de nuevo para obtener las notas#}
                                                 {% for resultado in alumnos %}
-                                                    {% if resultado.alumnoCarnetalumno==d %}<td>{{ resultado.nota }}</td>{% endif %}
+                                                    {% if resultado.alumnoCarnetalumno==d %}
+                                                        <td>{{ resultado.nota }}</td>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </tr>
                                         {% endif %}

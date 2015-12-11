@@ -312,6 +312,7 @@
                         <!--Finaliza Gestionar Alumnos-->
                     {% endif %}
 
+                  {#
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Gestionar Secciones-->
                         <li class="treeview">
@@ -334,6 +335,7 @@
                         </li>
                         <!--Finaliza Gestionar Secciones-->
                     {% endif %}
+                  #}
 
                     {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Gestionar Notas-->
@@ -593,7 +595,7 @@
                         <!--Fin Opcion 2-->
 
                         <!--Inicia Opcion 3 Secciones-->
-                        <div class="col-lg-3 col-xs-6">
+                      <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-purple">
                                 <div class="inner">

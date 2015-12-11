@@ -38,7 +38,7 @@ function inicio() {
     $("#inTelPadre").keyup(validarTelefono);
     $("#momtel").keyup(validarTelefono);
     $("#inputRecibo").keyup(validarRecibo);
-    $("#form_Carnet").keyup(validarCarnet);
+    $("#form_Carnet").keyup(validarCarnetFer);
     $("#inputP").keyup(validarNombre);
     $("#inputtel").keyup(validarTelefono);
     $("#inputCarnet").keyup(validarCarnet);
@@ -83,6 +83,25 @@ function validarCarnet() {
     }
     else {
         $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+        return false;
+    }
+}
+function validarCarnetFer() {
+    var id = $(this).attr('id').toString();
+    var valor= document.getElementById(id).value;
+    var caracteres;
+    var numeros;
+    if(valor.length<=7) {
+        caracteres = valor.substring(0,1);
+        numeros = valor.substring(2,7);
+    }
+    if(!isNaN(numeros) && isNaN(caracteres) && valor.length==7) {
+        $("#"+id).parent().attr("class","col-sm-4 has-success has-feedback");
+        $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+    }
+    else {
+        $("#"+id).parent().attr("class","col-sm-4 has-error has-feedback");
         $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
@@ -184,11 +203,11 @@ function validarRecibo() {
     var id = $(this).attr('id').toString();
     var valor= document.getElementById(id).value;
     if(valor[0]=='R' && valor[1]=='-' && valor.length==6) {
-        $("#"+id).parent().attr("class","col-sm-6 has-success has-feedback");
+        $("#"+id).parent().attr("class","col-sm-4 has-success has-feedback");
         $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
     }
     else {
-        $("#"+id).parent().attr("class","col-sm-6 has-error has-feedback");
+        $("#"+id).parent().attr("class","col-sm-4 has-error has-feedback");
         $("#"+id).parent().children("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
         return false;
     }
