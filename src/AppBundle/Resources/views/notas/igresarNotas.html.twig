@@ -3,122 +3,59 @@
 {% block principal %}
     <head>
         <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js") }}" type="text/javascript"></script>
-    </head><section class="content">
+    </head>
+    <section class="content">
 
-    <div class="row">
-        <div class="col-xs-6">
-            {% for flashMessage in app.session.flashbag.get('mensaje') %}
-                <br>
-                <div class="alert alert-success fade in">
-                        <span class="close" data-dismiss="alert">
-                            &times;
-                        </span>
-                    {{ flashMessage }}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Administrar Notas</h3>
-                </div>
+                    {% if alumnos is defined%}
+                    <div class="col-xs-12">
+                        <div class="box">
 
-                <form role="form" method="POST" action="{{ path("ingresarnotas") }}">
-                    <div class="box-body">
-                        <div class="form-group col-sm-12">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-
-                                    <label>Nivel</label>
-                                    <select class="form-control" id="snivel" name="snivel">
-                                        {% for nivel in niveles %}
-                                            <option value="{{ nivel.idnivel }}">{{ nivel.nombrenivel }}</option>
-                                        {% endfor %}
-                                        <option>Nivel de Prueba 2</option>
-                                    </select>
-                                </div>
+                            <!--Inicia Cabecera de tabla-->
+                            <div class="box-header">
+                                <h3 class="box-title">Listado de Notas de Alumnos CENIUES</h3>
                             </div>
+                            <!--Finaliza Cabecera de tabla-->
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Clase</label>
-                                    <select class="form-control" id="sclase" name="sclase">
+                            <!--Inicia cuerpo de tabla-->
+                            <div class="box-body table-responsive">
+                                <table class="table table-bordered table-hover dataTable">
+                                    <thead>
+                                    <th>CARNET</th>
+                                    <th>ESTUDIANTE</th>
+                                    <th>EV.1</th>
+                                    <th>EV.2</th>
+                                    <th>EV.3</th>
+                                    <th>EV.4</th>
+                                    <th>EV.5</th>
+                                    <td>NOTA FINAL</td>
 
-                                    </select>
-                                </div>
+                                    </thead>
+                                    <tbody>
+                                    {# Creo un Alumno Base para saber si no es el mismo#}
+                                    {% set d=al %}
+                                    {% for resultado in alumnos %}
+                                        {# comparo si es el mismo para solo imprimir esa info una vez#}
+                                        {% if resultado.alumnoCarnetalumno!=d%}
+                                            <tr>{% set d=resultado.alumnoCarnetalumno %}
+                                            <td>{{ resultado.alumnoCarnetalumno.carnetalumno }}</td>
+                                            <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
+                                                {#recorro de nuevo para obtener las notas#}
+                                                {% for resultado in alumnos %}
+                                                    {% if resultado.alumnoCarnetalumno==d %}
+                                                        <td>{{ resultado.nota }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <button class="btn btn-info" type="submit" id="buscar" name="buscar">Buscar</button>
-
-                                    </div>
-                                </div>
-                            </div>
+                            <!--Finaliza Cuerpo de tabla-->
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-        {% if alumnos is defined%}
-            <div class="col-xs-12">
-            <div class="box">
-
-                <!--Inicia Cabecera de tabla-->
-                <div class="box-header">
-                    <h3 class="box-title">Listado de Notas de Alumnos CENIUES</h3>
-                </div>
-                <!--Finaliza Cabecera de tabla-->
-
-                <!--Inicia cuerpo de tabla-->
-                <div class="box-body table-responsive">
-                    <table class="table table-bordered table-hover dataTable">
-                        <thead>
-                        <th>CARNET</th>
-                        <th>ESTUDIANTE</th>
-                        <th>EV.1</th>
-                        <th>EV.2</th>
-                        <th>EV.3</th>
-                        <th>EV.4</th>
-                        <th>EV.5</th>
-                        <td>NOTA FINAL</td>
-                        </thead>
-                        <tbody>
-                        {# Creo un Alumno Base para saber si no es el mismo#}
-                        {% set d=al %}
-                        {% for resultado in alumnos %}
-                            {# comparo si es el mismo para solo imprimir esa info una vez#}
-                            {% if resultado.alumnoCarnetalumno!=d%}
-                                <tr id="trdatos">{% set d=resultado.alumnoCarnetalumno %}
-                                    <td>{{ resultado.alumnoCarnetalumno.carnetalumno }}</td>
-                                    <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
-                                    {#recorro de nuevo para obtener las notas#}
-                                    {% for resultado in alumnos %}
-                                        {% if resultado.alumnoCarnetalumno==d %}<td id="tdnota"><input name="inpnota" value="{{ resultado.nota }}"><input id="input" name="{{ resultado.alumnoCarnetalumno.carnetalumno }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{ resultado.evaluacionevaluacion.idevaluacion }}" hidden></td>{% endif %}
-                                    {% endfor %}
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <!--Finaliza Cuerpo de tabla-->
-                <div class="box-footer">
-                    <!--<form method="POST" action="{{ path('ingresarnotas') }}">-->
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary" id="guardar" name="guardar" onclick="registrarnota()">Guardar</button>
-                        <button type="submit" class="btn btn-danger">Cancelar</button>
-                    </div>
-                    <!-- </form> -->
-                </div>
-            </div>
-        </div>
-
-        {% endif %}
+                    {% endif %}
     </section>
 
     <script>
@@ -152,44 +89,6 @@
                 }
             });
         });
-
-
-        function registrarnota(){
-            var arreglo =[];
-            var colum = $('#tdnota');
-
-             colum.each(function(){
-
-                 var nota = $(this).find("input[name*='inpnota']").val(),
-                     datos = $(this).find("input[id*='input']").attr('name');
-
-                 arr = {};
-
-                 if(nota!==null){
-                    arr["id"] = datos;
-                     arr["dato"] = nota;
-                     arreglo.push(arr);
-                 }
-             });
-                 console.log(arreglo);
-
-                 var INFO = new FormData();
-                 var aInfo = JSON.stringify(arreglo);
-
-                 INFO.append('data',aInfo);
-
-             $.ajax({
-                type: "POST",
-                url: '{{ path("regisnota") }}',
-                data: INFO,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    alert(response.mensaje);
-                }
-            });
-        }
-
     </script>
 
 {% endblock %}

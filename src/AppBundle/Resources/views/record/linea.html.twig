@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <br>
         <img class="pull-left" src="{{ asset('images/ceniueslogo2.png') }}">
-        <h4 class="pull-right">Fecha : 25/11/2015</h4>
+        <h4 class="pull-right">Fecha : {{ fecha.format('d-m-Y') }}</h4>
         <h2 >Graficas de Programa para ni&ntildeos CENIUES </h2>
         <form class="form-inline contact_form" method="post" action="{{ path('graf2') }}">
             {% if niveles %}
@@ -21,7 +21,6 @@
                     <div class="col-sm-4">
                         <select id ="selectGrafico"name="grafico">
                             <option value="aprob">Aprobados</option>
-                            <option value="act">Activos</option>
                             <option value="not" selected>Notas</option>
                         </select>
                     </div>

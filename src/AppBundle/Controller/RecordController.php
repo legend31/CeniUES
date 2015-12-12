@@ -109,6 +109,7 @@ class RecordController extends DSIController
         $niveles=$em->getRepository('AppBundle:Modulo')->find($mod);
         $records=$em->getRepository('AppBundle:Record')->findAll();
         $modulos=$em->getRepository('AppBundle:Modulo')->findAll();
+        $fechahoy=new \DateTime('now',new \DateTimeZone("America/El_Salvador"));
         for($i=1;$i<11;$i++) {
             $c=0;
             if($nivel==0)
@@ -119,13 +120,13 @@ class RecordController extends DSIController
                     //Para todos los niveles
                     $notaAlumno=$re->getRecordalumnorecordalumno()->getNotafinal();
                     if($re->getNivelnivel()->getIdnivel()==$nivel&&$notaAlumno>=$i&&$notaAlumno<($i+1))
-                        if($em->getRepository('AppBundle:Matricula')->findOneBy(array('nivelnivel'=>$re->getNivelnivel(),'esactivo'=>1,'alumnoCarnetalumno'=>$re->getRecordalumnorecordalumno()->getAlumnoCarnetalumno())))
+                        if($em->getRepository('AppBundle:Matricula')->findOneBy(array('nivelnivel'=>$re->getNivelnivel(),'alumnoCarnetalumno'=>$re->getRecordalumnorecordalumno()->getAlumnoCarnetalumno())))
                             $c++;
                 }
                 $notas[]=$c;
             }
         }
-        return $this->render('AppBundle:record:linea.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$mod,'datos'=>json_encode($notas,JSON_NUMERIC_CHECK),'niveles'=>$niveles,'selectedNivel'=>$nivel));
+        return $this->render('AppBundle:record:linea.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$mod,'datos'=>json_encode($notas,JSON_NUMERIC_CHECK),'niveles'=>$niveles,'selectedNivel'=>$nivel,'fecha'=>$fechahoy));
     }
     /**
      * @Route("/graficos",name="graf")
@@ -160,24 +161,25 @@ class RecordController extends DSIController
         $em=$this->getDoctrine()->getManager();
         //Modulo
         $modulos=$em->getRepository('AppBundle:Modulo')->findAll();
+        $fechahoy=new \DateTime('now',new \DateTimeZone("America/El_Salvador"));
         $ob=new Highchart();
         if($request->isMethod("POST")){
             $niveles=$em->getRepository('AppBundle:Modulo')->find($request->get('modulo'));
             if($request->get('grafico')=='aprob') {
                 $ob=$this->graficoAprobados($request->get('nivel'));
-                return $this->render('AppBundle::reportes-select.html.twig', array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles' => $niveles, 'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel')));
+                return $this->render('AppBundle::reportes-select.html.twig', array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles' => $niveles, 'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel'),'fecha'=>$fechahoy));
             }
             if($request->get('grafico')=='act'){
                 $ob=$this->graficaActivos();
-                return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'act','selectedNivel'=>$request->get('nivel')));
+                return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'act','selectedNivel'=>$request->get('nivel'),'fecha'=>$fechahoy));
             }
             if($request->get('grafico')=='not'){
                 return $this->redirectToRoute('graficoAlumno',array('nivel'=>$request->get('nivel'),'mod'=>$request->get('modulo')));
             }
-            return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel')));
+            return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>$request->get('modulo'),'niveles'=>$niveles,'chart' => $ob,'selected'=>'aprob','selectedNivel'=>$request->get('nivel'),'fecha'=>$fechahoy));
 
         }
-        return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>'','niveles'=>'','chart' => $ob,'selected'=>'','selectedNivel'=>''));
+        return $this->render('AppBundle::reportes-select.html.twig',array('modulos'=>$modulos,'selectedModulo'=>'','niveles'=>'','chart' => $ob,'selected'=>'','selectedNivel'=>'','fecha'=>$fechahoy));
     }
     private function graficoPastel(){
         $ob = new Highchart();
@@ -190,7 +192,10 @@ class RecordController extends DSIController
         ));
         return $ob;
     }
-    private  function graficoAprobados($nivel){
+    /**
+     * @Route("/gW/{nivel}");
+     */
+    public function willAction($nivel){
         $ob=$this->graficoPastel();
         if($nivel==0)
             $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en CENIUES ');
@@ -199,9 +204,56 @@ class RecordController extends DSIController
         //Logica
         $em=$this->getDoctrine()->getManager();
         if($nivel==0)
-            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1));
+            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array(''));
         else
-            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1,'nivelnivel'=>$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel)));
+            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('nivelnivel'=>$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel)));
+
+        $total=0;
+        $aprob=0;
+        if($matricula){
+            foreach($matricula as $mat)
+            {
+                $record_A=$em->getRepository('AppBundle:Recordalumno')->findOneBy(array('alumnoCarnetalumno'=>$mat->getAlumnoCarnetalumno()));
+                $record=$em->getRepository('AppBundle:Record')->findOneBy(array('nivelnivel'=>$mat->getNivelnivel(),'recordalumnorecordalumno'=>$record_A));
+                if($record)
+                {
+                    if($record->getRecordalumnorecordalumno()->getNotafinal()>=7)
+                        $aprob++;
+                }
+                $total++;
+            }
+            var_dump($aprob);
+            $prom=round($aprob/$total,2);
+            $np=1-$prom;
+            //Data a Enviar
+            $data = array(
+                array('Alumnos Aprobados '.$aprob, $prom),
+                array('Alumnos Reprobados '.($total-$aprob), $np),
+            );
+        }
+        else{
+            $data = array(
+                array('Alumnos Aprobados '.(0), 0),
+                array('Alumnos Reprobados '.(0), 100),
+            );
+        }
+        $ob->series(array(array('type' => 'pie','name' => 'Porcentaje', 'data' => $data)));
+
+        return new Response();
+    }
+    private  function graficoAprobados($nivel)
+    {
+        /*$ob=$this->graficoPastel();
+        if($nivel==0)
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en CENIUES ');
+        else
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados ');
+        //Logica
+        $em=$this->getDoctrine()->getManager();
+        if($nivel==0)
+            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array(''));
+        else
+            $matricula=$em->getRepository('AppBundle:Matricula')->findBy(array('nivelnivel'=>$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel)));
         $total=0;
         $aprob=0;
         if($matricula){
@@ -229,6 +281,66 @@ class RecordController extends DSIController
                 array('Alumnos Reprobados '.(0), 100),
             );
         }
+        $ob->series(array(array('type' => 'pie','name' => 'Porcentaje', 'data' => $data)));*/
+        $ob = $this->graficoPastel();
+        if ($nivel == 0)
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en CENIUES ');
+        else
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados ');
+        //Logica
+        $em = $this->getDoctrine()->getManager();
+        $total=0;
+        $aprob=0;
+        $matricula=null;
+        if ($nivel == 0) {
+            $modulo=$this->obtenerNivelesActivos();
+            $record = $em->getRepository('AppBundle:Record')->findAll();
+            foreach($record as $r){
+                foreach($modulo->getNivelnivel() as $n){
+                    if($r->getNivelnivel()->getIdnivel()==$n->getIdnivel()&&$r->getRecordalumnorecordalumno()->getNotafinal()>=7)
+                        $aprob++;
+                }
+                $total++;
+            }
+            $prom=round($aprob/$total,2);
+            $np=1-$prom;
+            //Data a Enviar
+            $data = array(
+                array('Alumnos Aprobados '.$aprob, $prom),
+                array('Alumnos Reprobados '.($total-$aprob), $np),
+            );
+        }
+        else {
+            $matricula = $em->getRepository('AppBundle:Matricula')->findBy(array('nivelnivel' => $this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel)));
+            if($matricula){
+                foreach($matricula as $mat)
+                {
+                    $record_A=$em->getRepository('AppBundle:Recordalumno')->findOneBy(array('alumnoCarnetalumno'=>$mat->getAlumnoCarnetalumno()));
+                    $record=$em->getRepository('AppBundle:Record')->findOneBy(array('nivelnivel'=>$mat->getNivelnivel(),'recordalumnorecordalumno'=>$record_A));
+                    if($record)
+                    {
+                        if($record->getRecordalumnorecordalumno()->getNotafinal()>=7)
+                            $aprob++;
+                    }
+                    $total++;
+                }
+                //var_dump($aprob);
+                $prom=round($aprob/$total,2);
+                $np=1-$prom;
+                //Data a Enviar
+                $data = array(
+                    array('Alumnos Aprobados '.$aprob, $prom),
+                    array('Alumnos Reprobados '.($total-$aprob), $np),
+                );
+            }
+            else{
+                $data = array(
+                    array('Alumnos Aprobados '.(0), 0),
+                    array('Alumnos Reprobados '.(0), 100),
+                );
+            }
+        }
+
         $ob->series(array(array('type' => 'pie','name' => 'Porcentaje', 'data' => $data)));
         return $ob;
     }
