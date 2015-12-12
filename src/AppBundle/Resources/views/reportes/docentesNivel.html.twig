@@ -1,0 +1,45 @@
+<div class="pad margin no-print">
+</div>
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Centro de Enseñanza de Idiomas Extranjeros</h1>
+            <h2 class="page-header text-center">
+                <i class="fa fa-globe"></i> Docentes en Nivel.
+            </h2>
+        </div><!-- /.col -->
+    </div>
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12 table-responsive">
+            <table border=1 cellspacing=0 cellpadding=15 bordercolor="000000" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Carnet</th>
+                    <th>Docente</th>
+                    <th>Nivel Asignado</th>
+                    <th>Seccion</th>
+                    <th>Local</th>
+                    <th>Facultad</th>
+                    <th>Horario</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in form %}
+                    <tr>
+                        <td>{{ entity.docenteCarnetdocente.carnetdocente }}</td>
+                        <td>{{ entity.docenteCarnetdocente.primernombredocente }} {{ entity.docenteCarnetdocente.segundonombredocente }} {{ entity.docenteCarnetdocente.primerapellidodocente }}</td>
+                        <td>{{ entity.nivelnivel.nombrenivel }}</td>
+                        <td>Seccion {{ entity.seccion.nombreseccion }}</td>
+                        <td>{{ entity.locallocal.nombrelocal }}</td>
+                        <td>{{ entity.locallocal.nombrefacultad }}</td>
+                        <td>{{ entity.horario.format('h:i A') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>

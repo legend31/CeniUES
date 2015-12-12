@@ -12,14 +12,7 @@
                 <div class="box box-danger">
                     <div class="box-header">
                         <h3 class="box-title">Asignar docentes en niveles</h3>
-                        <div class="box-tools">
-                            <div class="input-group" style="width: 350px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Buscar">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <!--Impresion de errores-->
                         <!--Docente no existen-->
@@ -29,29 +22,8 @@
                                 <b>Error</b> no existe ning&uacute;n docente dentro del sistema.
                             </div>
 
-                        <!--locales no definidos-->
-                        {% elseif error == 2 %}
-                            <div class="alert alert-danger alert-dismissable">
-                                <h4><i class="icon fa fa-ban"></i> Locales no definidos</h4>
-                                <b>Error</b> debe definir locales para poder asignar donde se impartiran las clases.
-                            </div>
-
-                        <!--niveles no creados-->
-                        {% elseif error == 3 %}
-                            <div class="alert alert-danger alert-dismissable">
-                                <h4><i class="icon fa fa-ban"></i> Niveles no definidos</h4>
-                                <b>Error</b> debe definir niveles.
-                            </div>
-
-                        <!--secciones no definidas-->
-                        {% elseif error == 4 %}
-                            <div class="alert alert-danger alert-dismissable">
-                                <h4><i class="icon fa fa-ban"></i> Secciones no definidos</h4>
-                                <b>Error</b> no se pueden definir docentes si no existen secciones para clases.
-                            </div>
-
                         <!--clases-->
-                        {% elseif error == 5 %}
+                        {% elseif error == 2 %}
                             <div class="alert alert-danger alert-dismissable">
                                 <h4><i class="icon fa fa-ban"></i> Clases no definidos</h4>
                                 <b>Error</b> no se han encontrado grupos de clases en el sistema.
@@ -65,52 +37,51 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
+                                <th>Carnet</th>
                                 <th>Docente</th>
                                 <th>Nivel Asignado</th>
-                                <th>Seccion</th>
                                 <th>Local</th>
+                                <th>Facultad</th>
                                 <th>Hora Clase</th>
+                                <th>Opciones</th>
                             </tr>
                             {% for clase in clases %}
                                 {% if clase.docenteCarnetdocente %}
                                     <tr>
-                                        <td>{{ clase.docenteCarnetdocente.nombredocente }}</td>
-                                        <td>
-                                            <select class="col-sm-7" id="" name="" disabled>
-                                                    <option value="">{{ clase.nivelnivel.nombrenivel }}</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="col-sm-7" id="" name="" disabled>
-                                                <option value="">Seccion {{ clase.seccion.nombreseccion }}</option>
-                                            </select>
-                                        </td>
+                                        <td>{{ clase.docenteCarnetdocente.carnetdocente }}</td>
+                                        <td>{{ clase.docenteCarnetdocente.primernombredocente }} {{ clase.docenteCarnetdocente.primerapellidodocente }}</td>
+                                        <td>{{ clase.nivelnivel.nombrenivel }}</td>
                                         <td>{{ clase.locallocal.nombrelocal }}</td>
+                                        <td>{{ clase.locallocal.nombrefacultad }}</td>
                                         <td>{{ clase.horario.format('h:i A') }}</td>
+                                        <td>
+                                            <div class="fc-button-group">
+                                                <a class="btn btn-default bg-aqua-gradient" href="#">
+                                                    <i class="fa fa-undo"></i> Reasignar
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
-                            {% for entity in form %}
+                            {% for valor in 0..100 %}
+                            {% if form %}
                                     <tr>
-                                        <td>{{ entity }}</td>
+                                        <td>{{ form.valor.6.6 }}</td>
+                                        <td>{{ form.i.6.6 }}</td>
+                                        <td><i>No definido</i></td>
+                                        <td><i>No definido</i></td>
+                                        <td><i>No definido</i></td>
+                                        <td><i>No definido</i></td>
                                         <td>
-                                            <select class="col-sm-7" id="niv" name="niv">
-                                                {% for nivel in niveles %}
-                                                    <option value="{{ nivel.idnivel }}">{{ nivel.nombrenivel }}</option>
-                                                {% endfor %}
-                                            </select>
+                                            <div class="fc-button-group">
+                                                <a class="btn btn-default col-sm-8 bg-green-gradient" href="#">
+                                                    <i class="fa fa-check"></i> Asignar
+                                                </a>
+                                            </div>
                                         </td>
-                                        <td>
-                                            <select class="col-sm-7" id="sec" name="sec">
-                                                <!--<option value="null" selected>Selecionar</option>
-                                                {% for seccion in seciones %}
-                                                    <option value="{{ seccion.idseccion }}">{{ seccion.nombreseccion }}</option>
-                                                {% endfor %}-->
-                                            </select>
-                                        </td>
-                                        <td id="local"></td>
-                                        <td></td>
                                     </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

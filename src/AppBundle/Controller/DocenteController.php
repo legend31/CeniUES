@@ -267,30 +267,15 @@ class DocenteController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $docentes = $em->getRepository('AppBundle:Docente')->findAll();
-        $locales = $em->getRepository('AppBundle:Local')->findAll();
-        $niveles = $em->getRepository('AppBundle:Nivel')->findAll();
-        $secciones = $em->getRepository('AppBundle:Seccion')->findAll();
         $clases = $em->getRepository('AppBundle:Clase')->findAll();
 
         if(!$docentes)
         {
             return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>1));
         }
-        elseif(!$locales||!$niveles)
-        {
-            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>2));
-        }
-        elseif(!$niveles)
-        {
-            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>3));
-        }
-        elseif(!$secciones)
-        {
-            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>4));
-        }
         elseif(!$clases)
         {
-            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>5));
+            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>2));
         }
         $i=0;
         foreach($clases as $clase) {
@@ -315,7 +300,9 @@ class DocenteController extends Controller
             }
         }
         $envio=array_diff($nomdoc,$dn);
-        return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$envio, 'error'=>null, 'niveles' => $niveles, 'locales'=>$locales, 'seciones'=>$secciones, 'clases'=>$clases));
+        $send = array($n, $envio);
+        var_dump($send);
+        return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$send, 'error'=>null, 'clases'=>$clases, 'carnet'=>$n));
     }
 
     /**
