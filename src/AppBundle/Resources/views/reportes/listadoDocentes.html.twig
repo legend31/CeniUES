@@ -31,6 +31,7 @@
                     </thead>
                     <tbody>
                     {% for entity in form %}
+                        {% if entity.estado %}
                         <tr>
                             <td>{{ entity.getCarnetdocente }}</td>
                             <td>{{ entity.getPrimernombredocente }} {{ entity.getSegundonombredocente }}</td>
@@ -39,6 +40,7 @@
                             <td>{{ entity.getDirecciondocente }}</td>
                             <td>{{ entity.getTelefono }}</td>
                         </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>

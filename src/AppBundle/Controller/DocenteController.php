@@ -267,44 +267,42 @@ class DocenteController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $docentes = $em->getRepository('AppBundle:Docente')->findAll();
-        $locales = $em->getRepository('AppBundle:Local')->findAll();
-        $niveles = $em->getRepository('AppBundle:Nivel')->findAll();
-        $secciones = $em->getRepository('AppBundle:Seccion')->findAll();
         $clases = $em->getRepository('AppBundle:Clase')->findAll();
 
         if(!$docentes)
         {
-            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>1)));
-        }
-        elseif(!$locales||!$niveles)
-        {
-            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>2)));
-        }
-        elseif(!$niveles)
-        {
-            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>3)));
-        }
-        elseif(!$secciones)
-        {
-            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>4)));
+            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>1));
         }
         elseif(!$clases)
         {
-            return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>5)));
+            return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>2));
         }
-
-        /*foreach($docentes as $docente){
-            foreach($locales as $local) {
-                foreach($niveles as $nivel) {
-                    foreach($secciones as $seccion) {
-                        foreach($clases as $clase){
-                        }
-                    }
-                }
+        $i=0;
+        foreach($clases as $clase) {
+            if($clase->getDocenteCarnetdocente()) {
+                $d[$i] = $clase->getDocenteCarnetdocente()->getCarnetdocente();
+                $i++;
             }
-        }*/
-
-        return new Response($this->container->get('templating')->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$docentes, 'error'=>null)));
+        }
+        $i=0;
+        foreach($docentes as $docente) {
+            if($docente->getEstado()) {
+                $dc[$i] = $docente->getCarnetdocente();
+                $dn[$i] = $docente->getNombredocente();
+                $i++;
+            }
+        }
+        $nomdoc= $dn;
+        $n = array_diff($dc,$d);
+        foreach ($n as $key => $value) {
+            if(isset($n[$key])){
+                unset($dn[$key]);
+            }
+        }
+        $envio=array_diff($nomdoc,$dn);
+        $send = array($n, $envio);
+        var_dump($send);
+        return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$send, 'error'=>null, 'clases'=>$clases, 'carnet'=>$n));
     }
 
     /**
@@ -349,23 +347,37 @@ class DocenteController extends Controller
     }
 
     /**
+     * @Route("/andocente", name="documento2D")
+     */
+    public function reporteDocente2Action()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $clases = $em->getRepository('AppBundle:Clase')->findAll();
+
+        if(!$clases)
+        {
+            return $this->render('@App/docente/distriDoc.html.twig', array('TituloPagina' => 'Docentes en nivel', 'form' => $clases, 'msj'=>'error'));
+        }
+        return $this->render('@App/docente/distriDoc.html.twig', array('TituloPagina' => 'Docentes en nivel', 'form' => $clases, 'msj'=>null));
+    }
+
+    /**
      * @Route("/admin/detallesD", name="detallesD")
      */
-    public function detallesPorCarnetAction(Request $request){
-        $dui = $request->get('duidocente');
+    public function detallesPorCarnetAction(){
+        $request = $this->get('request');
+        $dui = $request->get('duidoc');
         $em = $this->getDoctrine()->getManager();
-        //$repo = $em->getRepository('AppBundle:Docente');
-        $docente = $em->getRepository('AppBundle:Docente')->findOneBy(array('dui'=>$dui));
+        $repo = $em->getRepository('AppBundle:Docente');
+        $docente = $repo->findOneBy(array('dui'=>$dui));
 
-        $envio = array("carnetdoc"=>$docente->getCarnetdocente(),
+        return new JsonResponse(array("carnetdoc"=>$docente->getCarnetdocente(),
             "nombre"=>$docente->getNombredocente(),
             "apellido"=>$docente->getApellidodocente(),
             "duidoc"=>$docente->getDui(),
             "direccion"=>$docente->getDirecciondocente(),
-            "fnac"=>$docente->getFechanacimiento()->format('Y-m-d'),
-            "ntel"=>$docente->getTelefono());
-
-        return new JsonResponse($envio);
+            "fnac"=>$docente->getFechanacimiento()->format('Y:m:d'),
+            "ntel"=>$docente->getTelefono()));
     }
 
     /**
@@ -408,8 +420,8 @@ class DocenteController extends Controller
             $hv = $request->get('hor2').":".$request->get('min2')."-pm";
             $sabD = $request->get('sabD');
             $domD = $request->get('domD');
-            $d->setDiasD($hm." ".$hv);
-            $d->setHorasD($sabD." ".$domD);
+            $d->setHorasD($hm." ".$hv);
+            $d->setDiasD($sabD." ".$domD);
             $em->flush();
             return $this->render("@App/docente/definirHorario.html.twig", array('docente'=>'3'));
         }
@@ -459,6 +471,27 @@ class DocenteController extends Controller
         }
         else {
             return $this->render('@App/docente/elimLateral.html.twig', array('modif'=>null));
+        }
+    }
+
+    /**
+     * @Route("/js2", name="js2")
+     */
+    public function javascriptSelect(Request $request){
+        if($request->isMethod('POST')){
+            $rep2 = $this->getDoctrine()->getRepository('AppBundle:Clase');
+            $idpasado = $request->get('idniv');
+            $clase = $rep2->findBy(array('nivelnivel'=>$idpasado));
+            //$c = array();
+            foreach($clase as $clas){
+                //array_push($c,$clas->getHorario());
+                $c["seccion"]=$clas->getSeccion()->getNombreseccion();
+                $d["local"]=$clas->getLocallocal()->getNombrelocal();
+            }
+            echo json_encode($c);
+            //$this->mensajeflash(date("Y-m-d(h:i:s)",$c["horario"]));
+            return new Response();
+
         }
     }
 }

@@ -1,0 +1,64 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} {{ TituloPagina }} {% endblock %}
+
+{% block principal %}
+    <div class="pad margin no-print">
+    </div>
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Docentes en Nivel
+                </h2>
+            </div><!-- /.col -->
+        </div>
+        {% if msj %}
+            <br>
+            <div class="alert alert-warning alert-dismissable">
+                <h4><i class="icon fa fa-warning"></i> No se ningún docente asignado en nivel.</h4>
+            </div>
+            <br>
+        {% else %}
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Carnet</th>
+                        <th>Docente</th>
+                        <th>Nivel Asignado</th>
+                        <th>Seccion</th>
+                        <th>Local</th>
+                        <th>Facultad</th>
+                        <th>Horario</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in form %}
+                        <tr>
+                            <td>{{ entity.docenteCarnetdocente.carnetdocente }}</td>
+                            <td>{{ entity.docenteCarnetdocente.primernombredocente }} {{ entity.docenteCarnetdocente.segundonombredocente }} {{ entity.docenteCarnetdocente.primerapellidodocente }}</td>
+                            <td>{{ entity.nivelnivel.nombrenivel }}</td>
+                            <td>Seccion {{ entity.seccion.nombreseccion }}</td>
+                            <td>{{ entity.locallocal.nombrelocal }}</td>
+                            <td>{{ entity.locallocal.nombrefacultad }}</td>
+                            <td>{{ entity.horario.format('h:i A') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="{{ path('listadoDocentes2Pdf') }}" class="btn btn-primary pull-right" ><i class="fa fa-download"></i> Generate PDF</a>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+{%  endblock %}

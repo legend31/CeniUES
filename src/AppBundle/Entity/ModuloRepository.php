@@ -13,15 +13,15 @@ class ModuloRepository extends EntityRepository{
     public function modulosxfecha($fechanow){
         $em=$this->getEntityManager();
         return $em->createQuery(
-            'SELECT m FROM AppBundle:Modulo m WHERE m.fechainicio > :fecha ORDER BY m.nombremodulo ASC'
+            'SELECT m.nombremodulo FROM AppBundle:Modulo m WHERE m.fechainicio > :fecha ORDER BY m.nombremodulo ASC'
         )->setParameter('fecha',$fechanow)->getResult();
     }
 
-    public function buscarmodulos1($fecha,$nombre){
+    public function buscarmodulos1($fechai,$fechaf,$nombre){
         $em=$this->getEntityManager();
         return $em->createQuery(
-            'SELECT m FROM AppBundle:Modulo m WHERE m.nombremodulo = :nombre OR m.fechainicio = :fecha OR m.fechafin > :fecha'
-        )->setParameter('nombre',$nombre)->setParameter('fecha',$fecha)->getResult();
+            'SELECT m FROM AppBundle:Modulo m WHERE m.nombremodulo = :nombre AND m.fechainicio <= :fechai AND m.fechafin >= :fechaf'
+        )->setParameter('nombre',$nombre)->setParameter('fechai',$fechai)->setParameter('fechaf',$fechaf)->getOneOrNullResult();
     }
     public function verificarModulo($fecha)
     {
