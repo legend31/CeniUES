@@ -2,20 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Detalleevaluacion;
 use AppBundle\Entity\Matricula;
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Modulo;
 use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Padre;
 use AppBundle\Entity\Responsable;
 use AppBundle\Entity\Resultadoevaluacion;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MatriculaController extends Controller
+class MatriculaController extends DSIController
 {
     /**
      * @Route("/desma",name="desma")
@@ -27,13 +30,14 @@ class MatriculaController extends Controller
             ->add('Buscar','submit')
             ->getForm();
         $form->handleRequest($request);
+        $m=$this->getDoctrine()->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1),array('nivelnivel'=>'ASC'));
         if($form->isValid()) {
             $data = $form->getData();
             $m=$this->getDoctrine()->getRepository('AppBundle:Matricula')->matriculasOrdenadas($data['Carnet']);
             return $this->render('AppBundle:matricula:desmatricular.html.twig', array('mat' =>$m, 'formulario' => $form->createView()));
         }
         else
-            return $this->render('AppBundle:matricula:desmatricular.html.twig',array('mat'=>'', 'formulario' => $form->createView()));
+            return $this->render('AppBundle:matricula:desmatricular.html.twig',array('mat'=>$m, 'formulario' => $form->createView(),'activos'=>1));
     }
     /**
      * @Route("/desmatricular/{d}",name="des")
@@ -45,116 +49,46 @@ class MatriculaController extends Controller
         $mat->setEsactivo(0);
         $em->flush();
         //MensajeFlash
-        $this->MensajeFlash('Desmatriculacion exitosa!');
+        $this->MensajeFlash('exito','Desmatriculacion exitosa!');
         return $this->redirectToRoute('desma');
-            //return $this->render('AppBundle:matricula:desmatricular.html.twig',array('al'=>$em->getRepository('AppBundle:Alumno')->find($mat->getAlumnoCarnetalumno()),'mat' =>$mat,'formulario' => $form->createView()))
     }
 
-    /**
-     * @Route("/alumnoinsertar",name="alumnoinsert")
-     */
-    public function alumnoInsertAction(Request $request){
-        $em = $this->getDoctrine()->getEntityManager();
-        //Validando el envio del formulario
-        if($request->isMethod("POST")) {
-            $al = new Alumno();
-            $al->setCarnetalumno(strtoupper($request->get("carnet")));
-            $al->setPrimernombrealumno($request->get("primer_nombre"));
-            $al->setPrimerapellidoalumno($request->get("primer_apellido"));
-            $al->setSegundonombrealumno($request->get("segundo_nombre"));
-            $al->setSegundoapellidoalumno($request->get("segundo_apellido"));
-            $al->setFechanacimiento(new \DateTime($request->get("fecha_nacimiento")));
-            $al->setDireccioncasa("xx");
-            $al->setTelefonocasa("xx");
-            $al->setPadrepadre($this->getDoctrine()->getRepository('AppBundle:Padre')->findOneBy(array('nombrepadre'=>$request->get('padre'))));
-            $al->setResponsableresponsable($em->getRepository('AppBundle:Responsable')->findOneBy(array('nombreresponsable'=>$request->get("responsable"))));
-
-            // Transformar la Edad
-            $fecha=$al->getFechanacimiento()->format('Y-m-d H:i:s');
-            $segundos=strtotime('now') - strtotime($fecha);
-            //Para hacerlo dias
-            $edad=intval($segundos/60/60/24/365);
-            // ******************
-            $al->setEdad($edad);
-
-            $em->persist($al);
-            $em->flush();
-            if($request->get("origen")=="nuevo")
-                return $this->redirectToRoute('antiguo');
-            else
-                return $this->redirectToRoute('examencolocacion');
-        }
-        return $this->render('AppBundle:formularios:alumno-inline.html.twig');
-
-    }
-
-    /**
-     * @Route("/padreInsertar",name="padreinsert")
-     */
-    public function padreInsertAction(Request $request){
-        $em=$this->getDoctrine()->getEntityManager();
-        if($request->isMethod("POST")){
-            $p=new Padre();
-            $p->setNombrepadre($request->get("nombreP"));
-            $p->setLugartrabajop($request->get("trabP"));
-            $p->setTelefonotrabajopadre($request->get("telP"));
-            $p->setNombremadre($request->get("nombreM"));
-            $p->setLugartrabajom($request->get("maTrab"));
-            $p->setTelefonotrabajomadre($request->get("maTel"));
-
-            $em->persist($p);
-            $em->flush();
-            if($request->get("origen")=="padrenuevo")
-                return $this->redirectToRoute('antiguo');
-            else
-                return $this->redirectToRoute('examencolocacion');
-        }
-        return $this->render('AppBundle:formularios:padre-inline.html.twig');
-    }
-    /**
-     * @Route("/responInsertar",name="responinsert")
-     */
-    public function responInsertAction(Request $request){
-        $em=$this->getDoctrine()->getEntityManager();
-        if($request->isMethod("POST")){
-            $res=new Responsable();
-            $res->setNombreresponsable($request->get("nombre"));
-            $res->setParentesco($request->get("parentesco"));
-            $res->setTelefono($request->get("tel"));
-
-            $em->persist($res);
-            $em->flush();
-            if($request->get("origen")=="nuevo")
-                return $this->redirectToRoute('antiguo');
-            else
-                return $this->redirectToRoute('examencolocacion');
-        }
-        return $this->render('AppBundle:formularios:responsable-inline.html.twig');
-    }
     /**
      * @Route("/matriculanuevo",name="matnuevo")
      */
     public function matriculaNuevoAction(Request $request){
-        $em=$this->getDoctrine()->getEntityManager();
+        $em=$this->getDoctrine()->getManager();
         //Formulario
         if($request->isMethod("POST"))
         {
-            $alumnos=$em->getRepository('AppBundle:Matricula')->findByalumnoCarnetalumno($request->get('carnet'));
-            foreach ($alumnos as $item)
-            {
-                $item->setEsactivo(0);
+            $mat=$em->getRepository('AppBundle:Matricula')->verificarMatricula($request->get('carnet'),$request->get('recibo'));
+            $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+            $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
+            //Validando q haya un modulo o que el alumno no esta ya matriculado
+            if(!$modulo){
+                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
+                return $this->redirectToRoute('matnuevo');
             }
-            $mat=new Matricula();
-            //Buzo con el formato de la fecha
-            $mat->setFechamatricula(new \DateTime($request->get("fecha"),new \DateTimeZone("America/El_Salvador")));
-            $mat->setNumerorecibo($request->get('recibo'));
-            $mat->setEsactivo(1);
-            $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find(1));
-            $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
-            //Perisistencia
-            $em->persist($mat);
-            $em->flush();
-            return $this->redirectToRoute('antiguo');
+            elseif($mat){
+                $this->MensajeFlash("error","Alumno/Recibo ya han sido matriculados");
+                return $this->redirectToRoute('matnuevo');
+            }
+            else {
+                $mat = new Matricula();
+                //Buzo con el formato de la fecha
+                $mat->setFechamatricula(new \DateTime($request->get("fecha"), new \DateTimeZone("America/El_Salvador")));
+                $mat->setNumerorecibo($request->get('recibo'));
+                $mat->setEsactivo(1);
+                $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find(1));
+                $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
+                //Perisistencia
+                $em->persist($mat);
+                $em->flush();
+                $this->MensajeFlash('exito',"Alumno ha sido matriculado");
+                return $this->redirectToRoute('matnuevo');
+            }
+            var_dump($modulo);
+            new Response();
         }
         return $this->render('AppBundle:formularios:matricula-nvo.html.twig');
     }
@@ -163,37 +97,50 @@ class MatriculaController extends Controller
      */
     public function matriculaAntiguaAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
-        $nivel=$em->getRepository('AppBundle:Nivel')->findAll();
+        //$nivel=$em->getRepository('AppBundle:Nivel')->findAll();
+        $nivel=$this->obtenerNivelesActivos();
         //Formulario
         if($request->isMethod("POST"))
         {
-            $mat=$em->getRepository('AppBundle:Matricula')->findOneBy(array('numerorecibo'=>$request->get('recibo')));
-            if($mat){
-                $this->MensajeFlash('error',"Recibo ya matriculado!");
-                return $this->redirectToRoute('examencolocacion');
+            $mat=$em->getRepository('AppBundle:Matricula')->verificarMatricula($request->get('carnet'),$request->get('recibo'));
+            $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+            $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
+            //Validando q haya un modulo o que el alumno no esta ya matriculado
+            if(!$modulo){
+                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
+                return $this->redirectToRoute('matantiguo');
+            }
+            elseif($mat){
+                $this->MensajeFlash('error',"Alumno/Recibo ya matriculado en modulo!");
+                return $this->redirectToRoute('matantiguo');
+            }
+            elseif(!$em->getRepository('AppBundle:Matricula')->findOneBy(array('alumnoCarnetalumno'=>$em->getRepository('AppBundle:Alumno')->find($request->get('carnet'))))){
+                $this->MensajeFlash('error',"Alumno nunca ha cursado niveles en CENIUES.Registrelo como nuevo Alumno");
+                return $this->redirectToRoute('matantiguo');
             }
             else{
-                $mat=new Matricula();
-                //Buzo con el formato de la fecha
-                $mat->setFechamatricula(new \DateTime($request->get("fecha")));
-                $mat->setNumerorecibo($request->get('recibo'));
-                $mat->setEsactivo('1');
-                $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find($request->get('nivel')));
-                $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
-                //Perisistencia
-                $em->persist($mat);
-                $em->flush();
-                //$this->MensajeFlash('Matriculacion exitosa');
-                if($request->get("origen")=="antiguo")
+                $nivel=$em->getRepository('AppBundle:Nivel')->find($request->get('nivel'));
+                $n=explode("Nivel ",$nivel->getNombrenivel());
+                //Correcion si ya paso el nivel 1
+                if($n[1]>1)
+                    $n[1]=$n[1]+1;
+                if($n[1]==$this->validarMatricula()){
+                    $mat=new Matricula();
+                    //Buzo con el formato de la fecha
+                    $mat->setFechamatricula(new \DateTime($request->get("fecha")));
+                    $mat->setNumerorecibo($request->get('recibo'));
+                    $mat->setEsactivo('1');
+                    $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find($request->get('nivel')));
+                    $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
+                    //Perisistencia
+                    $em->persist($mat);
+                    $em->flush();
+                    $this->MensajeFlash('exito',"Alumno matriculado exitosamente!");
                     return $this->redirectToRoute('matantiguo');
-                else
-                    return $this->redirectToRoute('examencolocacion');
+                }
+                $this->MensajeFlash('error',"Por favor Matricular este Alumno en el Nivel ".$n[1]);
+                return $this->redirectToRoute('matantiguo');
             }
-            /*$alumnos=$em->getRepository('AppBundle:Matricula')->findByalumnoCarnetalumno($request->get('carnet'));
-            foreach ($alumnos as $item)
-            {
-                $item->setEsactivo(0);
-            }*/
         }
         return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
     }
@@ -203,16 +150,28 @@ class MatriculaController extends Controller
     public function examenColocacionAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         //Para el combo del formulario
-        $niveles=$em->getRepository('AppBundle:Nivel')->nivelesColocacion();
+        //$niveles=$em->getRepository('AppBundle:Nivel')->nivelesColocacion();
+        $niveles=$this->obtenerNivelesActivos();
         $eva=$em->getRepository('AppBundle:Evaluacion')->findAll();
         if($request->isMethod("POST")){
-            $mat=$em->getRepository('AppBundle:Matricula')->findOneBy(array('numerorecibo'=>$request->get('recibo')));
-            if($mat){
-                $this->MensajeFlash('error',"Recibo ya matriculado!");
+            $alum=$em->getRepository('AppBundle:Alumno')->find($request->get('carnet'));
+            $mat=$em->getRepository('AppBundle:Matricula')->findOneBy(array('alumnoCarnetalumno'=>$alum));
+            $fechaActual=new \DateTime('now');
+            $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
+            //Validando q haya un modulo o que el alumno no esta ya matriculado
+            if(!$modulo){
+                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
+                return $this->redirectToRoute('examencolocacion');
+            }
+            elseif($mat){
+                $this->MensajeFlash('error',"Alumno ya ha cursado niveles en CENIUES");
+                return $this->redirectToRoute('examencolocacion');
+            }
+            elseif($em->getRepository('AppBundle:Matricula')->findOneBy(array('numerorecibo'=>$request->get('recibo')))){
+                $this->MensajeFlash('error',"Ese recibo ya ha sido usado en CENIUES");
                 return $this->redirectToRoute('examencolocacion');
             }
             else{
-                //validar la matricula
                 $mat=new Matricula();
                 //Buzo con el formato de la fecha
                 $mat->setFechamatricula(new \DateTime($request->get("fecha")));
@@ -224,13 +183,14 @@ class MatriculaController extends Controller
                 $em->persist($mat);
                 $em->flush();
                 //crear el record de estudiante
-                $this->crearRecord($em,$eva,$request);
+                $this->crearRecord($em,$eva,$request,$modulo);
                 $this->MensajeFlash('exito',"Matriculacion Exitosa");
                 return $this->redirectToRoute('examencolocacion');
             }
         }
         return $this->render('AppBundle:alumno:antiguoAlumnotabs.html.twig',array('niveles'=>$niveles));
     }
+    //JSon que uso para el Autocompletado
     /**
      * @Route("/json")
      */
@@ -266,68 +226,41 @@ class MatriculaController extends Controller
         return new Response();
     }
     /**
+     * @Route("/jsonMatricula")
+     */
+    public function jsonMatAction(){
+        $matricula=$this->getDoctrine()->getRepository('AppBundle:Matricula')->findBy(array('esactivo'=>1));
+        foreach($matricula as $mat){
+            $mm[]=$mat->getAlumnoCarnetalumno()->getCarnetalumno();
+        }
+        echo json_encode($mm);
+        return new Response();
+    }
+    /**
      * @Route("/fecha")
      */
     public function FechaAction(){
-        /*$fecha=new \DateTime(date("Y-m-d"));
-        $f=date("Y-m-d");
-        echo $f;
-        return new Response();*/
-
         $fecha="1992-03-31 00:00:00";
         $segundos=strtotime('now') - strtotime($fecha);
         $diferencia_dias=intval($segundos/60/60/24/365);
         echo "La cantidad de días entre el ".$fecha." y hoy es <b>".$diferencia_dias."</b>";
         return new Response();
     }
-    //Metodos Privados
-    public function MensajeFlash($nombre,$mensaje){
-        $this->get('session')->getFlashBag()->add(
-            ''.$nombre,
-            ''.$mensaje
-        );
-    }
-    private  function ingresarNotas($em,$carnet,$eva,$nota,$detalle){
-        $alumno=$em->getRepository('AppBundle:Alumno')->findOneBy(array('carnetalumno'=>$carnet));
-        //Creacion del resultado
-        $resultado=new Resultadoevaluacion();
-        $resultado->setAlumnoCarnetalumno($alumno);
-        $resultado->setDetalleevaluaciondetalleevaluacion($detalle);
-        $resultado->setEvaluacionevaluacion($eva);
-        //la nota del formulario
-        $resultado->setNota($nota);
-        //Peristencia
-        $em->persist($detalle);
-        $em->persist($resultado);
-        $em->flush();
-    }
-    private function crearDetalle($em,$n){
-        $docente=$em->getRepository('AppBundle:Docente')->find("DC00002");
-        $modulo=$em->getRepository('AppBundle:Modulo')->find(1);
-        $nivel=$em->getRepository('AppBundle:Nivel')->find($n);
-        //creacion del detalle de evaluacion
-        $resul=$em->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('docenteCarnetdocente'=>$docente,'modulomodulo'=>$modulo,'nivelnivel'=>$nivel));
-        if($resul)
-            return $resul;
-        else{
-            $detalle=new Detalleevaluacion();
-            $detalle->setDocenteCarnetdocente($docente);
-            $detalle->setModulomodulo($modulo);
-            $detalle->setNivelnivel($nivel);
-            //persistencia
-            $em->persist($detalle);
-            $em->flush();
-            $resul=$em->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('docenteCarnetdocente'=>$docente,'modulomodulo'=>$modulo,'nivelnivel'=>$nivel));
-            return $resul;
-        }
-    }
-    private  function crearRecord($em,$eva,$request){
-        $n=$request->get('nivel');
-        for($i=1;$i<$n+1;$i++){
-            $detalle=$this->crearDetalle($em,$i);
-            foreach($eva as $evaluaciones){
-                $this->ingresarNotas($em,$request->get('carnet'),$evaluaciones,$request->get('nota'),$detalle);
+    public function validarMatricula(){
+        $max=1;
+        $record=$this->getDoctrine()->getRepository('AppBundle:Record')->findAll();
+        foreach($record as $r){
+            //Obtengo el record
+            $rA=$r->getRecordalumnorecordalumno();
+            if($rA->getAlumnoCarnetalumno()->getCarnetalumno()=='BC11023'&&$rA->getNotafinal()>=7){
+                //Divido el Nivel para saber cual es
+                $n=explode("Nivel ",$r->getNivelnivel()->getNombrenivel());
+                //Conoaco el max nivel
+                if($n[1]>=$max)
+                    $max=$n[1];
             }
         }
+        return $max;
     }
+
 }

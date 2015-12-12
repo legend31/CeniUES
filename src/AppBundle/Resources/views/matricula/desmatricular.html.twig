@@ -13,7 +13,9 @@
 
                         <!--Inicia Cabecera de tabla-->
                         <div class="box-header">
-                            <h3 class="box-title">Niveles Inscitos Por Alumno</h3>
+                            {% if activos is not defined%}<h3 class="box-title">Niveles Inscitos Por Alumno</h3>
+                            {% else %}<h3 class="box-title">Alumnos Activos en CENIUES</h3>
+                            {% endif %}
                         </div>
                         <!--Finaliza Cabecera de tabla-->
 

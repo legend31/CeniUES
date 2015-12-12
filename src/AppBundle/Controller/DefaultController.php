@@ -2,13 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
+use AppBundle\Entity\Modulo;
 use AppBundle\Entity\Nivel;
+use AppBundle\Entity\Record;
+use AppBundle\Entity\Usuario;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class DefaultController extends DSIController
 {
     /**
      * @Route("/", name="homepage")
@@ -83,5 +88,29 @@ class DefaultController extends Controller
                 return $this->redirectToRoute("login");
             }
         }
+    }
+    /**
+     * @Route("buscarM")
+     */
+    public  function buscarM(){
+       $f=$this->validarMatricula();
+        var_dump($f);
+        return new Response();
+    }
+    public function validarMatricula(){
+        $max=1;
+        $record=$this->getDoctrine()->getRepository('AppBundle:Record')->findAll();
+        foreach($record as $r){
+            //Obtengo el record
+            $rA=$r->getRecordalumnorecordalumno();
+            if($rA->getAlumnoCarnetalumno()->getCarnetalumno()=='BC11023'&&$rA->getNotafinal()>=7){
+                //Divido el Nivel para saber cual es
+                $n=explode("Nivel ",$r->getNivelnivel()->getNombrenivel());
+                //Conoaco el max nivel
+                if($n[1]>=$max)
+                    $max=$n[1];
+            }
+        }
+        return $max;
     }
 }

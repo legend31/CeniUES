@@ -30,15 +30,6 @@ class ReportesController extends Controller
      */
     public function alumnosInscritosAction()
     {
-        /*$em = $this->getDoctrine()->getEntityManager();
-        $alumnos = $em->getRepository('AppBundle:Alumno')->findAll();
-
-        if(!$alumnos)
-        {
-            throw $this->createNotFoundException('No se encontro ningun docente');
-        }
-        return new Response($this->container->get('templating')->render('AppBundle:reportes:alumnosinscritos.html.twig', array('TituloPagina' => 'Alumnos inscritos', 'form' => $alumnos)));
-        */
         $mat=$this->getDoctrine()->getRepository('AppBundle:Matricula')->alumnosmMatriculados();
         $pdfGenerator=$this->get('siphoc.pdf.generator');
         $pdfGenerator->setName('listadoporniveles.pdf');

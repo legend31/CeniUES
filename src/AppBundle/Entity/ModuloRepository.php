@@ -23,4 +23,12 @@ class ModuloRepository extends EntityRepository{
             'SELECT m FROM AppBundle:Modulo m WHERE m.nombremodulo = :nombre AND m.fechainicio <= :fechai AND m.fechafin >= :fechaf'
         )->setParameter('nombre',$nombre)->setParameter('fechai',$fechai)->setParameter('fechaf',$fechaf)->getOneOrNullResult();
     }
+    public function verificarModulo($fecha)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Modulo m WHERE m.fechainicio > :fecha AND m.fechafin > :fecha'
+        )
+            ->setParameter('fecha',$fecha )
+            ->getOneOrNullResult();
+    }
 }

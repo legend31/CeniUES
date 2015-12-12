@@ -251,6 +251,12 @@
                             <!--Inicia Sub-Menu de Gestionar Matricula-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
+                                    <a href="{{ path('matnuevo') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Matricula Nuevo Ingreso
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ path('matantiguo') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Matricula Antiguo Ingreso
@@ -267,7 +273,7 @@
                                 <li>
                                     <a href="{{ path("desma") }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Desmatricular Alumno
+                                        Gestion de Matricula
                                     </a>
                                 </li>
                             </ul>
@@ -408,23 +414,9 @@
                             <!--Inicia Sub-Menu de Generacion de Estadisticas-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="{{ path('graficoAlumno') }}">
+                                    <a href="{{ path('graf2') }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Notas alumnos
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path('graficoAprobados') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Alumnos aprobado/reprobado
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ path('graficoActivos') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Alumnos activos/inactivos
+                                        Graficas
                                     </a>
                                 </li>
                             </ul>

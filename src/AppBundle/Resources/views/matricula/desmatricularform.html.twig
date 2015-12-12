@@ -7,17 +7,16 @@
     </head>
     <br>
     <div class="container">
-        <h3>Desmatriculacion de Alumno</h3>
+        <h3>Gestion de Matricula</h3>
         <div class="row">
             <div class="col-sm-5">
-                {% for flashMessage in app.session.flashbag.get('mensaje') %}
-                    <br>
-                    <div class="alert alert-success fade in">
-                    <span class="close" data-dismiss="alert">
-                        &times;
-                    </span>
-                        {{ flashMessage }}
-                    </div>
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                    <script>
+                        window.onload = function notificacion(){
+                            alertify.log("{{ flashMessage }}.");
+                            return false;
+                        }
+                    </script>
                 {% endfor %}
             </div>
         </div>

@@ -15,57 +15,30 @@
     </head>
     <div class="bs-example">
         <div class="container-fluid">
-            <h2>Formularios Nuevo Ingreso</h2>
+            <h2>Formularios Registro de Alumno</h2>
+            {% for flashMessage in app.session.flashbag.get('fracaso') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.log("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
             <div class="nav-tabs-custom" data-find="_2">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
                     <li class=""><a href="#responsable" data-toggle="tab" aria-expanded="false">Responsable</a></li>
                     <li class=""><a href="#alumno" data-toggle="tab" aria-expanded="false">Alumno</a></li>
-                    <li class=""><a href="#matricula" data-toggle="tab" aria-expanded="false">Matricula</a></li>
                 </ul>
                 <div class="tab-content" data-find="_1">
-                    <div class="tab-pane" id="matricula">
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Matricula</h2>
-                            {% for flashMessage in app.session.flashbag.get('credencial') %}
-                                <script>
-                                    window.onload = function error(){
-                                        alertify.error("{{ flashMessage }}.");
-                                        return false;
-                                    }
-                                </script>
-                            {% endfor %}
-                        </div>
-                        <form class="form-horizontal contact_form" method="post" action="{{ path('matnuevo') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
-                                <div class="col-sm-6">
-                                    <input id="inputFecha" class="form-control" type="date" name="fecha" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
-                                <div class="col-sm-6">
-                                    <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" maxlength="6" required pattern="[R]{1}[-]{1}[0-9]{4}">
-                                    <span class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" maxlength="7" required pattern="[A-Z]{2}[0-9]{5}">
-                                    <span class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-
-
-                    </div><!-- /.tab-pane -->
                     <div class="tab-pane active" id="padre">
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Padres</h2>
@@ -73,44 +46,38 @@
                         <form class="form-horizontal contact_form" method="post" action="{{ path('padreinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPadre">Nombre Padre</label>
-                                <div class="col-sm-6">
-                                    <input id="inputPadre" class="form-control letras" type="text" name="nombreP" required>
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputPadre" class="form-control" type="text" name="nombreP" pattern="[a-zA-Z ]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputTrabajoP">Lugar de Trabajo</label>
-                                <div class="col-sm-6">
-                                    <input id="inputTrabajoP" class="form-control" type="text" name="trabP" required>
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputTrabajoP" class="form-control" type="text" name="trabP" pattern="[a-zA-Z ]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inTelPadre">Telefono</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" id="inTelPadre" type="text" name="telP" placeholder="2216-0101" maxlength="9" required pattern="[0-9]{4}[-]{1}[0-9]{4}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input class="form-control" id="inTelPadre" type="text" name="telP" placeholder="2216-0101" required pattern="[0-9]{4}[-]{1}[0-9]{4}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputMadre">Nombre Madre</label>
-                                <div class="col-sm-6">
-                                    <input id="inputMadre" class="form-control letras" type="text" name="nombreM" required>
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputMadre" class="form-control" type="text" name="nombreM" pattern="[a-zA-Z]{1,}"required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="momjob">Lugar de trabajo</label>
-                                <div class="col-sm-6">
+                                <label for="" class="control-label col-sm-3" for="momjob">Lugar de trabajo</label>
+                                <div class="col-sm-4">
                                     <input id="momjob"  type="text" class="form-control" name="maTrab" pattern="[a-zA-Z ]{1,}" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="momtel">Telefono</label>
-                                <div class="col-sm-6">
-                                    <input id="momtel"  type="text" class="form-control" name="maTel" placeholder="2216-0101" maxlength="9" required pattern="[0-9]{4}[-]{1}[0-9]{4}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                    <span class="form-control-feedback"></span>
+                                <label for="" class="control-label col-sm-3" for="momtel">Telefono</label>
+                                <div class="col-sm-4">
+                                    <input id="momtel"  type="text" class="form-control" name="maTel" placeholder="2216-0101" required pattern="[0-9]{4}[-]{1}[0-9]{4}">
                                 </div>
                             </div>
                             <input type="hidden" name="origen" value="padrenuevo">
@@ -128,23 +95,20 @@
                         <form class="form-horizontal contact_form" method="post" action="{{ path('responinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputNombre">Nombre</label>
-                                <div class="col-sm-6">
-                                    <input id="inputNombre" class="form-control letras" type="text" name="nombre" required>
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputP">Parentesco</label>
-                                <div class="col-sm-6">
-                                    <input id="inputP" class="form-control letras" type="text" name="parentesco" required>
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputP" class="form-control" type="text" name="parentesco" pattern="[a-zA-Z]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputtel">Telefono</label>
-                                <div class="col-sm-6">
-                                    <input id="inputtel" class="form-control" type="tel" name="tel" placeholder="2216-0101" maxlength="9" required pattern="[0-9]{4}-[0-9]{4}" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputtel" class="form-control" type="text" name="tel" placeholder="2216-0101" required pattern="[0-9]{4}-[0-9]{4}">
                                 </div>
                             </div>
                             <input type="hidden" name="origen" value="nuevo">
@@ -163,57 +127,56 @@
                         <form class="form-horizontal contact_form" method="post" action="{{ path('alumnoinsert') }}">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputCarnet">Carnet</label>
-                                <div class="col-sm-6">
-                                    <input id="inputCarnet" class="form-control" type="text" name="carnet" placeholder="BC11023" maxlength="7" required pattern="[A-Z]{2}[0-9]{5}">
-                                    <span class="form-control-feedback"></span>
+                                <div class="col-sm-4">
+                                    <input id="inputCarnet" class="form-control" type="text" name="carnet" placeholder="BC11023" required pattern="[A-Z]{2}[0-9]{5}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPrimer">Primer Nombre</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input id="inputPrimer" class="form-control" type="text" name="primer_nombre" pattern="[a-zA-Z]{1,}" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputSegundo">Segundo Nombre</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input id="inputSegundo" class="form-control" type="text" name="segundo_nombre" pattern="[a-zA-Z]{1,}" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPrimerApe">Primer Apellido</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input id="inputPrimerApe" class="form-control" type="text" name="primer_apellido" pattern="[a-zA-Z]{1,}" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputSegApe">Segundo Apellido</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" pattern="[a-zA-Z]{1,}" required>
-                                    <span class="form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="inputEmail">E-mail</label>
+                                <div class="col-sm-4">
+                                    <input id="inputEmail" class="form-control" type="email" name="email" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputFecha">Fecha de Nacimiento</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input id="inputFecha" class="form-control" type="date" name="fecha_nacimiento" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3 required" for="inputRespon">Responsable</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input class="form-control" type="text" id="inputRespon" name="responsable" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3 required" for="inputPa">Padre</label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <input class="form-control" type="text" id="inputPa" name="padre" required>
-                                    <span class="form-control-feedback"></span>
                                 </div>
                             </div>
                             <input type="hidden" name="origen" value="nuevo">
@@ -258,35 +221,5 @@
                             });
                 }
         );
-    </script>
-
-    <!--Archivos necesarios para la validacion-->
-    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
-
-    <!--para solo permitir ingresar letras-->
-    <script>
-        $(".letras").keypress(function (key) {
-            window.console.log(key.charCode)
-            if ((key.charCode < 97 || key.charCode > 122)//letras mayusculas
-                    && (key.charCode < 65 || key.charCode > 90) //letras minusculas
-                    && (key.charCode != 45) //retroceso
-                    && (key.charCode != 241) //ñ
-                    && (key.charCode != 209) //Ñ
-                    && (key.charCode != 32) //espacio
-                    && (key.charCode != 225) //á
-                    && (key.charCode != 233) //é
-                    && (key.charCode != 237) //í
-                    && (key.charCode != 243) //ó
-                    && (key.charCode != 250) //ú
-                    && (key.charCode != 193) //Á
-                    && (key.charCode != 201) //É
-                    && (key.charCode != 205) //Í
-                    && (key.charCode != 211) //Ó
-                    && (key.charCode != 218) //Ú
-            )
-                return false;
-        });
     </script>
 {% endblock %}
