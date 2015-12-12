@@ -1,0 +1,140 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block principal %}
+    <head>
+        <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js") }}" type="text/javascript"></script>
+    </head>
+    <section class="content">
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <script>
+                window.onload = function error(){
+                    alertify.error("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
+            <script>
+                window.onload = function notificacion(){
+                    alertify.log("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
+        <form method="post" class="contact_form" action="{{ path('ingresarnotas') }}">
+            <div class="box-body">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="snivel">Niveles</label>
+                            <select class="form-control" id="snivel" name="snivel">
+                                {% for n in niveles.nivelnivel %}
+                                    <option value="{{ n.idnivel }}"{% if selectedN==n.idnivel%}selected{% endif %}>{{ n.nombrenivel }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Alumnos</label>
+                            <select class="form-control" id="snivel" name="carnet">
+                                {% for alum in alumnosL %}
+                                    <option value="{{ alum.carnetalumno }}"{% if selectedA==alum.carnetalumno%}selected{% endif %}>{{ alum.carnetalumno }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                            <div class="form-group">
+                                <input class="btn bg-primary" name="con" type="submit" value="Consultar">
+                            </div>
+                        </div>
+            </div>
+            {% if alumnos is defined%}
+                <div class="col-xs-12">
+                    <div class="box">
+                        <!--Inicia Cabecera de tabla-->
+                        <div class="box-header">
+                            <h3 class="box-title">Informacion de Alumnno</h3>
+                        </div>
+                        <!--Finaliza Cabecera de tabla-->
+
+                        <!--Inicia cuerpo de tabla-->
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-hover dataTable">
+                                <thead>
+                                <th>CARNET</th>
+                                <th>ESTUDIANTE</th>
+                                <th>EV.1 (20%)</th>
+                                <th>EV.2 (20%)</th>
+                                <th>EV.3 (25%)</th>
+                                <th>EV.4 (25%)</th>
+                                <th>EV.5 (10%)</th>
+                                <th>NOTA FINAL</th>
+
+                                </thead>
+                                <tbody>
+                                {# Creo un Alumno Base para saber si no es el mismo#}
+                                {% set d=al %}
+                                {% for resultado in alumnos %}
+                                    {% set nota=0 %}
+                                    {# comparo si es el mismo para solo imprimir esa info una vez#}
+                                    {% if resultado.alumnoCarnetalumno!=d%}
+                                        <tr>{% set d=resultado.alumnoCarnetalumno %}
+                                            <td>{{ resultado.alumnoCarnetalumno.carnetalumno }}</td>
+                                            <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
+                                            {#recorro de nuevo para obtener las notas#}
+                                            {% for resultado in alumnos %}
+                                                {% if resultado.alumnoCarnetalumno==d %}{% set nota =nota +(resultado.nota*(resultado.evaluacionevaluacion.ponderacion/100)) %}
+                                                    <td><input class="col-sm-8" type="number" min="0" max="10" name="n-{{ resultado.evaluacionevaluacion.idevaluacion }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{resultado.nota  }}-{{ resultado.alumnoCarnetalumno.carnetalumno }}" step="0.01" value="{{ resultado.nota }}"></td>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <td>{{ nota }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Finaliza Cuerpo de tabla-->
+                    </div>
+                </div>
+            {% endif %}
+           {% if alumnos %} <input class="btn bg-primary pull-right" name="mod" type="submit" value="Modificar">{% endif %}
+        </form>
+    </section>
+
+    <script>
+        $('document').ready(function(){
+            $("#snivel").change(function(){
+                var niv = $(this).val();
+
+                if(niv>0){
+
+                    var datos ={
+                        idniv : $(this).val()
+                    };
+
+                    $.post("{{ path('js') }}",datos,function(response){
+
+                        var $comboclase = $('#sclase');
+
+                        $comboclase.empty();
+
+                        $.each(response,function(i,val){
+                            $comboclase.append("<option>"+val+"</option>");
+                            /*var hora = $('#sclase').val();
+                             alert(hora);*/
+                        });
+                    },'json');
+                }else{
+                    //limpiamos combo y pedimos que seleccione un nivel
+                    var $comboclase = $('#sclase');
+                    $comboclase.empty();
+                    $comboclase.val("Seleccione un nivel");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

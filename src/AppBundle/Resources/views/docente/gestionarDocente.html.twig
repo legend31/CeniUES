@@ -8,73 +8,253 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Docentes registrados en el sistema</h3>
+                        {% if mensaje != 10 %}
+                        <h3 class="box-title">Docentes activos en el sistema</h3>
+                        {% else %}
+                        <h3 class="box-title">Docentes registrado en el sistema</h3>
+                        {% endif %}
                         <div class="box-tools">
                             <div class="input-group" style="width: 350px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Buscar">
+                                <form role="form" method="post" action="{{ path('dhome') }}">
+                                    <div class="input-group" style="width: 250px;">
+                                        <input type="text" name="carnet" id="carnetB" class="form-control input-sm pull-right" placeholder="Buscar" maxlength="7" pattern="[a-zA-Z]{2}[0-9]{5}">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                    <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
+                                    <a href="{{ path('agregarD') }}"><button class="btn btn-default btn-sm bg-green-gradient" data-widget="add" data-toggle="tooltip" title="" data-original-title=""><i class="fa fa-plus"></i> Agregar Docente</button></a>
                                 </div>
-
                             </div>
                         </div>
                     </div><!-- /.box-header -->
+
+                    {% if mensaje == 1 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno con el mismo carnet.
+                        </div>
+                    {% elseif mensaje == 2 %}
+                        <div class="alert alert-success alert-dismissable">
+                            <h4><i class="icon fa fa-check"></i> Docente almacenado</h4>
+                            El docente fue almacenado correctamente. Se ha generado un nuevo usuario de tipo Docente.
+                        </div>
+                    {% elseif mensaje == 3 %}
+                        <div class="alert alert-warning alert-dismissable">
+                            <h4><i class="icon fa fa-warning"></i> No se encontro ning&uacute;n docente</h4>
+                        </div>
+                    {% elseif mensaje == 4 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser actualizado por que ya existe uno con el mismo carnet.
+                        </div>
+                    {% elseif mensaje == 5 %}
+                        <div class="alert alert-success alert-dismissable">
+                            <h4><i class="icon fa fa-check"></i> Docente actualizado</h4>
+                            El docente fue actualizado correctamente.
+                        </div>
+                    {% elseif mensaje == 6 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno con el mismo carnet y DUI.
+                        </div>
+                    {% elseif mensaje == 7 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Docente existe</h4>
+                            <b>Error</b> el docente no pudo ser almacenado por que ya existe uno asociado al mismo DUI.
+                        </div>
+                    {% endif %}
+
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
-                            <tbody>
-                                <tr>
+                            {% if mensaje != 3 %}
+                            <thead>
                                     <th>Carnet</th>
                                     <th>Apellidos</th>
                                     <th>Nombres</th>
                                     <th>DUI</th>
                                     <th>Telefono</th>
                                     <th>Opciones</th>
-                                </tr>
+                            </thead>
+                            <tbody>
                                 {% for entity in docentes %}
+                                    {% if entity.estado == 1 or mensaje == 10 %}
                                     <tr>
-                                        <td>{{ entity.getCarnetdocente }}</td>
+                                        <td>{{ entity.carnetdocente }}</td>
                                         <td>{{ entity.getApellidodocente }}</td>
                                         <td>{{ entity.getNombredocente }}</td>
                                         <td>{{ entity.getDui }}</td>
                                         <td>{{ entity.getTelefono }}</td>
                                         <td>
                                             <div class="fc-button-group">
-                                                <button class="btn btn-default btn-sm" data-widget="" data-toggle="tooltip" title="" data-original-title="Detalles"><i class="fa fa-eye"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-default btn-sm" data-widget="" data-target="#eliminar" data-toggle="modal" title="" data-original-title="Eliminar"><i class="fa fa-trash"></i></button>
+                                                <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.dui }})">
+                                                    <i class="fa fa-eye"></i>
+                                                </span>
 
-                                                <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria_hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4>Eliminar docente</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                &iquest;Est&aacute; seguro que desea eliminar al docente {{ entity.getNombredocente }}?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a class="btn btn-default bg-red-gradient"> Eliminar </a>
-                                                                <a class="btn btn-default pull-right" data-dismiss="modal"> Cancelar </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a class="btn btn-default" href="{{ path('modificarD',{'carnet': entity.carnetdocente}) }}">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+
+                                                {% if entity.estado == 1 %}
+                                                <span class="btn btn-default" data-toggle="modal" data-id="{{ entity.carnetdocente }}" data-target="#eliminar" >
+                                                    <i class="fa fa-close"></i>
+                                                </span>
+                                                {% else %}
+                                                <a class="btn btn-default" href="{{ path('activarD',{'carnet': entity.carnetdocente}) }}">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                                {% endif %}
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                             </tbody>
+
+                            {% endif %}
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
         </div>
     </section>
+
+    <!-- MODALES -->
+
+    <!-- Modal Detalles-->
+     <div class="modal fade" id="detalles-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="box-title">Detalles del Docente</i></h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div>
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Carnet: </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="carnet" name="carnet" class="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Nombres: </label>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="nombres" name="nombres" class="">
+                                    </div>
+                                </div>
+
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Apellidos: </label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="apellidos" name="apellidos" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">DUI: </label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="dui" name="dui" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Direcci&oacute;n de residencia: </label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="address" name="address" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Fecha de nacimiento: </label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="fnacim" name="fnacim" class="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="symfony-form-row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 control-label">Tel&eacute;fono: </label>
+                                        <div class="col-sm-2">
+                                            <input type="text" id="ntelef" name="ntelef" class="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     </div>
+    <!-- Fin Modal Detalles-->
+
+    <!-- Modal Eliminar -->
+    <form class="contact-form" role="form" method="post" action="{{ path('eliminarD') }}">
+    <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria_hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Dar de baja a docente</h4>
+                </div>
+                <div class="modal-body">
+                    &iquest;Est&aacute; seguro que desea deshabilitar al docente <b name="carac" id="elim"></b>?
+                    <input type="text" name="crnE" id="crnE" value="" readonly hidden>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default bg-red-gradient" id="eliminar" type="submit"><i class="fa fa-save"> Eliminar</i></button>
+                    <a class="btn btn-default pull-right" data-dismiss="modal"> Cancelar </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <!-- Fin modal eliminar -->
+
+    <!-- fIN modales -->
 {% endblock %}
 
 {% block javascript2 %}
-    <script href="https://code.jquery.com/jquery.js"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/boostrap.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <!--<script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>-->
+    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+    <script>
+        function detallesDocentes(dui){
+            $.ajax({
+                url:'{{ path('detallesD') }}',
+                type: 'POST',
+                data: { duidocente:dui },
+                success:function(response){
+                    $('#carnet').val(response.carnetdoc);
+                    $('#nombres').val(response.nombre);
+                    $('#apellidos').val(response.apellido);
+                    $('#dui').val(response.duidoc);
+                    $('#address').val(response.direccion);
+                    $('#fnacim').val(response.fnac);
+                    $('#ntelef').val(response.ntel);
+                }
+            })
+        }
+        $(document).on("click", ".btn",function () {
+            var carD = $(this).data('id');
+            $("#elim").text(carD);
+            $("#crnE").attr("value",carD);
+        });
+    </script>
 {% endblock %}

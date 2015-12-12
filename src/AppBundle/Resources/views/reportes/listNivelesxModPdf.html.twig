@@ -1,0 +1,36 @@
+    <div class="pad margin no-print"></div>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Listado de niveles para el modulo
+                    <small class="pull-right">Date: 5/11/2015</small>
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 table-responsive" >
+                <table border=1 cellspacing=0 cellpadding=15 bordercolor="000000" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Maestro</th>
+                            <th>Aula</th>
+                            <th>Edificio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for nivel in niv %}
+                        <tr>
+                            <td>{{ nivel.nombrenivel }}</td>
+                            <td>Larisa Carrillo</td>
+                            <td>16</td>
+                            <td>Edificio de idiomas</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>

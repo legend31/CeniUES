@@ -4,6 +4,19 @@
         <!--Inicia contenido de la UI-->
         <section class="content">
             <div class="row">
+                <div class="col-xs-6">
+                    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                        <br>
+                        <div class="alert alert-success fade in">
+                        <span class="close" data-dismiss="alert">
+                            &times;
+                        </span>
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
 
@@ -38,11 +51,11 @@
                                                     <i class="fa fa-eye"></i>
                                                 </span>
 
-                                                <a class="btn btn-default">
+                                                <a class="btn btn-default" href="{{ path('actualizarmod',{'id': modulos.idmodulo}) }}">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
 
-                                                <a class="btn btn-default">
+                                                <a class="btn btn-default" href="{{ path('deletemod',{'id': modulos.idmodulo}) }}">
                                                     <i class="fa fa-close"></i>
                                                 </a>
                                             </div>
@@ -86,41 +99,35 @@
                                         <input type="text" id="idmodulo" name="idmodulo" class="">
                                     </div>
                                 </div>
-
+                                <br>
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Nombre Modulo Modulo</label>
                                     <div class="col-sm-2">
                                         <input type="text" id="nombremodulo" name="nombremodulo" class="">
                                     </div>
                                 </div>
-
-
-                                <div class="symfony-form-row">
-                                    <div class="form-group row">
-                                        <label class="col-sm-5 control-label">Fecha Inicio</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" id="fini" name="fini" class="">
-                                        </div>
+                                <br>
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Fecha Inicio</label>
+                                    <div class="col-sm-2">
+                                         <input type="text" id="fini" name="fini" class="">
                                     </div>
                                 </div>
-
-                                <div class="symfony-form-row">
-                                    <div class="form-group row">
-                                        <label class="col-sm-5 control-label">Fecha Fin</label>
+                                <br>
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Fecha Fin</label>
                                         <div class="col-sm-2">
                                             <input type="text" id="ffin" name="ffin" class="">
                                         </div>
-                                    </div>
                                 </div>
-
-                                <div class="symfony-form-row">
-                                    <div class="form-group row">
-                                        <label class="col-sm-5 control-label">Duracion</label>
+                                <br>
+                                <div class="form-group">
+                                    <label class="col-sm-5 control-label">Duracion</label>
                                         <div class="col-sm-2">
                                             <input type="text" id="duracio" name="duracion" class="">
                                         </div>
-                                    </div>
                                 </div>
+
 
                             </div>
 
@@ -130,7 +137,10 @@
 
                         </div>
                     </div>
-                </div><!-- /.modal -->
+                </div><!-- /.modal1 -->
+
+
+
 {% endblock %}
 {% block javascript2 %}
 <script>
@@ -148,12 +158,14 @@
                             $('#nombremodulo').val(response.nombremod);
                             $('#fini').val(response.fechainicio.toLocaleString());
                             //$('#ffin').val(date.toLocaleDateString(response.fechafin));
-                            $('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            //$('#ffin').val(date.toLocaleDateString(response.fechafin));
+                            $('#ffin').val(response.fechafin.toLocaleString());
                             $('#duracio').val(response.duracion+" Meses");
 
                         }
 
                     })
                 }
+
 </script>
 {% endblock %}

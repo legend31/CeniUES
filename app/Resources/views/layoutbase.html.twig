@@ -2,16 +2,21 @@
 
 {% block tittle %} Ventana principal {% endblock %}
 
-{% block body %}
+{% block docente %}
     <div class="wrapper">
         <header class="main-header">
+
             <!--Logo-->
             <div class="logo">
-            <a href="{{ path('principal') }}"> <!--<span class="logo-lg active"-->
-                <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
-                <!--<b>CENIUES</b>-->
-            <!--</span>-->
-            </a>
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <a href="{{ path('principal') }}">
+                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                    </a>
+                {% elseif is_granted('ROLE_DOCENTE') %}
+                    <a href="{{ path('dprincipal') }}">
+                    <img src="{{ asset('/images/ceniueslogo2.png') }}" width="130" height="50">
+                    </a>
+                {% endif %}
             </div>
             <!--Fin de Logo-->
 
@@ -26,13 +31,12 @@
                                  <span class="label label-warning">10</span>
                              </a>
                          </li>
-                         <!--Fin de Boton de Notificaciones -->
 
                         <!--Boton de opciones de usuario-->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Nombre de Usuario</span>
+                                <span class="hidden-xs">Bienvenido {{ app.user }}</span>
                             </a>
 
                             <!--Menu de opciones de usuario-->
@@ -46,25 +50,13 @@
                                             <small>Member since Nov. 2012</small>
                                         </p>
                                     </li>
-                                    <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </li>
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="logout" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -91,29 +83,12 @@
             <!--Estilo de barra lateral-->
             <section class="sidebar">
 
-                <!--Barra de navegacion seccion de usuario-->
-                {% block seccionUsuarioLateral %}
-
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="{{ asset('libs/AdminLTE-2.2.0/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p>Nombre de Usuario</p>
-                            <a href="#">
-                                <i class="fa fa-circle text-success">
-                                </i>
-                                " Online"
-                            </a>
-                        </div>
-                    </div>
-                {% endblock %}
-
                 {% block opcionesMenuLateral %}
                     <!--Opciones de menus-->
                     <ul class="sidebar-menu">
                         <li class="header">OPCIONES DE NAVEGACION</li>
 
+                    {% if is_granted('ROLE_ADMINISTRADOR')  %}
                         <!--Menu para gestion de los fechas-->
                         <li class="treeview">
                             <a href="#">
@@ -180,14 +155,14 @@
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('modD2') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Modificar Docentes
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('elimL2') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Eliminar Docentes
                                     </a>
@@ -223,47 +198,7 @@
                         </li>
                         <!--Finaliza Gestionar Docentes en Niveles-->
 
-                        <!--Inicia Gestionar Evaluaciones-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-check-square"></i>
-                                <span>Gestionar Evaluaciones</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
 
-                            <!--Inicia Sub-Menu Gestionar Evaluaciones-->
-                            <ul class="treeview-menu" style="display: none;">
-                                <li>
-                                    <a href="{{ path('agreval') }}">
-                                        <i class="fa fa-circle-o"></i>
-                                        Ingresar Evaluacion
-                                    </a>
-                                </li>
-<!-- Aqui Es donde Joahm toco -->
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-circle-o"></i>
-                                        Consultar Evaluacion
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Eliminar Evaluacion
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Actualizar Evaluacion
-                                    </a>
-                                </li>
-                                <!--Finaliza Sub-menu Gestionar Evaluaciones-->
-                            </ul>
-                        </li>
-                        <!--Finaliza Gestionar Evaluaciones-->
 
                         <!--Inicia Gestionar Matricula-->
                         <li class="treeview">
@@ -276,6 +211,12 @@
                             <!--Inicia Sub-Menu de Gestionar Matricula-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
+                                    <a href="{{ path('matnuevo') }}">
+                                        <i class="fa fa-circle-o"></i>
+                                        Matricula Nuevo Ingreso
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ path('matantiguo') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Matricula Antiguo Ingreso
@@ -283,23 +224,25 @@
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('examencolocacion') }}">
                                         <i class="fa fa-circle-o"></i>
                                         Matricula por Examen
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ path("des") }}">
+                                    <a href="{{ path("desma") }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Desmatricular Alumno
+                                        Gestion de Matricula
                                     </a>
                                 </li>
                             </ul>
                             <!--Finaliza Sub-Menu de Gestionar Matricula-->
                         </li>
                         <!--Finaliza Gestionar Matricula-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Gestionar Alumnos-->
                         <li class="treeview">
                             <a href="#">
@@ -327,7 +270,10 @@
                             <!--Finaliza Sub-Menu Gestionar Alumno-->
                         </li>
                         <!--Finaliza Gestionar Alumnos-->
+                    {% endif %}
 
+                  {#
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Gestionar Secciones-->
                         <li class="treeview">
                             <a href="#">
@@ -348,7 +294,10 @@
                             <!--Finaliza Sub-Menu Gestionar Secciones-->
                         </li>
                         <!--Finaliza Gestionar Secciones-->
+                    {% endif %}
+                  #}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Gestionar Notas-->
                         <li class="treeview">
                             <a href="">
@@ -389,7 +338,7 @@
                             <!--Inicia Sub-Menu Disponiblidad de Horas-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path("definirH") }}">
                                         <i class="fa fa-circle-o"></i>
                                         Ingresar Horas Disponibles
                                     </a>
@@ -412,7 +361,9 @@
                             <!--Finaliza Sub-Menu Disponiblidad de Horas-->
                         </li>
                         <!--Finaliza Disponibilidad de horas-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Generacion de Estadisticas-->
                         <li class="treeview">
                             <a href="#">
@@ -424,30 +375,18 @@
                             <!--Inicia Sub-Menu de Generacion de Estadisticas-->
                             <ul class="treeview-menu" style="display: none;">
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('graf2') }}">
                                         <i class="fa fa-circle-o"></i>
-                                        Notas alumnos
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Alumnos aprobado/reprobado
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i>
-                                        Alumnos activos/inactivos
+                                        Graficas
                                     </a>
                                 </li>
                             </ul>
                             <!--Finaliza Sub-Menu de Generacion de Estadisticas-->
                         </li>
                         <!--Finaliza Generacion de Estadisticas-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                         <!--Inicia Generacion de Reportes-->
                         <li class="treeview">
                             <a href="#">
@@ -466,7 +405,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path("documentoD") }}">
                                         <i class="fa fa-circle-o"></i>
                                         Listado de Docentes
                                     </a>
@@ -480,7 +419,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{ path("listadoAlumPdf") }}">
+                                    <a href="{{ path("ainscritos") }}">
                                         <i class="fa fa-circle-o"></i>
                                         Alumnos por nivel
                                     </a>
@@ -524,7 +463,9 @@
                             </ul>
                         </li>
                         <!--Finaliza Generacion de Reportes-->
+                    {% endif %}
 
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <!--Inicia Gestion de Modulos y Niveles-->
                         <li class="treeview">
                             <a href="#">
@@ -552,6 +493,7 @@
                             </ul>
                             <!--Finaliza Sub-Menu de Gestion de Modulos y Niveles-->
                         </li>
+                    {% endif %}
 
                         <!--Finaliza Gestion de Modulos-->
                     </ul>
@@ -573,9 +515,10 @@
 
                 <!--Contenido pricipal-->
                 <section class="content">
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
                     <!--Inicia Primera fila de opciones-->
                     <div class="row">
-                        <!--Opcion1-->
+                        <!--Opcion1 Gestionar Fechas-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-aqua">
@@ -593,7 +536,7 @@
                         </div>
                         <!--Fin Opcion1-->
 
-                        <!--Opcion 2-->
+                        <!--Opcion 2 Gestionar Docentes-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-fuchsia-active">
@@ -611,25 +554,25 @@
                         </div>
                         <!--Fin Opcion 2-->
 
-                        <!--Opcion 3-->
-                        <div class="col-lg-3 col-xs-6">
+                        <!--Inicia Opcion 3 Secciones-->
+                      <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
-                            <div class="small-box bg-green">
+                            <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <h3>Niveles</h3>
-                                    <p>Asignar docentes</p>
+                                    <h3>Secciones</h3>
+                                    <p>Gestionar</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="fa fa-list-alt"></i>
+                                    <i class="fa fa-cube"></i>
                                 </div>
-                                <a  href="{{ path('docn') }}" class="small-box-footer">
+                                <a  href="{{ path('secHome') }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
                         </div>
-                        <!--Fin Opcion 3-->
+                        <!--Finaliza Opcion 3-->
 
-                        <!--Opcion 4 -->
+                        <!--Opcion 4 Gestionar Evaluaciones-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-olive">
@@ -649,29 +592,15 @@
 
                     </div>
                     <!--Finaliza Primera Fila de Opciones-->
+                {% endif %}
 
+                {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_DOCENTE') %}
                     <!--Inicia Segunda Fila de Opciones-->
                     <div class="row">
-                        <!--Inicia Opcion 5-->
+                        <!--Inicia Opcion 5 Alumnos-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-red-active">
-                                <div class="inner">
-                                    <h3>Matricula</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-user-plus"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 5-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-orange">
                                 <div class="inner">
                                     <h3>Alumnos</h3>
                                     <p>Gestionar</p>
@@ -684,25 +613,27 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Inicia Opcion 6-->
+                        <!--Finaliza Opcion 5-->
+
+                        <!--Inicia Opcion 6 Definir Horario-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
-                            <div class="small-box bg-purple">
+                            <div class="small-box bg-lime-active">
                                 <div class="inner">
-                                    <h3>Secciones</h3>
+                                    <h3>Definir Horario</h3>
                                     <p>Gestionar</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="fa fa-cube"></i>
+                                    <i class="fa fa-clock-o"></i>
                                 </div>
-                                <a  href="{{ path('secHome') }}" class="small-box-footer">
+                                <a  href="{{ path("definirH") }}" class="small-box-footer">
                                     Click para acceder
                                 </a>
                             </div>
                         </div>
                         <!--Finaliza Opcion 6-->
 
-                        <!--Inicia la Opcion 7-->
+                        <!--Inicia la Opcion 7 Notas-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-teal-active">
@@ -719,46 +650,8 @@
                             </div>
                         </div>
                         <!--Finaliza la Opcion 7-->
-                    </div>
-                    <!--Finaliza Segunda Fila de Opciones-->
 
-                    <!--Inicia Tercerea Fila de Opciones-->
-                    <div class="row">
                         <!--Inicia Opcion 8-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-lime-active">
-                                <div class="inner">
-                                    <h3>Definir Horario</h3>
-                                    <p>Gestionar</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 8-->
-
-                        <!--Inicia Opcion 9-->
-                        <div class="col-lg-3 col-xs-6">
-                            <!--Small box-->
-                            <div class="small-box bg-light-blue-gradient">
-                                <div class="inner">
-                                    <h3>Estadisticas</h3>
-                                    <p>Obtener</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-pie-chart"></i>
-                                </div>
-                                <a  href="#" class="small-box-footer">
-                                    Click para acceder
-                                </a>
-                            </div>
-                        </div>
-                        <!--Finaliza Opcion 9-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-yellow">
@@ -774,7 +667,51 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Inicia Opcion 10-->
+                        <!--Finaliza Opcion 8-->
+                    </div>
+                    <!--Finaliza Segunda Fila de Opciones-->
+                    {% endif %}
+
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <!--Inicia Tercerea Fila de Opciones-->
+                    <div class="row">
+                        <!--Inicia opcion 9 Matricula-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Matricula</h3>
+                                    <p>Gestionar</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                                <a  href="{{ path('desma') }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin opcion 9-->
+
+                        <!--Opcion 10 Asignar Docentes en Nivel-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-orange">
+                                <div class="inner">
+                                    <h3>Niveles</h3>
+                                    <p>Asignar docentes</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <a  href="{{ path('docn') }}" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Fin Opcion 10-->
+
+                        <!--Inicia opcion 11-->
                         <div class="col-lg-3 col-xs-6">
                             <!--Small box-->
                             <div class="small-box bg-gray">
@@ -790,9 +727,28 @@
                                 </a>
                             </div>
                         </div>
-                        <!--Finaliza Opcion 10-->
+                        <!--Finaliza Opcion 11-->
+
+                        <!--Inicia Opcion 12 Estadisitcas-->
+                        <div class="col-lg-3 col-xs-6">
+                            <!--Small box-->
+                            <div class="small-box bg-light-blue-gradient">
+                                <div class="inner">
+                                    <h3>Estadisticas</h3>
+                                    <p>Obtener</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                                <a  href="#" class="small-box-footer">
+                                    Click para acceder
+                                </a>
+                            </div>
+                        </div>
+                        <!--Finaliza Opcion 12-->
                     </div>
                     <!--Finaliza Tercera Fila de Opciones-->
+                {% endif %}
                 </section>
                 <!--Fin de contenido principal-->
             {% endblock %}

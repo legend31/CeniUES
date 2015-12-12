@@ -8,19 +8,56 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Ingreso de Nivel</h3>
                         </div>
-                        <form role="form">
+                        <form role="form" method="post" action="{{ path("nnivel") }}">
                             <div class="box-body">
                                 <div class="form-group col-sm-12">
                                     <label>Nombre de Nivel</label>
-                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del nivel">
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del nivel" id="nombreNivel" name="nombreNivel" required>
+                                </div>
+                                <br>
+                                <div class="form-group col-sm-12">
+                                    <label>Nombre de Nivel</label>
+                                    <br>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">Nivel</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            {% for modulo in mod %}
+                                            <li><a href="#">{{ modulo.nombremodulo }}</a></li>
+                                            <li class="divider"></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group col-sm-6">
+                                    <label>Fecha de Inicio</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="fini" name="fini" type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" required>
+                                    </div>
                                 </div>
 
+                                <div class="form-group col-sm-6">
+                                    <label>Fecha Finalizacion</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input id="ffin" name="ffin" type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" required>
+                                    </div>
+                                </div>
 
 
                             </div>
                             <div class="box-footer">
                                 <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                     <input type="submit" class="btn btn-primary" value="Guardar" id="guardarniv">
                                     <button type="submit" class="btn btn-danger">Cancelar</button>
                                 </div>
                             </div>

@@ -10,9 +10,10 @@
     </head>
     <br>
     <div class="container">
+        {% if niveles %}
         <h2>Matricula Antiguo Ingreso</h2>
         <br>
-        {% for flashMessage in app.session.flashbag.get('mensaje') %}
+        {% for flashMessage in app.session.flashbag.get('exito') %}
             <script>
                 window.onload = function notificacion(){
                     alertify.log("{{ flashMessage }}.");
@@ -20,7 +21,15 @@
                 }
             </script>
         {% endfor %}
-        <form class="form-horizontal" method="post" action="{{ path('matantiguo') }}">
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <script>
+                window.onload = function error(){
+                    alertify.error("{{ flashMessage }}.");
+                    return false;
+                }
+            </script>
+        {% endfor %}
+        <form class="form-horizontal contact_form" method="post" action="{{ path('matantiguo') }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
                 <div class="col-sm-4">
@@ -30,15 +39,18 @@
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
                 <div class="col-sm-4">
-                    <input id="inputRecibo" class="form-control" type="text" name="recibo" required>
+                    <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" required maxlength="6" pattern="[R]{1}[-]{1}[0-9]{1,}">
+                    <span class="form-control-feedback"></span>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
                 <div class="col-sm-4">
                     <select id ="selectNivel"name="nivel">
-                        {% for item in niveles %}
-                            <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                        {% set i=0 %}
+                        {% for item in niveles.nivelnivel %}
+                            {% if i!=0 %}<option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>{% endif %}
+                            {% set i=i+1 %}
                         {% endfor %}
                     </select>
                 </div>
@@ -46,13 +58,18 @@
             <div class="form-group">
                 <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
                 <div class="col-sm-4">
-                    <input class="form-control" type="search" id="form_Carnet" name="carnet" required="required" />
+                    <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" maxlength="7" required pattern="[A-Z]{2}[0-9]{5}" />
+                    <span class="form-control-feedback"></span>
                 </div>
             </div>
+            <input type="hidden" name="origen" value="antiguo">
             <div class="col-sm-offset-3 col-sm-4">
                 <input class="btn bg-primary" type="submit" value="Enviar">
             </div>
         </form>
+        {% else %}
+           <h2>No es Periodo de Inscripcion!!<h3>
+        {% endif %}
     </div>
     <script>
         $('document').ready(
@@ -64,4 +81,6 @@
                 }
         );
     </script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
 {% endblock %}

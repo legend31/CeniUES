@@ -17,35 +17,34 @@ class Docente
      *
      * @ORM\Column(name="carnetDocente", type="string", length=7, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $carnetdocente;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="primerNombreDocente", type="string", length=45, nullable=false)
+     * @ORM\Column(name="primerNombreDocente", type="string", length=25, nullable=false)
      */
     private $primernombredocente;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundoNombreDocente", type="string", length=45, nullable=false)
+     * @ORM\Column(name="segundoNombreDocente", type="string", length=25, nullable=true)
      */
     private $segundonombredocente;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="primerApellidoDocente", type="string", length=45, nullable=true)
+     * @ORM\Column(name="primerApellidoDocente", type="string", length=25, nullable=false)
      */
     private $primerapellidodocente;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundoApellidoDocente", type="string", length=45, nullable=true)
+     * @ORM\Column(name="segundoApellidoDocente", type="string", length=25, nullable=true)
      */
     private $segundoapellidodocente;
 
@@ -63,10 +62,102 @@ class Docente
      */
     private $direcciondocente;
 
+    //edad y estado las agregue yo (Fredy)
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer", nullable=false)
+     */
+    private $estado;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
+     * @ORM\Column(name="diasDisponibles", type="string", length=25, nullable=true)
+     */
+    private $diasDisponible;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="horasDisponible", type="string", length=25, nullable=true)
+     */
+    private $horasDisponible;
+
+    /**
+     * Set horasDisponible
+     *
+     * @param string $horasDisponible
+     *
+     * @return Docente
+     */
+    public function setHorasD($horasDisponible)
+    {
+        $this->horasDisponible = $horasDisponible;
+        return $this;
+    }
+
+    /**
+     * Get horasDisponible
+     *
+     * @return string
+     */
+    public function getHorasD()
+    {
+        return $this->horasDisponible;
+    }
+
+    /**
+     * Set diasDisponible
+     *
+     * @param string $diasDisponible
+     *
+     * @return Docente
+     */
+    public function setDiasD($diasDisponible)
+    {
+        $this->diasDisponible = $diasDisponible;
+        return $this;
+    }
+
+    /**
+     * Get diasDisponible
+     *
+     * @return string
+     */
+    public function getDiasD()
+    {
+        return $this->diasDisponible;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     *
+     * @return Docente
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+    //Hasta aqui los campos que he añadidio
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
      */
     private $telefono;
 
@@ -282,7 +373,7 @@ class Docente
     }
 
     //metodos hechos por mi (Fredy)
-    //Metodo para obtener el ambos nombres en una sola cadena
+    //Metodo para obtener ambos nombres en una sola cadena
     public function getNombredocente()
     {
         return $this->getPrimernombredocente()." ".$this->getSegundonombredocente();
@@ -291,5 +382,49 @@ class Docente
     public function getApellidodocente()
     {
         return $this->getPrimerapellidodocente()." ".$this->getSegundoapellidodocente();
+    }
+
+    public function setNombredocente($nombres)
+    {
+        $nombre = explode(" ", $nombres);
+        $cuenta = count($nombre);
+        if($cuenta > 1){
+            $this->primernombredocente = $nombre[0];
+            $this->segundonombredocente = $nombre[1];
+        }
+        else {
+            $this->primernombredocente = $nombres;
+            $this->segundonombredocente = null;
+        }
+        return $this;
+    }
+
+    public function setApellidodocente($apellidos)
+    {
+        $apellido = explode(" ", $apellidos);
+        $cuenta = count($apellido);
+        if($cuenta > 1) {
+            $this->primerapellidodocente = $apellido[0];
+            $this->segundoapellidodocente = $apellido[1];
+        }
+        else {
+            $this->primerapellidodocente = $apellidos;
+            $this->segundoapellidodocente = null;
+        }
+        return $this;
+    }
+
+    /**
+     * Set carnetdocente
+     *
+     * @param string $carnetdocente
+     *
+     * @return Docente
+     */
+    public function setCarnetdocente($carnet)
+    {
+        $this->carnetdocente = $carnet;
+
+        return $this;
     }
 }

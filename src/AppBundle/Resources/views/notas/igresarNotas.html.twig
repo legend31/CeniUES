@@ -1,54 +1,18 @@
 {% extends "::layoutbase.html.twig" %}
 
 {% block principal %}
+    <head>
+        <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js") }}" type="text/javascript"></script>
+    </head>
     <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Administrar Notas</h3>
-                    </div>
 
-                    <form role="form">
-                        <div class="box-body">
-                            <div class="form-group col-sm-12">
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Nivel</label>
-                                        <select class="form-control">
-                                            <option>Nivel de Prueba 1</option>
-                                            <option>Nivel de Prueba 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Clase</label>
-                                        <select class="form-control">
-                                            <option>Clase de Prueba 1</option>
-                                            <option>Clase de Prueba 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <button class="btn btn-info">Buscar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
+                    {% if alumnos is defined%}
                     <div class="col-xs-12">
                         <div class="box">
 
                             <!--Inicia Cabecera de tabla-->
                             <div class="box-header">
-                                <h3 class="box-title">Listado de Notas para el Nivel 1 Prueba</h3>
+                                <h3 class="box-title">Listado de Notas de Alumnos CENIUES</h3>
                             </div>
                             <!--Finaliza Cabecera de tabla-->
 
@@ -56,7 +20,7 @@
                             <div class="box-body table-responsive">
                                 <table class="table table-bordered table-hover dataTable">
                                     <thead>
-                                    <th>No</th>
+                                    <th>CARNET</th>
                                     <th>ESTUDIANTE</th>
                                     <th>EV.1</th>
                                     <th>EV.2</th>
@@ -67,16 +31,23 @@
 
                                     </thead>
                                     <tbody>
-
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Carlos Lopez</td>
-                                        <td><div contenteditable="true">6.00</div></td>
-                                        <td><div contenteditable="true">9.00</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
-                                        <td><div contenteditable="true">8.50</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
-                                    </tr>
+                                    {# Creo un Alumno Base para saber si no es el mismo#}
+                                    {% set d=al %}
+                                    {% for resultado in alumnos %}
+                                        {# comparo si es el mismo para solo imprimir esa info una vez#}
+                                        {% if resultado.alumnoCarnetalumno!=d%}
+                                            <tr>{% set d=resultado.alumnoCarnetalumno %}
+                                            <td>{{ resultado.alumnoCarnetalumno.carnetalumno }}</td>
+                                            <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
+                                                {#recorro de nuevo para obtener las notas#}
+                                                {% for resultado in alumnos %}
+                                                    {% if resultado.alumnoCarnetalumno==d %}
+                                                        <td>{{ resultado.nota }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
@@ -84,17 +55,40 @@
                             <!--Finaliza Cuerpo de tabla-->
                         </div>
                     </div>
-
-
-                    <div class="box-footer">
-                        <div class="col-sm-6">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                            <button type="submit" class="btn btn-danger">Cancelar</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+                    {% endif %}
     </section>
+
+    <script>
+        $('document').ready(function(){
+            $("#snivel").change(function(){
+                var niv = $(this).val();
+
+                if(niv>0){
+
+                    var datos ={
+                        idniv : $(this).val()
+                    };
+
+                    $.post("{{ path('js') }}",datos,function(response){
+
+                        var $comboclase = $('#sclase');
+
+                        $comboclase.empty();
+
+                        $.each(response,function(i,val){
+                            $comboclase.append("<option>"+val+"</option>");
+                            /*var hora = $('#sclase').val();
+                            alert(hora);*/
+                        });
+                    },'json');
+                }else{
+                    //limpiamos combo y pedimos que seleccione un nivel
+                    var $comboclase = $('#sclase');
+                    $comboclase.empty();
+                    $comboclase.val("Seleccione un nivel");
+                }
+            });
+        });
+    </script>
+
 {% endblock %}
