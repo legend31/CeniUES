@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Modulo;
 use Proxies\__CG__\AppBundle\Entity\Matricula;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 
-class ModulosNivelesController extends Controller{
+class ModulosNivelesController extends DSIController{
     //funcion encargada de redirigir al sub menu de las gestion de modulos y niveles
     /**
      * @Route("/admin/modulosyniveles", name="gmyn")
@@ -75,7 +76,7 @@ class ModulosNivelesController extends Controller{
             $auxffin = $request->get('ffin');
             $fechai = date_create_from_format('Y-m-d',$auxfini);
             $fechaf = date_create_from_format('Y-m-d',$auxffin);
-            $modulos = $repmod->buscarmodulos1($fechai,$auxnombre);
+            $modulos = $repmod->buscarmodulos1($fechai,$fechaf,$auxnombre);
             if($modulos == null) {
                 $var = strtotime($auxffin) - strtotime($auxfini);
                 if ($var > 0) {
@@ -87,14 +88,14 @@ class ModulosNivelesController extends Controller{
                     $mod->setDuracion($dif);
                     $em->persist($mod);
                     $em->flush();
-                    $this->mensajeflash('Modulo ingresado con exito');
+                    $this->MensajeFlash('exito','Modulo ingresado con exito');
                     return $this->redirectToRoute('gmodulos');
                 } else {
-                    $this->mensajeflash('No se pudo ingresar modulo: la Fecha inicio debe ser menor que la la Fecha final' . $var);
+                    $this->MensajeFlash('error','No se pudo ingresar modulo: la Fecha inicio debe ser menor que la la Fecha final' . $var);
                     return $this->redirectToRoute('newmodulo');
                 }
             }else{
-                $this->mensajeflash('No se pudo ingresar modulo: Hay un modulo con el mismo nombre o con la misma fecha de inicio almacenado verificar fechas de fiinalizacion de ultimo modulo');
+                $this->MensajeFlash('error','No se pudo ingresar modulo: Hay un modulo con el mismo nombre o con la misma fecha de inicio almacenado verificar fechas de fiinalizacion de ultimo modulo');
                 return $this->redirectToRoute('newmodulo');
             }
         }//return $this->render('AppBundle:admin/gmodulosniveles:formNuevoModulo.html.twig');
@@ -125,10 +126,10 @@ class ModulosNivelesController extends Controller{
                     $auxmod->setFechafin($fechaf);
                     $em->persist($auxmod);
                     $em->flush();
-                    $this->mensajeflash('Modulo actualizado correctamente');
+                    $this->MensajeFlash('exito','Modulo actualizado correctamente');
                     return $this->redirectToRoute('gmodulos');
                 }else{
-                   $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
+                   $this->mensajeFlash('error','No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
                    return $this->redirectToRoute('gmodulos');
                 }
             }else{
@@ -151,10 +152,10 @@ class ModulosNivelesController extends Controller{
         if($auxnivel==null){
             $em->remove($auxmod);
             $em->flush();
-            $this->mensajeflash('Modulo eliminado de forma exitosa');
+            $this->MensajeFlash('exito','Modulo eliminado de forma exitosa');
             return $this->redirectToRoute('gmodulos');
         }else{
-            $this->mensajeflash('No se puede eliminar el modulo ya que tiene niveles asignados');
+            $this->MensajeFlash('error','No se puede eliminar el modulo ya que tiene niveles asignados');
             return $this->redirectToRoute('gmodulos');
         }
     }
@@ -205,19 +206,19 @@ class ModulosNivelesController extends Controller{
                             $em->flush();
                             $auxmod->addNivelnivel($niv);
                             $em->flush();
-                            $this->mensajeflash('Nivel ingresado de forma exitosa');
+                            $this->MensajeFlash('exito','Nivel ingresado de forma exitosa');
                             return $this->redirectToRoute('newnivel');
                         }else{
-                            $this->mensajeflash('No se puede ingresar el nivel ya que sus fechas no corresponde con las del modulo');
+                            $this->MensajeFlash('error','No se puede ingresar el nivel ya que sus fechas no corresponde con las del modulo');
                             return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
                         }
                     }else{
-                        $this->mensajeflash('Ya existe un nivel para las fechas ingresadas');
+                        $this->MensajeFlash('error','Ya existe un nivel para las fechas ingresadas');
                         return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
                     }
                 }
             }else{
-                $this->mensajeflash('Fecha de Inicio debe ser menor que la Fecha fin');
+                $this->MensajeFlash('error','Fecha de Inicio debe ser menor que la Fecha fin');
                 return $this->render('AppBundle:admin/gmodulosniveles:formNuevoNivel.html.twig', array('mod' => $mod));
             }
         }
@@ -247,10 +248,10 @@ class ModulosNivelesController extends Controller{
                     $auxniv->setFechafin($fechaf);
                     $em1->persist($auxniv);
                     $em1->flush();
-                    $this->mensajeflash('Modulo actualizado correctamente');
+                    $this->MensajeFlash('exito','Modulo actualizado correctamente');
                     return $this->redirectToRoute('gniveles');
                 }else{
-                    $this->mensajeflash('No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
+                    $this->MensajeFlash('error','No se pudo actualizar el modulo ya que ya ha iniciado o finalizado');
                     return $this->redirectToRoute('gniveles');
                 }
             }else{
@@ -279,22 +280,19 @@ class ModulosNivelesController extends Controller{
             if ($auxmatricula == null) {
                 $em->remove($auxniv);
                 $em->flush();
-                $this->mensajeflash('Nivel eliminado de forma exitosa');
+                $this->MensajeFlash('exito','Nivel eliminado de forma exitosa');
                 return $this->redirectToRoute('gniveles');
             } else {
-                $this->mensajeflash('No se puede eliminar el nivel ya que tiene alumnos inscritos en el');
+                $this->MensajeFlash('error','No se puede eliminar el nivel ya que tiene alumnos inscritos en el');
                 return $this->redirectToRoute('gniveles');
             }
         }else{
-            $this->mensajeflash('No se puede eliminar el nivel ya que esta ya ha iniciado o finalizado');
+            $this->MensajeFlash('error','No se puede eliminar el nivel ya que esta ya ha iniciado o finalizado');
             return $this->redirectToRoute('gniveles');
         }
     }
 
 
-    private function mensajeflash($m){
-        $this->get('session')->getFlashBag()->add('mensaje',''.$m);
-    }
 
     /**
      * @Route("/admin/infonivel", name="infoniv")

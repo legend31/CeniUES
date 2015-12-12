@@ -4,14 +4,21 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-5">
-                    {% for flashMessage in app.session.flashbag.get('mensaje') %}
-                        <br>
-                        <div class="alert alert-success fade in">
-                        <span class="close" data-dismiss="alert">
-                            &times;
-                        </span>
-                            {{ flashMessage }}
-                        </div>
+                    {% for flashMessage in app.session.flashbag.get('exito') %}
+                        <script>
+                            window.onload = function notificacion(){
+                                alertify.log("{{ flashMessage }}.");
+                                return false;
+                            }
+                        </script>
+                    {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        <script>
+                            window.onload = function error(){
+                                alertify.error("{{ flashMessage }}.");
+                                return false;
+                            }
+                        </script>
                     {% endfor %}
                 </div>
             </div>
@@ -31,11 +38,12 @@
                                 <div class="form-group col-sm-12">
                                     <label>Nombre de Modulo</label>
                                     <br>
-                                    {% for modulo in mod %}
+
                                     <select class="form-control" id="smodulo" name="smodulo">
+                                    {% for modulo in mod %}
                                         <option>{{ modulo.nombremodulo }}</option>
-                                    </select>
                                     {% endfor %}
+                                    </select>
                                 </div>
                                 <br>
                                 <div class="form-group col-sm-6">
