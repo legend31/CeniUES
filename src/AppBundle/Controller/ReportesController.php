@@ -55,6 +55,16 @@ class ReportesController extends Controller
         return $pdfGenerator->displayForView('AppBundle:reportes:listadoDocentesPdf.html.twig',array('form'=>$docentes));
 
     }
+    /**
+     * @Route("/nivelesDocentesPdf",name="listadoDocentes2Pdf")
+     */
+    public function pdfDocentes2Action(){
+        $em = $this->getDoctrine()->getEntityManager();
+        $docentes = $em->getRepository('AppBundle:Clase')->findAll();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('nivelesDocentes.pdf');
+        return $pdfGenerator->displayForView('AppBundle:reportes:docentesNivel.html.twig',array('form'=>$docentes));
+    }
 
     /**
      * @Route("/LisNxM", name="lnivelesmodulos")

@@ -22,15 +22,30 @@
                                     <thead>
                                     <th>CARNET</th>
                                     <th>ESTUDIANTE</th>
-                                    <th>EV.1</th>
-                                    <th>EV.2</th>
+                                    {% for e in evaluacion %}
+                                    <th>{{ e.nombreevaluacion }}</th>
+                                    <!--<th>EV.2</th>
                                     <th>EV.3</th>
                                     <th>EV.4</th>
-                                    <th>EV.5</th>
+                                    <th>EV.5</th>-->
+                                    {% endfor %}
                                     <td>NOTA FINAL</td>
 
                                     </thead>
                                     <tbody>
+<<<<<<< HEAD
+                                    {% for alumno in alumnos %}
+                                    <tr>
+                                        <td>{{ alumno.carnetalumno }}</td>
+                                        <td>{{ alumno.nombre }}</td>
+                                        {% for notaal in notas %}
+                                            {#{% if nota.nota == null %}
+                                            {% set nota = notaal|merge({'nota':'0'}) %}#}
+                                        <td><div contenteditable="true">{{ notaal.nota }}</div></td>
+                                        {#{% endif %}#}
+                                        {% endfor %}
+                                    </tr>
+=======
                                     {# Creo un Alumno Base para saber si no es el mismo#}
                                     {% set d=al %}
                                     {% for resultado in alumnos %}
@@ -47,6 +62,7 @@
                                                 {% endfor %}
                                             </tr>
                                         {% endif %}
+>>>>>>> 7bb3a148090426c4ea4759a839887aa505c83be4
                                     {% endfor %}
 
                                     </tbody>

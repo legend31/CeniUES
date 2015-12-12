@@ -27,6 +27,7 @@
                         </div>
                     </form>
                     {% endif %}
+                    <br>
                     {% if docente == 2 %}
                         <div class="alert alert-warning alert-dismissable">
                             <h4><i class="icon fa fa-warning"></i> No se encontro ning&uacute;n docente con el carnet ingresado.</h4>
@@ -141,7 +142,7 @@
 {% endblock %}
 {% block javascript2 %}
     <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!--<script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>-->
     <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
-    <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/select2/select2.full.min.js") }}" type="text/javascript"></script>
+    <!--<script src="{{ asset("libs/AdminLTE-2.2.0/plugins/select2/select2.full.min.js") }}" type="text/javascript"></script>-->
 {% endblock %}

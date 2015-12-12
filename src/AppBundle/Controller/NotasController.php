@@ -24,6 +24,50 @@ class NotasController extends DSIController{
     /**
      * @Route("/ingresarnotas", name="ingresarnotas")
      */
+/*
+    public function ingresarNotas(Request $request){
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niv = $rep->findAll();
+        $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula');
+        $ev = $this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findAll();
+        if($request->isMethod('POST')){
+            $nivel = $request->get('snivel');
+            $horario = $request->get('sclase');
+            $al= $mat->listadoAlumnos($nivel,$horario);
+            //var_dump($al);
+            $repres = $this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion');
+            $arrnotas = new \ArrayObject();
+            //$prueba = $repres->getresevaluaciones('AA12000');
+            foreach ($al as $auxal ) {
+                $a=(object)$auxal;
+                //$notas = $repres->getresevaluaciones($a->carnetalumno);
+                $notas = $repres->findBy(array('alumnoCarnetalumno'=>$a->carnetalumno));
+                $ob = (object)$notas;
+                if($ob->nota == null){
+                    $notas->nota=0;
+                }
+                $arrnotas->append($notas);
+                /*if(!empty($notas)){
+                    foreach($notas as $n) {
+                        $obnotas = new \stdClass();
+                        $ob = (object)$n;
+                        //$obnotas->evaluacion = $ob->nombreevaluacion;
+                        if($ob->nota==null){
+                            $ob->nota =0;
+                        }else {
+                            $obnotas->nota = $ob->nota;
+                        }
+                        $arrnotas->append($obnotas);
+                    }
+                }*/
+  /*          }
+            return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notas"=>$arrnotas,"evaluacion"=>$ev));
+            //return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notaalum"=>$notasevaluacion));
+        }else{
+            return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
+        }
+        return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
+*/
     public function ingresarNotasAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         $niv = $this->obtenerNivelesActivos();
@@ -105,9 +149,27 @@ class NotasController extends DSIController{
             $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel);
             $det=$this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel'=>$n));
             $res=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion'=>$det));
-            return $this->render("AppBundle::notas.html.twig",array('alumnos'=>$res,'al'=>$alComparar,'niveles'=>''));
+            return $this->render("AppBundle::notas.html.twig",array('alumnos'=>$res,'al'=>$alComparar,'niveles'=>$niv));
         }
         return $this->render("AppBundle::notas.html.twig",array('alumnos'=>'','al'=>'','niveles'=>$niv));
+    }
+
+
+    /**
+     * @Route("/pruebaf", name="pruebaf")
+     */
+    public function pruebafAction(Request $request){
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+        $niv = $rep->findAll();
+        $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula');
+        $ev = $this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findAll();
+        if($request->isMethod('POST')){
+            $nivel = $request->get('snivel');
+            $horario = $request->get('sclase');
+            $al= $mat->prueba($nivel,$horario);
+            var_dump($al);
+        }
+        return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
     }
 
 
