@@ -1,0 +1,53 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block tittle %}{{ TituloPagina }}{% endblock %}
+
+{% block principal %}
+    <div class="pad margin no-print"></div>
+
+    <section class="content invoice">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Listado de distribucion de niveles y modulos
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 table-responsive" >
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Modulo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table border-l">
+                    {% for mod in modulos %}
+                        <tr>
+                            <td bgcolor="#f0f8ff">{{ mod.nombremodulo }}</td>
+                            <td bgcolor="#f0f8ff">{{ mod.fechainicio |date('d-m-Y') }}</td>
+                            <td bgcolor="#f0f8ff">{{ mod.fechafin |date('d-m-Y') }}</td>
+                        </tr>
+                        {% for niveles in mod.nivelnivel %}
+                        <tr>
+                            <td bgcolor="#fffff0">{{ niveles.nombrenivel }}</td>
+                            <td bgcolor="#fffff0">{{ niveles.fechainicio.format('d-m-Y') }}</td>
+                            <td bgcolor="#fffff0">{{ niveles.fechafin.format('d-m-Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="{{ path('distribucionmynPDF') }}" class="btn btn-primary pull-right"><i class="fa fa-download"></i> Generate PDF</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

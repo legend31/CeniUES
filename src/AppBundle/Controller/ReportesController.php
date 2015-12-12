@@ -81,4 +81,26 @@ class ReportesController extends Controller
         $pdfGenerator->setName('listadoNiveles.pdf');
         return $pdfGenerator->displayForView('AppBundle:reportes:listNivelesxModPdf.html.twig',array('niv'=>$niveles));
     }
+
+    /**
+     * @Route("/distribucionmyn", name="distribucionmyn")
+     */
+    public function distribucionmodulosnivelesAction(){
+        $em = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $modulos = $em->findAll();
+        return $this->render("AppBundle:reportes:distribucionModulos.html.twig",array('modulos'=>$modulos));
+    }
+
+
+    /**
+     * @Route("/distribucionmynPDF", name="distribucionmynPDF")
+     */
+    public function distribucionmodulosnivelesActionPDF(){
+        $em = $this->getDoctrine()->getRepository('AppBundle:Modulo');
+        $modulos = $em->findAll();
+        $pdfGenerator=$this->get('siphoc.pdf.generator');
+        $pdfGenerator->setName('dsitribucionModulosPDF.pdf');
+        return $pdfGenerator->displayForView('AppBundle:reportes:distribucionModulosPDF.html.twig',array('modulos'=>$modulos));
+        //return $this->render("AppBundle:reportes:distribucionModulos.html.twig",array('modulos'=>$modulos));
+    }
 }
