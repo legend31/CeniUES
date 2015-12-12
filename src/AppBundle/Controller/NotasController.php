@@ -52,17 +52,25 @@ class NotasController extends DSIController{
                     }
                 }
                 $i=0;
+                $error=0;
                 foreach($aux as $a){
                     $alumno=$em->getRepository('AppBundle:Alumno')->find($aux[0][4]);
                     $det=$em->getRepository('AppBundle:Detalleevaluacion')->find($aux[0][2]);
                     $eva=$em->getRepository('AppBundle:Evaluacion')->find($aux[$i][1]);
                     //Obtengo el resultado
                     $resultado=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findOneBy(array('evaluacionevaluacion'=>$eva,'alumnoCarnetalumno'=>$alumno,'detalleevaluaciondetalleevaluacion'=>$det));
+                    if($request->get($llaves[$i])>=0.0&&$request->get($llaves[$i])<=10.00){
                     $resultado->setNota($request->get($llaves[$i]));
                     $em->flush();
                     $i++;
+                    }
+                    else
+                        $error++;
                 }
-                $this->MensajeFlash('exito','Modificacion Exitosa');
+                if($error==0)
+                    $this->MensajeFlash('exito','Modificacion Exitosa');
+                else
+                    $this->MensajeFlash('error','Ingrese notas entre 0  y 10!');
                 return $this->redirectToRoute('ingresarnotas');
             }
 

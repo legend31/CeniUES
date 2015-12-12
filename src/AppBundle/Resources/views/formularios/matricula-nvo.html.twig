@@ -10,7 +10,7 @@
     </head>
     <div class="container">
         <div class="col-sm-offset-1">
-            <h2>Matricula Nuevo Ingreso</h2>
+
         </div>
         {% for flashMessage in app.session.flashbag.get('exito') %}
             <script>
@@ -28,7 +28,10 @@
                 }
             </script>
         {% endfor %}
-        <br>
+
+        {% if modulo %}
+            <h2>Matricula Nuevo Ingreso</h2>
+            <br>
         <form class="form-horizontal contact_form" method="post" action="{{ path('matnuevo') }}">
             <div class="form-group">
                 <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
@@ -54,6 +57,8 @@
                 <input class="btn bg-primary" type="submit" value="Guardar">
             </div>
         </form>
+            {% else %}<h2>No es Periodo de Inscripcion!!</h2>
+        {% endif %}
     </div>
     <script>
         $('document').ready(

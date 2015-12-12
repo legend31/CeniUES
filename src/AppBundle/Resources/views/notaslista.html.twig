@@ -21,12 +21,11 @@
                 }
             </script>
         {% endfor %}
-        <form method="post" action="{{ path('ingresarnotas') }}">
+        <form method="post" class="contact_form" action="{{ path('ingresarnotas') }}">
             <div class="box-body">
-                <div class="form-group col-sm-12">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label" for="snivel">Nivel</label>
+                            <label class="control-label" for="snivel">Niveles</label>
                             <select class="form-control" id="snivel" name="snivel">
                                 {% for n in niveles.nivelnivel %}
                                     <option value="{{ n.idnivel }}"{% if selectedN==n.idnivel%}selected{% endif %}>{{ n.nombrenivel }}</option>
@@ -44,12 +43,11 @@
                             </select>
                         </div>
                     </div>
-                        <div class="col-sm-4">
+                    <div class="col-sm-4">
                             <div class="form-group">
-                                <input class="btn bg-primary pull-right" name="con" type="submit" value="Consultar">
+                                <input class="btn bg-primary" name="con" type="submit" value="Consultar">
                             </div>
                         </div>
-                </div>
             </div>
             {% if alumnos is defined%}
                 <div class="col-xs-12">
@@ -87,7 +85,7 @@
                                             {#recorro de nuevo para obtener las notas#}
                                             {% for resultado in alumnos %}
                                                 {% if resultado.alumnoCarnetalumno==d %}{% set nota =nota +(resultado.nota*(resultado.evaluacionevaluacion.ponderacion/100)) %}
-                                                    <td><input class="col-sm-8" type="number" name="n-{{ resultado.evaluacionevaluacion.idevaluacion }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{resultado.nota  }}-{{ resultado.alumnoCarnetalumno.carnetalumno }}" step="0.01" value="{{ resultado.nota }}"></td>
+                                                    <td><input class="col-sm-8" type="number" min="0" max="10" name="n-{{ resultado.evaluacionevaluacion.idevaluacion }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{resultado.nota  }}-{{ resultado.alumnoCarnetalumno.carnetalumno }}" step="0.01" value="{{ resultado.nota }}"></td>
                                                 {% endif %}
                                             {% endfor %}
                                             <td>{{ nota }}</td>
