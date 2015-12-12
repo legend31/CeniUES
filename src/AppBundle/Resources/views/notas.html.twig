@@ -77,18 +77,19 @@
                             <thead>
                             <th>CARNET</th>
                             <th>ESTUDIANTE</th>
-                            <th>EV.1</th>
-                            <th>EV.2</th>
-                            <th>EV.3</th>
-                            <th>EV.4</th>
-                            <th>EV.5</th>
-                            <td>NOTA FINAL</td>
+                            <th>EV.1 (20%)</th>
+                            <th>EV.2 (20%)</th>
+                            <th>EV.3 (25%)</th>
+                            <th>EV.4 (25%)</th>
+                            <th>EV.5 (10%)</th>
+                            <th>NOTA FINAL</th>
 
                             </thead>
                             <tbody>
                             {# Creo un Alumno Base para saber si no es el mismo#}
                             {% set d=al %}
                             {% for resultado in alumnos %}
+                                {% set nota=0 %}
                                 {# comparo si es el mismo para solo imprimir esa info una vez#}
                                 {% if resultado.alumnoCarnetalumno!=d%}
                                     <tr>{% set d=resultado.alumnoCarnetalumno %}
@@ -96,8 +97,9 @@
                                         <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
                                         {#recorro de nuevo para obtener las notas#}
                                         {% for resultado in alumnos %}
-                                            {% if resultado.alumnoCarnetalumno==d %}<td>{{ resultado.nota }}</td>{% endif %}
+                                            {% if resultado.alumnoCarnetalumno==d %}{% set nota =nota +(resultado.nota*(resultado.evaluacionevaluacion.ponderacion/100)) %}<td>{{ resultado.nota }}</td>{% endif %}
                                         {% endfor %}
+                                        <td>{{ nota }}</td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}

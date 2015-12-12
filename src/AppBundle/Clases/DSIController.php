@@ -31,7 +31,6 @@ class DSIController extends Controller
         //Docente
         $docente=$em->getRepository('AppBundle:Docente')->find("DC00002");
         //Verificando el modulo
-
         $nivel=$em->getRepository('AppBundle:Nivel')->find($n);
         //creacion del detalle de evaluacion
         $resul=$em->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('docenteCarnetdocente'=>$docente,'modulomodulo'=>$modulo,'nivelnivel'=>$nivel));
@@ -51,11 +50,34 @@ class DSIController extends Controller
     }
     protected  function crearRecord($em,$eva,$request,$modulo){
         $n=$request->get('nivel');
-        for($i=1;$i<$n;$i++){
+        /*for($i=1;$i<$n;$i++){
             $detalle=$this->crearDetalle($em,$i,$modulo);
             foreach($eva as $evaluaciones){
                 $this->ingresarNotas($em,$request->get('carnet'),$evaluaciones,$request->get('nota'),$detalle);
             }
+        }*/
+        foreach($modulo->getNivelnivel() as $m){
+           if($m->getIdnivel()<=$n){
+               $detalle=$this->crearDetalle($em,$m->getIdnivel(),$modulo);
+               foreach($eva as $evaluaciones){
+                   if($m->getIdnivel()==$n)
+                    $this->ingresarNotas($em,$request->get('carnet'),$evaluaciones,0.0,$detalle);
+                   else
+                       $this->ingresarNotas($em,$request->get('carnet'),$evaluaciones,$request->get('nota'),$detalle);
+               }
+           }
+        }
+    }
+    protected  function crearRecordIndividual($em,$eva,$request,$modulo){
+        $detalle=$this->crearDetalle($em,$request->get('nivel'),$modulo);
+        foreach($eva as $evaluaciones) {
+            $this->ingresarNotas($em, $request->get('carnet'), $evaluaciones, 0.0, $detalle);
+        }
+    }
+    protected  function crearRecordNuevo($em,$eva,$request,$modulo){
+        $detalle=$this->crearDetalle($em,$modulo->getNivelnivel()[0]->getIdnivel(),$modulo);
+        foreach($eva as $evaluaciones) {
+            $this->ingresarNotas($em, $request->get('carnet'), $evaluaciones, 0.0, $detalle);
         }
     }
     //Obtiene los niveles del modulo activo
