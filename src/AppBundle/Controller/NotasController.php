@@ -24,7 +24,7 @@ class NotasController extends DSIController{
     /**
      * @Route("/ingresarnotas", name="ingresarnotas")
      */
-<<<<<<< HEAD
+/*
     public function ingresarNotas(Request $request){
         $rep = $this->getDoctrine()->getRepository('AppBundle:Nivel');
         $niv = $rep->findAll();
@@ -60,14 +60,14 @@ class NotasController extends DSIController{
                         $arrnotas->append($obnotas);
                     }
                 }*/
-            }
+  /*          }
             return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notas"=>$arrnotas,"evaluacion"=>$ev));
             //return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notaalum"=>$notasevaluacion));
         }else{
             return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
         }
         return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
-=======
+*/
     public function ingresarNotasAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         $niv = $this->obtenerNivelesActivos();
@@ -121,7 +121,6 @@ class NotasController extends DSIController{
         }
         return $this->render("AppBundle::notaslista.html.twig",array('alumnos'=>'','al'=>'','alumnosL'=>$alumnos,'niveles'=>$niv,'selectedN'=>'','selectedA'=>''));
 
->>>>>>> a5b4acda7d391f09df20e7701d3811645b2e01b2
     }
 
     /**
@@ -156,7 +155,6 @@ class NotasController extends DSIController{
     }
 
 
-<<<<<<< HEAD
 
     private function mensajeflash($m){
         $this->get('session')->getFlashBag()->add('mensaje',''.$m);
@@ -179,8 +177,6 @@ class NotasController extends DSIController{
     }
 
 
-=======
->>>>>>> a5b4acda7d391f09df20e7701d3811645b2e01b2
     //FUNCION ENCARGADA DE AUTOCOMPLETAR UN SELECT EN BASE A OTRO
     /**
      * @Route("/js", name="js")
