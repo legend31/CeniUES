@@ -93,12 +93,12 @@
                         {% for resultado in alumnos %}
                             {# comparo si es el mismo para solo imprimir esa info una vez#}
                             {% if resultado.alumnoCarnetalumno!=d%}
-                                <tr>{% set d=resultado.alumnoCarnetalumno %}
+                                <tr id="trdatos">{% set d=resultado.alumnoCarnetalumno %}
                                     <td>{{ resultado.alumnoCarnetalumno.carnetalumno }}</td>
                                     <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
                                     {#recorro de nuevo para obtener las notas#}
                                     {% for resultado in alumnos %}
-                                        {% if resultado.alumnoCarnetalumno==d %}<td><input value="{{ resultado.alumnoCarnetalumno.carnetalumno }}" hidden>{{ resultado.nota }}</td>{% endif %}
+                                        {% if resultado.alumnoCarnetalumno==d %}<td id="tdnota"><input value="{{ resultado.nota }}"><input name="{{ resultado.alumnoCarnetalumno.carnetalumno }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{ resultado.evaluacionevaluacion.idevaluacion }}" hidden></td>{% endif %}
                                     {% endfor %}
                                 </tr>
                             {% endif %}
@@ -108,6 +108,19 @@
                 </div>
                 <!--Finaliza Cuerpo de tabla-->
             </div>
+                <form role="form" method="POST" action="">
+                    <div class="box-body">
+                        <div class="form-group col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" type="submit">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         {% endif %}
     </section>
@@ -143,6 +156,7 @@
                 }
             });
         });
+
     </script>
 
 {% endblock %}
