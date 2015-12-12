@@ -56,7 +56,7 @@
                                         <td>{{ clase.horario.format('h:i A') }}</td>
                                         <td>
                                             <div class="fc-button-group">
-                                                <a class="btn btn-default bg-aqua-gradient" href="#">
+                                                <a class="btn btn-default bg-aqua-gradient" href="{{ path('reasignarD',{'carnet': clase.docenteCarnetdocente.carnetdocente}) }}">
                                                     <i class="fa fa-undo"></i> Reasignar
                                                 </a>
                                             </div>
@@ -88,36 +88,4 @@
             </div>
         </div>
     </section>
-
-    <script>
-        $('document').ready(function(){
-            $("#niv").change(function(){
-                var niv = $(this).val();
-
-                if(niv>0){
-
-                    var datos ={
-                        idniv : $(this).val()
-                    };
-
-                    $.post("{{ path('js2') }}", datos, function(response){
-
-                        var $combosec = $('#sec');
-                        var $loca = $('#local');
-
-                        $combosec.empty();
-
-                        $.each(response,function(i, val){
-                            $combosec.append("<option>"+ "Seccion " + val +"</option>");
-                        });
-                    },'json');
-                }else{
-                    //limpiamos combo y pedimos que seleccione un nivel
-                    var $combosec = $('#sec');
-                    $combosec.empty();
-                    $combosec.val("Seleccione un nivel");
-                }
-            });
-        });
-    </script>
 {% endblock %}

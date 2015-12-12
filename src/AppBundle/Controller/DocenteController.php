@@ -301,7 +301,6 @@ class DocenteController extends Controller
         }
         $envio=array_diff($nomdoc,$dn);
         $send = array($n, $envio);
-        var_dump($send);
         return $this->render('AppBundle:docente:docenteNivel.html.twig', array('form'=>$send, 'error'=>null, 'clases'=>$clases, 'carnet'=>$n));
     }
 
@@ -493,5 +492,30 @@ class DocenteController extends Controller
             return new Response();
 
         }
+    }
+
+    /**
+     * @Route("/adnivel", name="asignarD")
+     */
+    public function asignarSelect(Request $request){
+        if($request->isMethod('POST')){
+            $rep2 = $this->getDoctrine()->getRepository('AppBundle:Clase');
+            $idpasado = $request->get('nivel');
+            $clase = $rep2->findBy(array('nivelnivel'=>$idpasado));
+
+            return $this->render('@App/docente/docenteNivel.html.twig', array('form'=>null, 'error'=>null, 'clases'=>null));
+        }
+    }
+
+    /**
+     * @Route("/rdnivel", name="reasignarD")
+     */
+    public function reasignarSelect(Request $request){
+        $rep2 = $this->getDoctrine()->getRepository('AppBundle:Clase');
+        $carnet = $request->get('carnet');
+        $clase = $rep2->findBy(array('docenteCarnetdocente'=>$carnet));
+        $niveles = $this->getDoctrine()->getRepository('AppBundle:Nivel')->findAll();
+
+        return $this->render('@App/docente/reasignarDocente.html.twig', array('clase'=>$clase, 'niveles'=>$niveles));
     }
 }
