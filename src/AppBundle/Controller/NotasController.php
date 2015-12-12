@@ -36,12 +36,13 @@ class NotasController extends Controller{
             $n = $this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel);
             $det = $this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel' => $n));
             $res = $this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion' => $det));
-            return $this->render("AppBundle::notas.html.twig", array('alumnos' => $res, 'al' => $alComparar, 'niveles' => ''));
+            return $this->render("AppBundle:notas:igresarNotas.html.twig", array('alumnos' => $res, 'al' => $alComparar, 'niveles' => $niv));
             //return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notas"=>$arrnotas,"evaluacion"=>$ev));
             //return $this->render('AppBundle:notas:igresarNotas.html.twig', array("alumnos" => $al,"niveles"=>$niv,"notaalum"=>$notasevaluacion));
         }else{
             return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
         }
+        return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
     }
 
     /**
@@ -70,7 +71,7 @@ class NotasController extends Controller{
             $n = $this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel);
             $det = $this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel' => $n));
             $res = $this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion' => $det));
-            return $this->render("AppBundle::notas.html.twig", array('alumnos' => $res, 'al' => $alComparar, 'niveles' => ''));
+            return $this->render("AppBundle::notas.html.twig", array('alumnos' => $res, 'al' => $alComparar, 'niveles' =>$niv));
                 //var_dump($det->getIddetalleevaluacion());
                 //return new Response();
         }
