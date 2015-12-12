@@ -10,7 +10,7 @@
     </head>
     <br>
     <div class="container">
-        <h3>Gestion de informacion de Alumnos</h3>
+        <h3>Gestion de Informacion de Alumnos</h3>
         {# Mensaje Flash  #}
         <div class="row">
             <div class="col-xs-6">
@@ -67,6 +67,7 @@
                                 <th>Edad</th>
                                 <th>Padre</th>
                                 <th>Responsable</th>
+                                {% if not mat %}<th>Eliminar</th>{% endif %}
                                 </thead>
                                 <tbody>
                                 {% for al in al%}
@@ -111,6 +112,13 @@
                                                 {{ alu.responsableresponsable.nombreresponsable }}
                                             </a>
                                         </td>
+                                        {%  if not mat %}
+                                        <td>
+                                            <a href="{{ path('alumDel',{'id':alu.carnetalumno}) }}" title="Eliminar">
+                                                <img src="{{ asset('bundles/app/images/delete.png') }}">
+                                            </a>
+                                        </td>
+                                        {% endif %}
                                     </tr>
                                 {% endif %}
                                 </tbody>

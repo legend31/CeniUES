@@ -88,4 +88,28 @@ class SeccionController extends DSIController
         $em->flush();
         return $this->redirectToRoute('secHome');
     }
+    /**
+     * @Route("/secAddNivel/{id}",name="nvoseccionAddN")
+     */
+    public function seccionAddNivel($id)
+    {
+        $em=$this->getDoctrine()->getEntityManager();
+        //Relacionando los objetos
+        $secciones=$em->getRepository('AppBundle:Seccion')->findAll();
+        $nivel=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($id);
+        $i=0;
+        foreach($nivel->getSeccionseccion() as $n){
+            foreach($secciones as $s){
+                if($n->getIdseccion()==$s->getIdseccion())
+                    unset($secciones[$i]);
+
+            }
+            $i++;
+        }
+        var_dump($secciones);
+        /*$nivel->addSeccionseccion($em->getRepository('AppBundle:Seccion')->find(1));
+        $em->flush($nivel);
+        return $this->redirectToRoute('secHome');*/
+        return new Response();
+    }
 }

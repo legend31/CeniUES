@@ -134,9 +134,10 @@ class AlumnoController extends DSIController
         $alumno=$em->getRepository('AppBundle:Alumno')->findAll();
         if($request->isMethod("POST")){
             $al=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
-            return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>'','alu'=>$al));
+            $mat=$em->getRepository('AppBundle:Matricula')->findOneBy(array('alumnoCarnetalumno'=>$al));
+            return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>'','alu'=>$al,'mat'=>$mat));
         }
-        return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>$alumno,'alu'=>''));
+        return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>$alumno,'alu'=>'','mat'=>$alumno));
     }
     /**
      * @Route("/padreUpdate/{id}",name="padreUp")
@@ -197,5 +198,16 @@ class AlumnoController extends DSIController
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:alumno-mod.html.twig',array('alumno'=>$al,'id'=>$id));
+    }
+    /**
+     * @Route("/alumDel/{id}",name="alumDel")
+     */
+    public function AlumDelete($id){
+        $em=$this->getDoctrine()->getManager();
+        $al=$em->getRepository('AppBundle:Alumno')->find($id);
+        $em->remove($al);
+        $em->flush();
+        $this->MensajeFlash('exito','Alumno Eliminado Exitosamente');
+        return $this->redirectToRoute('alBuscar');
     }
 }

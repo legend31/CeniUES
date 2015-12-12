@@ -4,9 +4,7 @@
 {% endblock %}
 {% block principal %}
     <div class="container-fluid">
-            <h3>Gestionar Secciones</h3>
-        <h2>Matricula Antiguo Ingreso</h2>
-        <br>
+            <h2>Gestionar Secciones</h2>
         {% for flashMessage in app.session.flashbag.get('exito') %}
             <script>
                 window.onload = function notificacion(){
