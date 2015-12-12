@@ -15,55 +15,30 @@
     </head>
     <div class="bs-example">
         <div class="container-fluid">
-            <h2>Formularios Nuevo Ingreso</h2>
+            <h2>Formularios Registro de Alumno</h2>
+            {% for flashMessage in app.session.flashbag.get('fracaso') %}
+                <script>
+                    window.onload = function error(){
+                        alertify.error("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('exito') %}
+                <script>
+                    window.onload = function notificacion(){
+                        alertify.log("{{ flashMessage }}.");
+                        return false;
+                    }
+                </script>
+            {% endfor %}
             <div class="nav-tabs-custom" data-find="_2">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#padre" data-toggle="tab" aria-expanded="true">Padre</a></li>
                     <li class=""><a href="#responsable" data-toggle="tab" aria-expanded="false">Responsable</a></li>
                     <li class=""><a href="#alumno" data-toggle="tab" aria-expanded="false">Alumno</a></li>
-                    <li class=""><a href="#matricula" data-toggle="tab" aria-expanded="false">Matricula</a></li>
                 </ul>
                 <div class="tab-content" data-find="_1">
-                    <div class="tab-pane" id="matricula">
-                        <div class="col-sm-offset-1">
-                            <h2>Ingreso de Matricula</h2>
-                            {% for flashMessage in app.session.flashbag.get('credencial') %}
-                                <script>
-                                    window.onload = function error(){
-                                        alertify.error("{{ flashMessage }}.");
-                                        return false;
-                                    }
-                                </script>
-                            {% endfor %}
-                        </div>
-                        <form class="form-horizontal contact_form" method="post" action="{{ path('matnuevo') }}">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
-                                <div class="col-sm-4">
-                                    <input id="inputFecha" class="form-control" type="date" name="fecha" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="inputRecibo">Recibo</label>
-                                <div class="col-sm-4">
-                                    <input id="inputRecibo" class="form-control" type="text" name="recibo" placeholder="R-0000" required pattern="[R]{1}[-]{1}[0-9]{4}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" required pattern="[A-Z]{2}[0-9]{5}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-4">
-                                    <input class="btn bg-primary" type="submit" value="Guardar">
-                                </div>
-                            </div>
-                        </form>
-
-
-                    </div><!-- /.tab-pane -->
                     <div class="tab-pane active" id="padre">
                         <div class="col-sm-offset-1">
                             <h2>Ingreso de Padres</h2>
@@ -72,7 +47,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="inputPadre">Nombre Padre</label>
                                 <div class="col-sm-4">
-                                    <input id="inputPadre" class="form-control" type="text" name="nombreP" pattern="[a-zA-Z]{1,}" required>
+                                    <input id="inputPadre" class="form-control" type="text" name="nombreP" pattern="[a-zA-Z ]{1,}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -178,6 +153,12 @@
                                 <label class="control-label col-sm-3" for="inputSegApe">Segundo Apellido</label>
                                 <div class="col-sm-4">
                                     <input id="inputSegApe" class="form-control" type="text" name="segundo_apellido" pattern="[a-zA-Z]{1,}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="inputEmail">E-mail</label>
+                                <div class="col-sm-4">
+                                    <input id="inputEmail" class="form-control" type="email" name="email" required>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -1,8 +1,10 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Clase;
 use AppBundle\Entity\Detalleevaluacion;
+use AppBundle\Entity\Nivel;
 use AppBundle\Entity\Resultadoevaluacion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,9 +70,35 @@ class NotasController extends Controller{
     /**
      * @Route("/consultarnotas", name="consultarnotas")
      */
-    public function consultarNotas(){
-        return $this->render('AppBundle:notas:consultarNotas.html.twig');
+    public function consultarNotas(Request $request){
+        //return $this->render('AppBundle:notas:consultarNotas.html.twig');
+            /*$rep = $this->getDoctrine()->getRepository('AppBundle:Nivel');
+            $niv = $rep->findAll();
+            $mat = $this->getDoctrine()->getRepository('AppBundle:Matricula');
+            $ev = $this->getDoctrine()->getRepository('AppBundle:Evaluacion')->findAll();
+            if($request->isMethod('POST')){
+                $nivel = $request->get('snivel');
+                $horario = $request->get('sclase');
+                $al= $mat->prueba($nivel,$horario);
+
+
+            }
+            return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));*/
+        $niv = $this->getDoctrine()->getRepository('AppBundle:Nivel')->findAll();
+        if($request->isMethod('POST')){
+            $nivel = $request->get('snivel');
+            $horario = $request->get('sclase');
+            $al= $this->getDoctrine()->getRepository('AppBundle:Matricula')->prueba($nivel,$horario);
+            $alComparar=new Alumno();
+            $n=$this->getDoctrine()->getRepository('AppBundle:Nivel')->find($nivel);
+            $det=$this->getDoctrine()->getRepository('AppBundle:Detalleevaluacion')->findOneBy(array('nivelnivel'=>$n));
+            $res=$this->getDoctrine()->getRepository('AppBundle:Resultadoevaluacion')->findBy(array('detalleevaluaciondetalleevaluacion'=>$det));
+            return $this->render("AppBundle::notas.html.twig",array('alumnos'=>$res,'al'=>$alComparar,'niveles'=>''));
+        }
+        return $this->render("AppBundle::notas.html.twig",array('alumnos'=>'','al'=>'','niveles'=>$niv));
     }
+
+
 
     private function mensajeflash($m){
         $this->get('session')->getFlashBag()->add('mensaje',''.$m);

@@ -13,9 +13,8 @@
         <script src="{{ asset('bundles/app/js/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
     </head>
-    <div class="bs-example">
         <div class="container-fluid">
-            <h2>Ingreso por Colocacion</h2>
+            <h2>Matricula por Examen de Colocacion</h2>
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <script>
                     window.onload = function error(){
@@ -49,15 +48,17 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="form_Carnet">Carnet</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" required>
+                        <input class="form-control" type="search" id="form_Carnet" name="carnet" placeholder="BC11023" pattern="[A-Z]{2}[0-9]{5}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
                     <div class="col-sm-4">
                         <select id ="selectNivel"name="nivel">
-                            {% for item in niveles %}
-                                <option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>
+                            {% set i=0 %}
+                            {% for item in niveles.nivelnivel %}
+                                {% if i!=0 %}<option value="{{ item.idnivel }}">{{ item.nombrenivel}}</option>{% endif %}
+                                {% set i=i+1 %}
                             {% endfor %}
                         </select>
                     </div>
@@ -76,7 +77,6 @@
                 </div>
             </form>
         </div>
-    </div>
     <script>
         $('document').ready(
                 function(){

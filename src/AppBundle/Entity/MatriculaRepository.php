@@ -67,7 +67,16 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('activo',1 )
             ->getSingleScalarResult();
     }
-
+    public function verificarMatricula($carnet,$recibo)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT m FROM AppBundle:Matricula m  WHERE m.numerorecibo = :recibo OR  m.alumnoCarnetalumno = :carnet AND m.esactivo = :activo'
+        )
+            ->setParameter('carnet',$carnet )
+            ->setParameter('recibo',$recibo )
+            ->setParameter('activo',1 )
+            ->getResult();
+    }
     //FUNCION PARA OBTENER EL LISTADO DE ALUMNO INSCRITOS EN DIF. NIVELES Y CLASES
     public function listadoAlumnos($nivel, $horario){
         $em = $this->getEntityManager();
@@ -87,8 +96,6 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
              JOIN AppBundle:Clase d WITH d.nivelnivel=c
              WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();
     }
-
-
     public function prueba($nivel,$horario){
         $em = $this->getEntityManager();
         return $em->createQuery(

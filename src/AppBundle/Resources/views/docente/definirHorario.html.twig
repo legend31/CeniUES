@@ -1,0 +1,147 @@
+{% extends "::layoutbase.html.twig" %}
+
+{% block title %} Gestionar docentes {% endblock %}
+
+{% block principal %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Definir horario disponible para impartir clases</h3>
+                    </div><!-- /.box-header -->
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <form role="form" method="post" action="{{ path('definirH') }}">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-2 text-right">
+                                    <label>Buscar docente:</label>
+                                </div>
+                                <div class="col-md-3 input-group">
+                                    <input type="text" name="parB" class="form-control input-sm pull-right" id="carnetH" maxlength="7" placeholder="Carnet Docente" pattern="[a-zA-Z]{2}[0-9]{5}">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div><!-- /.col -->
+                            </div><!-- /.row -->
+                        </div>
+                    </form>
+                    {% endif %}
+                    {% if docente == 2 %}
+                        <div class="alert alert-warning alert-dismissable">
+                            <h4><i class="icon fa fa-warning"></i> No se encontro ning&uacute;n docente con el carnet ingresado.</h4>
+                        </div>
+                        <br>
+                    {% elseif docente == 3 %}
+                        <div class="alert alert-success alert-dismissable">
+                            <h4><i class="icon fa fa-check"></i> Se definio el horario correctamente.</h4>
+                        </div>
+                        <br>
+                    {% elseif docente == 4 %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <h4><i class="icon fa fa-ban"></i> Ocurrio un error al tratar de asignar horario.</h4>
+                        </div>
+                    {% endif %}
+                    {% if docente != 3 %}
+                    {% if is_granted('ROLE_ADMINISTRADOR') and docente != 2 %}
+                        <div class="box-header">
+                            {% if docente %}
+                                <h3 align="center"><small>Docente: </small><i>{{ docente }}</i></h3>
+                            {% endif %}
+                        </div>
+                    {% elseif is_granted('ROLE_DOCENTE') %}
+                        <div class="box-header">
+                            <h3 align="center"><small>Docente: </small><i>{{ app.user.username }}</i></h3>
+                        </div>
+                    {% endif %}
+                    {% if docente %}
+                    {% if docente != 2 %}
+                        <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('guardarH') }}">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="form_nombredocente" class="col-sm-3 control-label">Horario Matutino: </label>
+                                    <div class="calendar-time">
+                                        <select name="horS" class="hourselect">
+                                            <!--<option value="01">1</option><option value="02">2</option>
+                                            <option value="03">3</option><option value="04">4</option>
+                                            <option value="05">5</option>--><option value="06" selected="selected">06</option>
+                                            <option value="07">07</option><option value="08">08</option>
+                                            <option value="09">09</option><option value="10">10</option>
+                                            <option value="11">11</option><option value="12">12</option>
+                                        </select> :
+                                        <select name="minS" class="minuteselect">
+                                            <option value="00">00</option><option value="30">30</option>
+                                        </select>
+                                        <select name="apmS" class="ampmselect" disabled>
+                                            <option value="AM" selected="selected">AM</option><option value="PM">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_nombredocente" class="col-sm-3 control-label">Horario Vespertino: </label>
+                                    <div class="calendar-time">
+                                        <select name="hor2" class="hourselect">
+                                            <option value="01" selected="selected">01</option><option value="02">02</option>
+                                            <option value="03">03</option><option value="04">04</option>
+                                            <option value="05">05</option><!--<option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option>
+                                            <option value="09">9</option><option value="10">10</option>
+                                            <option value="11">11</option><option value="12">12</option>-->
+                                        </select> :
+                                        <select name="min2" class="minuteselect">
+                                            <option value="00">00</option><option value="30">30</option>
+                                        </select>
+                                        <select name="apm2" class="ampmselect" disabled>
+                                            <option value="AM">AM</option><option value="PM" selected="selected">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form_apellidodocente" class="col-sm-3 control-label">Dias disponibles: </label>
+                                    <div class="checkbox">
+                                        <div class="checkbox checkbox-inline">
+                                            <label><input name="sabD" value="Sabado" type="checkbox">Sabado</label>
+                                        </div>
+                                        <div class="checkbox checkbox-inline">
+                                            <label><input name="domD" value="Domingo" type="checkbox">Domingo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.box-body -->
+                            <div class="form-group">
+                                <div>
+                                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                                        <input type="text" name="crnt" id="crnt" value="{{ docente }}" readonly hidden>
+                                    {% elseif is_granted('ROLE_DOCENTE') %}
+                                        <input type="text" name="crnt" id="crnt" value="{{ app.user.username }}" readonly hidden>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
+                                <div class="form-group">
+                                    <div class="col-sm-offset-0 col-sm-2">
+                                        <button class="btn bg-green-gradient" id="validar" type="submit"><i class="fa fa-save"> Guardar</i></button>
+                                    </div>
+                                    <a class="btn btn-default bg-red-gradient" href="{% if is_granted('ROLE_ADMINISTRADOR') %}{{ path('principal') }}{% elseif is_granted('ROLE_DOCENTE') %}{{ path('dprincipal') }}{% endif %}">
+                                        <i class="fa fa-close"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block javascript2 %}
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+    <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/select2/select2.full.min.js") }}" type="text/javascript"></script>
+{% endblock %}

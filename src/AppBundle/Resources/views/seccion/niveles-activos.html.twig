@@ -1,0 +1,13 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-sm-3" for="selectNivel">Nivel</label>
+        <div class="col-sm-4">
+            <select id ="selectNivel"name="nivel">
+                {% for n in moduloActivo.nivelnivel %}
+                    <option value="{{n.idnivel}}">{{ n.nombrenivel}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+

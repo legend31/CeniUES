@@ -16,42 +16,72 @@
                 <h3 class="box-title">Datos personales</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" method="post" action="{{ path('insertarD') }}">
+            <form class="form-horizontal contact-form" role="form" method="post" action="{{ path('agregarD') }}">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="form_nombredocente">Nombre</label>
-                        <input type="text" class="form-control" id="form_nombredocente" name="ndoc" placeholder="Nombres del nuevo docente">
+                        <label for="form_nombredocente" class="col-sm-3 control-label">Nombre</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control letras" id="form_nombredocente" name="ndoc" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="form_apellidodocente"> Appellido </label>
-                        <input type="text" class="form-control" id="form_apellidodocente" name="adoc" placeholder="Apellidos del nuevo docente">
+                        <label for="form_apellidodocente" class="col-sm-3 control-label">Apellido</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control letras" id="form_apellidodocente" name="adoc" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="form_dui"> DUI </label>
-                        <input type="text" class="form-control" id="form_dui" name="ddoc" placeholder="Documento Unico de Identidad">
+                        <label for="form_dui" class="col-sm-3 control-label"> DUI </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="form_dui" placeholder="99999999-9" name="ddoc" maxlength=10 onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" pattern="[0-9]{8}[-]{1}[0-9]{1}" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="form_carnetdocente"> Carnet </label>
-                        <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="N&uacute;mero de carnet" maxlength=7>
+                        <label for="form_carnetdocente" class="col-sm-3 control-label"> Carnet </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="form_carnetdocente" name="cdoc" placeholder="AA00000" maxlength=7 pattern="[A-Z]{2}[0-9]{5}" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="form_direcciondocente"> Direcci&oacute;n de residencia </label>
-                        <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="Direcci&oacute;n de residencia">
+                        <label for="form_fechanacimiento" class="col-sm-3 control-label"> Fecha de Nacimiento</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="form_fechanacimiento" name="fdoc" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="form_direcciondocente"> N&uacute;mero telef&oacute;nico </label>
-                        <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" placeholder="N&uacute;mero de telef&oacute;no">
+                        <label for="form_direcciondocente" class="col-sm-3 control-label"> Direcci&oacute;n de residencia </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="form_direcciondocente" name="rdoc" placeholder="" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_direcciondocente" class="col-sm-3 control-label"> N&uacute;mero telef&oacute;nico </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="form_telefonodocente" name="tdoc" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="2222-2222" pattern="[0-9]{4}[-]{1}[0-9]{4}" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_direcciondocente" class="col-sm-3 control-label"> Correo electr&oacute;nico </label>
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" id="form_email" name="edoc" pattern="[0-9a-zA-z]{4,20}[@]{1}[0-9a-zA-Z]{4,10}[.]{1}[0-9a-zA-Z]{3}" required>
+                            <span class="form-control-feedback"></span>
+                        </div>
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
                     <!-- <button type="submit" class="btn btn-primary">Guadar</button> -->
                     <div class="form-group">
-                        <div class="col-sm-offset-0 col-sm-4">
-                            <button class="btn bg-green-gradient" type="submit"><i class="fa fa-save"> Guardar</i></button>
-                            <button class="btn bg-primary"><i class="fa fa-trash"> Limpiar</i></button>
+                        <div class="col-sm-offset-0 col-sm-2">
+                            <button class="btn bg-green-gradient" id="validar" type="submit"><i class="fa fa-save"> Guardar</i></button>
                         </div>
-                        <a class="btn btn-default bg-red-gradient pull-right" href="{{ path('dhome') }}">
+                        <a class="btn btn-default bg-red-gradient" href="{{ path('dhome') }}">
                             <i class="fa fa-close"></i> Cancelar
                         </a>
                     </div>
@@ -60,4 +90,33 @@
         </div><!-- /.box -->
     </div>
     </section>
+
+    {% block javascript2 %}
+        <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+        <script>
+            $(".letras").keypress(function (key) {
+                window.console.log(key.charCode)
+                if ((key.charCode < 97 || key.charCode > 122)//letras mayusculas
+                        && (key.charCode < 65 || key.charCode > 90) //letras minusculas
+                        && (key.charCode != 45) //retroceso
+                        && (key.charCode != 241) //ñ
+                        && (key.charCode != 209) //Ñ
+                        && (key.charCode != 32) //espacio
+                        && (key.charCode != 225) //á
+                        && (key.charCode != 233) //é
+                        && (key.charCode != 237) //í
+                        && (key.charCode != 243) //ó
+                        && (key.charCode != 250) //ú
+                        && (key.charCode != 193) //Á
+                        && (key.charCode != 201) //É
+                        && (key.charCode != 205) //Í
+                        && (key.charCode != 211) //Ó
+                        && (key.charCode != 218) //Ú
+                )
+                    return false;
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
