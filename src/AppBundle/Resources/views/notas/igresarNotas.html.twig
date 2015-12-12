@@ -52,7 +52,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <button class="btn btn-info" type="submit">Buscar</button>
+                                        <button class="btn btn-info" type="submit" id="buscar" name="buscar">Buscar</button>
 
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                     <td>{{ resultado.alumnoCarnetalumno.primernombrealumno }} {{ resultado.alumnoCarnetalumno.primerapellidoalumno }}</td>
                                     {#recorro de nuevo para obtener las notas#}
                                     {% for resultado in alumnos %}
-                                        {% if resultado.alumnoCarnetalumno==d %}<td id="tdnota"><input value="{{ resultado.nota }}"><input name="{{ resultado.alumnoCarnetalumno.carnetalumno }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{ resultado.evaluacionevaluacion.idevaluacion }}" hidden></td>{% endif %}
+                                        {% if resultado.alumnoCarnetalumno==d %}<td id="tdnota"><input name="inpnota" value="{{ resultado.nota }}"><input id="input" name="{{ resultado.alumnoCarnetalumno.carnetalumno }}-{{ resultado.detalleevaluaciondetalleevaluacion.iddetalleevaluacion }}-{{ resultado.evaluacionevaluacion.idevaluacion }}" hidden></td>{% endif %}
                                     {% endfor %}
                                 </tr>
                             {% endif %}
@@ -107,21 +107,17 @@
                     </table>
                 </div>
                 <!--Finaliza Cuerpo de tabla-->
-            </div>
-                <form role="form" method="POST" action="">
-                    <div class="box-body">
-                        <div class="form-group col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <button class="btn btn-success" type="submit">Guardar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="box-footer">
+                    <!--<form method="POST" action="{{ path('ingresarnotas') }}">-->
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary" id="guardar" name="guardar" onclick="registrarnota()">Guardar</button>
+                        <button type="submit" class="btn btn-danger">Cancelar</button>
                     </div>
-                </form>
+                    <!-- </form> -->
+                </div>
             </div>
+        </div>
+
         {% endif %}
     </section>
 
@@ -156,6 +152,43 @@
                 }
             });
         });
+
+
+        function registrarnota(){
+            var arreglo =[];
+            var colum = $('#tdnota');
+
+             colum.each(function(){
+
+                 var nota = $(this).find("input[name*='inpnota']").val(),
+                     datos = $(this).find("input[id*='input']").attr('name');
+
+                 arr = {};
+
+                 if(nota!==null){
+                    arr["id"] = datos;
+                     arr["dato"] = nota;
+                     arreglo.push(arr);
+                 }
+             });
+                 console.log(arreglo);
+
+                 var INFO = new FormData();
+                 var aInfo = JSON.stringify(arreglo);
+
+                 INFO.append('data',aInfo);
+
+             $.ajax({
+                type: "POST",
+                url: '{{ path("regisnota") }}',
+                data: INFO,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert(response.mensaje);
+                }
+            });
+        }
 
     </script>
 

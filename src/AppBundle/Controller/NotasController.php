@@ -101,6 +101,21 @@ class NotasController extends Controller{
         return $this->render("AppBundle:notas:igresarNotas.html.twig",array("niveles"=>$niv));
     }
 
+    /**
+     * @Route("/regisnota", name="regisnota")
+     */
+    public function regisnotaAction(Request $request){
+        if($request->isMethod("POST")){
+            $var = $request->request->keys();
+            $arr = explode("-",$var);
+
+            var_dump($arr);
+            return new JsonResponse(
+                array("mensaje" =>'Funciona')
+            );
+        }
+    }
+
 
     //FUNCION ENCARGADA DE AUTOCOMPLETAR UN SELECT EN BASE A OTRO
     /**
