@@ -156,9 +156,9 @@ class NotasController extends DSIController{
 
 
 
-    private function mensajeflash($m){
+    /*private function mensajeflash($m){
         $this->get('session')->getFlashBag()->add('mensaje',''.$m);
-    }
+    }*/
     /**
      * @Route("/pruebaf", name="pruebaf")
      */
