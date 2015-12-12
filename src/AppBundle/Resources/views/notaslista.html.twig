@@ -5,6 +5,7 @@
         <script src="{{ asset("libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js") }}" type="text/javascript"></script>
     </head>
     <section class="content">
+        <div class="row">
         {% for flashMessage in app.session.flashbag.get('error') %}
             <script>
                 window.onload = function error(){
@@ -21,8 +22,11 @@
                 }
             </script>
         {% endfor %}
+        </div>
+        <div class="row">
         <form method="post" class="contact_form" action="{{ path('ingresarnotas') }}">
             <div class="box-body">
+                <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label" for="snivel">Niveles</label>
@@ -44,10 +48,11 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                            <div class="form-group">
-                                <input class="btn bg-primary" name="con" type="submit" value="Consultar">
-                            </div>
+                        <div class="form-group">
+                            <input class="btn bg-primary" name="con" type="submit" value="Consultar">
                         </div>
+                    </div>
+                </div>
             </div>
             {% if alumnos is defined%}
                 <div class="col-xs-12">
@@ -98,10 +103,11 @@
                         </div>
                         <!--Finaliza Cuerpo de tabla-->
                     </div>
-                </div>
+            </div>
             {% endif %}
            {% if alumnos %} <input class="btn bg-primary pull-right" name="mod" type="submit" value="Modificar">{% endif %}
         </form>
+        </div>
     </section>
 
     <script>
