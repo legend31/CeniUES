@@ -27,11 +27,17 @@ class EvaluacionController extends Controller
 
         if(!$evaluaciones)
         {
-            throw $this->createNotFoundException('No se encontro ninguna evaluacion');
+            return $this->render('AppBundle:evaluacion:evaluacionPrincipal.html.twig', array('evaluaciones'=>null));
         }
+        $ponder = 0;
+        foreach($evaluaciones as $Objeto => $ponder) {
+            echo $Objeto . " contiene ";
+            var_dump($ponder);
+        }
+        //var_dump($ponder);
 
-        return $this->render('AppBundle:evaluacion:evalPrincipal.html.twig');
-        //return $this->render('AppBundle:docente:gestionarDocente.html.twig');//return $this->render('AppBundle:docente:pdoc.html.twig');
+        //return $this->render('AppBundle:evaluacion:evalPrincipal.html.twig');
+        return $this->render('AppBundle:evaluacion:evaluacionPrincipal.html.twig', array('evaluaciones'=>$evaluaciones));
     }
 
     /**
