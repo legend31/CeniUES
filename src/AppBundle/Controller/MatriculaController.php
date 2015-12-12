@@ -59,38 +59,36 @@ class MatriculaController extends DSIController
     public function matriculaNuevoAction(Request $request){
         $em=$this->getDoctrine()->getManager();
         //Formulario
+        $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+        $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
         if($request->isMethod("POST"))
         {
             $mat=$em->getRepository('AppBundle:Matricula')->verificarMatricula($request->get('carnet'),$request->get('recibo'));
-            $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
+
             $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
             //Validando q haya un modulo o que el alumno no esta ya matriculado
-            if(!$modulo){
-                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
-                return $this->redirectToRoute('matnuevo');
-            }
-            elseif($mat){
+            if($mat){
                 $this->MensajeFlash("error","Alumno/Recibo ya han sido matriculados");
                 return $this->redirectToRoute('matnuevo');
             }
             else {
                 $mat = new Matricula();
+                $eva=$em->getRepository('AppBundle:Evaluacion')->findAll();
                 //Buzo con el formato de la fecha
                 $mat->setFechamatricula(new \DateTime($request->get("fecha"), new \DateTimeZone("America/El_Salvador")));
                 $mat->setNumerorecibo($request->get('recibo'));
                 $mat->setEsactivo(1);
-                $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find(1));
+                $mat->setNivelnivel($em->getRepository('AppBundle:Nivel')->find($modulo->getNivelnivel()[0]->getIdnivel()));
                 $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
                 //Perisistencia
                 $em->persist($mat);
-                $em->flush();
+                $this->crearRecordNuevo($em,$eva,$request,$modulo);
                 $this->MensajeFlash('exito',"Alumno ha sido matriculado");
+                $em->flush();
                 return $this->redirectToRoute('matnuevo');
             }
-            var_dump($modulo);
-            new Response();
         }
-        return $this->render('AppBundle:formularios:matricula-nvo.html.twig');
+        return $this->render('AppBundle:formularios:matricula-nvo.html.twig',array('modulo'=>$modulo));
     }
     /**
      * @Route("/matriculaantiguo",name="matantiguo")
@@ -106,11 +104,7 @@ class MatriculaController extends DSIController
             $fechaActual=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
             $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
             //Validando q haya un modulo o que el alumno no esta ya matriculado
-            if(!$modulo){
-                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
-                return $this->redirectToRoute('matantiguo');
-            }
-            elseif($mat){
+            if($mat){
                 $this->MensajeFlash('error',"Alumno/Recibo ya matriculado en modulo!");
                 return $this->redirectToRoute('matantiguo');
             }
@@ -121,10 +115,12 @@ class MatriculaController extends DSIController
             else{
                 $nivel=$em->getRepository('AppBundle:Nivel')->find($request->get('nivel'));
                 $n=explode("Nivel ",$nivel->getNombrenivel());
+                $eva=$em->getRepository('AppBundle:Evaluacion')->findAll();
                 //Correcion si ya paso el nivel 1
-                if($n[1]>1)
-                    $n[1]=$n[1]+1;
-                if($n[1]==$this->validarMatricula()){
+                /*if($n[1]>1)
+                    $n[1]=$n[1]+1;*/
+                $max=$this->validarMatricula($request->get('carnet'));
+                if($n[1]==$max+1){
                     $mat=new Matricula();
                     //Buzo con el formato de la fecha
                     $mat->setFechamatricula(new \DateTime($request->get("fecha")));
@@ -134,12 +130,16 @@ class MatriculaController extends DSIController
                     $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
                     //Perisistencia
                     $em->persist($mat);
-                    $em->flush();
+                    $this->crearRecordIndividual($em,$eva,$request,$modulo);
                     $this->MensajeFlash('exito',"Alumno matriculado exitosamente!");
+                    $em->flush();
                     return $this->redirectToRoute('matantiguo');
                 }
-                $this->MensajeFlash('error',"Por favor Matricular este Alumno en el Nivel ".$n[1]);
-                return $this->redirectToRoute('matantiguo');
+                else{
+                $this->MensajeFlash('error',"Por favor Matricular este Alumno en el Nivel ".($max+1));
+                return $this->redirectToRoute('matantiguo');}
+                //var_dump($this->validarMatricula($request->get('carnet')));
+                //return new Response();
             }
         }
         return $this->render('AppBundle:formularios:matricula.html.twig',array('niveles'=>$nivel));
@@ -156,14 +156,10 @@ class MatriculaController extends DSIController
         if($request->isMethod("POST")){
             $alum=$em->getRepository('AppBundle:Alumno')->find($request->get('carnet'));
             $mat=$em->getRepository('AppBundle:Matricula')->findOneBy(array('alumnoCarnetalumno'=>$alum));
-            $fechaActual=new \DateTime('now');
-            $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
+            //$fechaActual=new \DateTime('now');
+            //$modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechaActual);
             //Validando q haya un modulo o que el alumno no esta ya matriculado
-            if(!$modulo){
-                $this->MensajeFlash('error',"Aun no se ha Configurado un Nuevo Modulo!");
-                return $this->redirectToRoute('examencolocacion');
-            }
-            elseif($mat){
+            if($mat){
                 $this->MensajeFlash('error',"Alumno ya ha cursado niveles en CENIUES");
                 return $this->redirectToRoute('examencolocacion');
             }
@@ -181,10 +177,10 @@ class MatriculaController extends DSIController
                 $mat->setAlumnoCarnetalumno($em->getRepository('AppBundle:Alumno')->find($request->get('carnet')));
                 //Perisistencia
                 $em->persist($mat);
-                $em->flush();
                 //crear el record de estudiante
-                $this->crearRecord($em,$eva,$request,$modulo);
+                $this->crearRecord($em,$eva,$request,$niveles);
                 $this->MensajeFlash('exito',"Matriculacion Exitosa");
+                $em->flush();
                 return $this->redirectToRoute('examencolocacion');
             }
         }
@@ -246,13 +242,13 @@ class MatriculaController extends DSIController
         echo "La cantidad de días entre el ".$fecha." y hoy es <b>".$diferencia_dias."</b>";
         return new Response();
     }
-    public function validarMatricula(){
+    public function validarMatricula($carnet){
         $max=1;
         $record=$this->getDoctrine()->getRepository('AppBundle:Record')->findAll();
         foreach($record as $r){
             //Obtengo el record
             $rA=$r->getRecordalumnorecordalumno();
-            if($rA->getAlumnoCarnetalumno()->getCarnetalumno()=='BC11023'&&$rA->getNotafinal()>=7){
+            if($rA->getAlumnoCarnetalumno()->getCarnetalumno()==$carnet&&$rA->getNotafinal()>=7){
                 //Divido el Nivel para saber cual es
                 $n=explode("Nivel ",$r->getNivelnivel()->getNombrenivel());
                 //Conoaco el max nivel

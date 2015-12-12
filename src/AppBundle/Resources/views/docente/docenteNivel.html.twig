@@ -64,11 +64,10 @@
                                     </tr>
                                 {% endif %}
                             {% endfor %}
-                            {% for valor in 0..100 %}
                             {% if form %}
                                     <tr>
-                                        <td>{{ form.valor.6.6 }}</td>
-                                        <td>{{ form.i.6.6 }}</td>
+                                        <td>{{ form.0.6.6 }}</td>
+                                        <td>{{ form.0.6.6 }}</td>
                                         <td><i>No definido</i></td>
                                         <td><i>No definido</i></td>
                                         <td><i>No definido</i></td>
@@ -82,7 +81,6 @@
                                         </td>
                                     </tr>
                             {% endif %}
-                            {% endfor %}
                             </tbody>
                         </table>
                     </div><!-- /.box-body -->

@@ -13,7 +13,7 @@
 
                         <!--Inicia Cabecera de tabla-->
                         <div class="box-header">
-                            {% if activos is not defined%}<h3 class="box-title">Niveles Inscitos Por Alumno</h3>
+                            {% if activos is not defined%}<h3 class="box-title">Niveles Inscritos Por Alumno</h3>
                             {% else %}<h3 class="box-title">Alumnos Activos en CENIUES</h3>
                             {% endif %}
                         </div>
@@ -36,7 +36,7 @@
                                     <td>{{ mat.alumnoCarnetalumno.primernombrealumno }} {{ mat.alumnoCarnetalumno.segundonombrealumno}}</td>
                                     <td>{{ mat.alumnoCarnetalumno.primerapellidoalumno }} {{ mat.alumnoCarnetalumno.segundoapellidoalumno }}</td>
                                     <td>{{ mat.alumnoCarnetalumno.edad }}</td>
-                                    <td>{{ mat.nivelnivel.Idnivel}}</td>
+                                    <td>{{ mat.nivelnivel.nombrenivel}}</td>
                                     <td>{{ mat.alumnoCarnetalumno.responsableresponsable.Nombreresponsable }}</td>
                                     <td>
                                         {% if mat and mat.esactivo == 1 %}

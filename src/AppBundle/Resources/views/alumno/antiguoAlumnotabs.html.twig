@@ -14,24 +14,25 @@
         <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
     </head>
         <div class="container-fluid">
-            <h2>Matricula por Examen de Colocacion</h2>
-            {% for flashMessage in app.session.flashbag.get('error') %}
+            {% if niveles %}
+                <h2>Matricula por Examen de Colocacion</h2>
+                {% for flashMessage in app.session.flashbag.get('error') %}
                 <script>
                     window.onload = function error(){
                         alertify.error("{{ flashMessage }}.");
                         return false;
                     }
                 </script>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('exito') %}
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
                 <script>
                     window.onload = function notificacion(){
                         alertify.log("{{ flashMessage }}.");
                         return false;
                     }
                 </script>
-            {% endfor %}
-            <br>
+                {% endfor %}
+                <br>
             <form class="form-horizontal contact_form" method="post" action="{{ path('examencolocacion') }}">
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="inputFecha">Fecha</label>
@@ -66,7 +67,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="inputNota">Calificacion</label>
                     <div class="col-sm-4">
-                        <input id="inputNota" class="form-control" type="number" name="nota" step="0.01" required>
+                        <input id="inputNota" class="form-control" type="number" name="nota" step="0.01" min="0" max="10" required>
                     </div>
                 </div>
                 <input type="hidden" name="origen" value="colocacion">
@@ -76,6 +77,9 @@
                     </div>
                 </div>
             </form>
+                {% else %}<h2>No es Aun Periodo de Inscripcion!</h2>
+            {% endif %}
+
         </div>
     <script>
         $('document').ready(
