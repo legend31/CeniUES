@@ -13,7 +13,6 @@
         <script src="{{ asset('bundles/app/js/jquery-2.1.4.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/app/js/jquery-ui.min.js') }}" type="text/javascript"></script>
     </head>
-    <div class="bs-example">
         <div class="container-fluid">
             <h2>Matricula por Examen de Colocacion</h2>
             {% for flashMessage in app.session.flashbag.get('error') %}
@@ -78,7 +77,6 @@
                 </div>
             </form>
         </div>
-    </div>
     <script>
         $('document').ready(
                 function(){

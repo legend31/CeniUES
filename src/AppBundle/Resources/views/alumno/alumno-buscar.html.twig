@@ -1,6 +1,6 @@
 {% extends '::layoutbase.html.twig' %}
 {% block title %}
-    Modificar Alumno
+    Gestionar Alumnos
 {% endblock %}
 {% block principal %}
     <head>
@@ -10,18 +10,25 @@
     </head>
     <br>
     <div class="container">
-        <h3>Gestion de informacion de Alumno</h3>
+        <h3>Gestion de informacion de Alumnos</h3>
         {# Mensaje Flash  #}
         <div class="row">
             <div class="col-xs-6">
-                {% for flashMessage in app.session.flashbag.get('mensaje') %}
-                    <br>
-                    <div class="alert alert-success fade in">
-                    <span class="close" data-dismiss="alert">
-                        &times;
-                    </span>
-                        {{ flashMessage }}
-                    </div>
+                {% for flashMessage in app.session.flashbag.get('fracaso') %}
+                    <script>
+                        window.onload = function error(){
+                            alertify.error("{{ flashMessage }}.");
+                            return false;
+                        }
+                    </script>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('exito') %}
+                    <script>
+                        window.onload = function notificacion(){
+                            alertify.log("{{ flashMessage }}.");
+                            return false;
+                        }
+                    </script>
                 {% endfor %}
             </div>
         </div>
@@ -38,7 +45,6 @@
             </form>
             <br>
         </div>
-        {% if al %}
         <section class="content">
             <div class="row">
                 <div class="col-sm-10">
@@ -46,7 +52,8 @@
 
                         <!--Inicia Cabecera de tabla-->
                         <div class="box-header">
-                            <h3 class="box-title">Informacion de Alumno</h3>
+                            {% if al %}<h3 class="box-title">Informacion de Alumnos</h3>{% endif %}
+                            {% if alu %}<h3 class="box-title">Informacion de Alumno</h3>{% endif %}
                         </div>
                         <!--Finaliza Cabecera de tabla-->
 
@@ -62,30 +69,53 @@
                                 <th>Responsable</th>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="{{ path('alumUp',{'id':al.carnetalumno}) }}" title="Modificar">
-                                            {{ al.carnetalumno }}
-                                        </a>
-                                    </td>
-                                    <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
-                                    <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
-                                    <td>{{ al.edad }}</td>
-                                    <td>
-                                        <a href="{{ path('padreUp',{'id':al.padrepadre.idpadre}) }}" title="Modificar">
-                                            {{ al.padrepadre.nombrepadre }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('responUp',{'id':al.responsableresponsable.idresponsable}) }}" title="Modificar">
-                                            {{ al.responsableresponsable.nombreresponsable }}
-                                        </a>
-                                    </td>
-                                </tr>
+                                {% for al in al%}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('alumUp',{'id':al.carnetalumno}) }}" title="Modificar">
+                                                {{ al.carnetalumno }}
+                                            </a>
+                                        </td>
+                                        <td>{{ al.primernombrealumno }} {{ al.segundonombrealumno }}</td>
+                                        <td>{{ al.primerapellidoalumno }} {{ al.segundoapellidoalumno }}</td>
+                                        <td>{{ al.edad }}</td>
+                                        <td>
+                                            <a href="{{ path('padreUp',{'id':al.padrepadre.idpadre}) }}" title="Modificar">
+                                                {{ al.padrepadre.nombrepadre }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('responUp',{'id':al.responsableresponsable.idresponsable}) }}" title="Modificar">
+                                                {{ al.responsableresponsable.nombreresponsable }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {%  if alu %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('alumUp',{'id':alu.carnetalumno}) }}" title="Modificar">
+                                                {{ alu.carnetalumno }}
+                                            </a>
+                                        </td>
+                                        <td>{{ alu.primernombrealumno }} {{ alu.segundonombrealumno }}</td>
+                                        <td>{{ alu.primerapellidoalumno }} {{ alu.segundoapellidoalumno }}</td>
+                                        <td>{{ alu.edad }}</td>
+                                        <td>
+                                            <a href="{{ path('padreUp',{'id':alu.padrepadre.idpadre}) }}" title="Modificar">
+                                                {{ alu.padrepadre.nombrepadre }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('responUp',{'id':alu.responsableresponsable.idresponsable}) }}" title="Modificar">
+                                                {{ alu.responsableresponsable.nombreresponsable }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
                                 </tbody>
                             </table>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>

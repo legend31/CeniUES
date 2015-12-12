@@ -60,7 +60,7 @@ class DSIController extends Controller
     }
     //Obtiene los niveles del modulo activo
     protected function obtenerNivelesActivos(){
-        $fechahoy=new \DateTime('now');
+        $fechahoy=new \DateTime('now',new \DateTimeZone('America/El_Salvador'));
         //Para jalar el modulo activo
         $modulo=$this->getDoctrine()->getRepository('AppBundle:Modulo')->verificarModulo($fechahoy);
         return $modulo;

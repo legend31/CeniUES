@@ -10,6 +10,7 @@
     </head>
     <br>
     <div class="container">
+        {% if niveles %}
         <h2>Matricula Antiguo Ingreso</h2>
         <br>
         {% for flashMessage in app.session.flashbag.get('exito') %}
@@ -66,6 +67,9 @@
                 <input class="btn bg-primary" type="submit" value="Enviar">
             </div>
         </form>
+        {% else %}
+           <h3>No es Periodo de Inscripcion!!<h3>
+        {% endif %}
     </div>
     <script>
         $('document').ready(

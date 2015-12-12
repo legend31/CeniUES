@@ -195,7 +195,7 @@ class RecordController extends DSIController
         if($nivel==0)
             $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en CENIUES ');
         else
-            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados en Nivel '.$nivel);
+            $ob->title->text('Porcentaje de Alumnos Aprobados/Reprobados ');
         //Logica
         $em=$this->getDoctrine()->getManager();
         if($nivel==0)

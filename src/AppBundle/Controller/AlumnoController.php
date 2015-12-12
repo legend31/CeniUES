@@ -2,12 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Clases\DSIController;
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class AlumnoController extends Controller
+class AlumnoController extends DSIController
 {
     /**
      * @Route("/nuevoAlumMenu",name="antiguo")
@@ -20,9 +23,9 @@ class AlumnoController extends Controller
      */
     public function alumnoInsertAction(Request $request){
         $em = $this->getDoctrine()->getEntityManager();
-        $duplicado=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
         //Validando el envio del formulario
         if($request->isMethod("POST")) {
+            $duplicado=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
             if($duplicado){
                 $this->MensajeFlash('fracaso','Alumno ya esta registrado en CENIUES');
                 return $this->redirectToRoute('antiguo');
@@ -53,7 +56,7 @@ class AlumnoController extends Controller
                 $user->setNomusuario($request->get("carnet"));
                 $user->setEmailusuario($request->get("email"));
                 $user->setIsactive(1);
-                //Cifra la contraseña
+                //Cifra la contraseï¿½a
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $password = $encoder->encodePassword($request->get("carnet"), $user->getSalt());
@@ -66,7 +69,7 @@ class AlumnoController extends Controller
             $this->MensajeFlash('exito','Alumno Ingresado exitosamente!');
             return $this->redirectToRoute('antiguo');
         }
-        return $this->render('AppBundle:formularios:alumno-inline.html.twig');
+        return $this->redirectToRoute('antiguo');
 
     }
 
@@ -128,12 +131,12 @@ class AlumnoController extends Controller
      */
     public function alumnoBuscarAction(Request $request){
         $em=$this->getDoctrine()->getEntityManager();
+        $alumno=$em->getRepository('AppBundle:Alumno')->findAll();
         if($request->isMethod("POST")){
-            $alumno=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
-            return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>$alumno));
-
+            $al=$em->getRepository('AppBundle:Alumno')->find($request->get("carnet"));
+            return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>'','alu'=>$al));
         }
-        return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>''));
+        return $this->render('AppBundle:alumno:alumno-buscar.html.twig',array('al'=>$alumno,'alu'=>''));
     }
     /**
      * @Route("/padreUpdate/{id}",name="padreUp")
@@ -151,7 +154,7 @@ class AlumnoController extends Controller
 
             $em->flush($p);
             //Mensaje Flash
-            $this->MensajeFlash('Modificacion exitosa');
+            $this->MensajeFlash('exito','Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:padre-mod.html.twig',array('padre'=>$p,'id'=>$id));
@@ -190,15 +193,9 @@ class AlumnoController extends Controller
 
             $em->flush();
             //Mensaje Flash
-            $this->MensajeFlash('Modificacion exitosa');
+            $this->MensajeFlash('exito','Modificacion exitosa');
             return $this->redirectToRoute('alBuscar');
         }
         return $this->render('AppBundle:alumno:alumno-mod.html.twig',array('alumno'=>$al,'id'=>$id));
-    }
-    private function MensajeFlash($m){
-        $this->get('session')->getFlashBag()->add(
-            'mensaje',
-            ''.$m
-        );
     }
 }

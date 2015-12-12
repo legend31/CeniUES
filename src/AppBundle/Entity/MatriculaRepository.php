@@ -77,4 +77,23 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('activo',1 )
             ->getResult();
     }
+    //FUNCION PARA OBTENER EL LISTADO DE ALUMNO INSCRITOS EN DIF. NIVELES Y CLASES
+    public function listadoAlumnos($nivel, $horario){
+        $em = $this->getEntityManager();
+        /*return $em->createQuery(
+            'SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(b.primernombrealumno," "),b.segundonombrealumno)," "),b.primerapellidoalumno)," "),b.segundoapellidoalumno)AS nombre
+             FROM AppBundle:Matricula a
+             INNER JOIN a.alumnoCarnetalumno b
+             INNER JOIN a.nivelnivel c
+             INNER JOIN AppBundle:Clase d WITH d.nivelnivel c
+             WHERE c.nombrenivel = :nivel AND d.horario = :horario')->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();*/
+        return $em->createQuery(
+            "SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(b.primernombrealumno,' '),b.segundonombrealumno),' '),b.primerapellidoalumno),' '),b.segundoapellidoalumno) AS nombre,
+             b.carnetalumno
+             FROM AppBundle:Matricula a
+             JOIN a.alumnoCarnetalumno b
+             JOIN a.nivelnivel c
+             JOIN AppBundle:Clase d WITH d.nivelnivel=c
+             WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();
+    }
 }
