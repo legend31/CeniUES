@@ -25,14 +25,14 @@
                         <h3 class="box-title">Administrar Notas</h3>
                     </div>
 
-                    <form role="form">
+                    <form role="form" method="POST" action="{{ path("ingresarnotas") }}">
                         <div class="box-body">
                             <div class="form-group col-sm-12">
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
+
                                         <label>Nivel</label>
-                                        <select class="form-control" id="snivel">
+                                        <select class="form-control" id="snivel" name="snivel">
                                             {% for nivel in niveles %}
                                                 <option value="{{ nivel.idnivel }}">{{ nivel.nombrenivel }}</option>
                                             {% endfor %}
@@ -44,7 +44,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Clase</label>
-                                        <select class="form-control" id="sclase">
+                                        <select class="form-control" id="sclase" name="sclase">
 
                                         </select>
                                     </div>
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <button class="btn btn-info"><a href="{{ path("desplegarnotas") }}"></a>Buscar</button>
+                                            <button class="btn btn-info" type="submit">Buscar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -60,12 +60,13 @@
                         </div>
                     </form>
 
+                    {% if alumnos is defined%}
                     <div class="col-xs-12">
                         <div class="box">
 
                             <!--Inicia Cabecera de tabla-->
                             <div class="box-header">
-                                <h3 class="box-title">Listado de Notas para el Nivel 1 Prueba</h3>
+                                <h3 class="box-title">Listado de Notas de Alumnos CENIUES</h3>
                             </div>
                             <!--Finaliza Cabecera de tabla-->
 
@@ -73,27 +74,31 @@
                             <div class="box-body table-responsive">
                                 <table class="table table-bordered table-hover dataTable">
                                     <thead>
-                                    <th>No</th>
+                                    <th>CARNET</th>
                                     <th>ESTUDIANTE</th>
-                                    <th>EV.1</th>
-                                    <th>EV.2</th>
+                                    {% for e in evaluacion %}
+                                    <th>{{ e.nombreevaluacion }}</th>
+                                    <!--<th>EV.2</th>
                                     <th>EV.3</th>
                                     <th>EV.4</th>
-                                    <th>EV.5</th>
+                                    <th>EV.5</th>-->
+                                    {% endfor %}
                                     <td>NOTA FINAL</td>
 
                                     </thead>
                                     <tbody>
-
+                                    {% for alumno in alumnos %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>Carlos Lopez</td>
-                                        <td><div contenteditable="true">6.00</div></td>
-                                        <td><div contenteditable="true">9.00</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
-                                        <td><div contenteditable="true">8.50</div></td>
-                                        <td><div contenteditable="true">7.00</div></td>
+                                        <td>{{ alumno.carnetalumno }}</td>
+                                        <td>{{ alumno.nombre }}</td>
+                                        {% for notaal in notas %}
+                                            {#{% if nota.nota == null %}
+                                            {% set nota = notaal|merge({'nota':'0'}) %}#}
+                                        <td><div contenteditable="true">{{ notaal.nota }}</div></td>
+                                        {#{% endif %}#}
+                                        {% endfor %}
                                     </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
@@ -101,6 +106,7 @@
                             <!--Finaliza Cuerpo de tabla-->
                         </div>
                     </div>
+                    {% endif %}
 
 
                     <div class="box-footer">
@@ -126,7 +132,7 @@
                         idniv : $(this).val()
                     };
 
-                    $.post("{{ path('ingresarnotas') }}",datos,function(response){
+                    $.post("{{ path('js') }}",datos,function(response){
 
                         var $comboclase = $('#sclase');
 
@@ -134,6 +140,8 @@
 
                         $.each(response,function(i,val){
                             $comboclase.append("<option>"+val+"</option>");
+                            /*var hora = $('#sclase').val();
+                            alert(hora);*/
                         });
                     },'json');
                 }else{
@@ -145,4 +153,5 @@
             });
         });
     </script>
+
 {% endblock %}

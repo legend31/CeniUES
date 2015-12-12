@@ -14,10 +14,15 @@ class ResultadoevaluacionRepository extends EntityRepository{
         return $em->createQuery();
     }
 
-    public function getsalumnonivel($niv, $horario){
+    public function getresevaluaciones($carnet){
         $em = $this->getEntityManager();
-        return $em->createQuery();
+        return $em->createQuery(
+            'SELECT b.nombreevaluacion, a.nota FROM AppBundle:Resultadoevaluacion a
+             JOIN a.evaluacionevaluacion b
+             WHERE a.alumnoCarnetalumno = :carnet')
+            ->setParameter('carnet',$carnet)->getResult();
     }
+
 }
 
 ?>

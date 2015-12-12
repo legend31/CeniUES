@@ -1,0 +1,59 @@
+{% extends "::layoutbase.html.twig" %}
+ {% block principal %}
+     <section class="content">
+         <div class="row">
+             <div class="col-xs-6">
+                 {% for flashMessage in app.session.flashbag.get('mensaje') %}
+                     <br>
+                     <div class="alert alert-success fade in">
+                        <span class="close" data-dismiss="alert">
+                            &times;
+                        </span>
+                         {{ flashMessage }}
+                     </div>
+                 {% endfor %}
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-xs-12">
+                 <div class="box box-primary">
+                     <div class="box-header with-border">
+                         <h3 class="box-title">Actualizar Nivel</h3>
+                     </div>
+                     <form role="form" method="POST" action="{{ path('updatenivel',{'id':id}) }}">
+                         <div class="box-body">
+
+                             <div class="form-group col-sm-12">
+                                 <label>Nombre de Nivel</label>
+                                 <input id="nombrenivel" name="nombrenivel" type="text" class="form-control" value="{{ nivel.nombrenivel }}"  required>
+                             </div>
+                             <br>
+                             <div class="form-group col-sm-12">
+                                 <label>Fecha Inicio</label>
+                                 <input id="fini" name="fini" type="text" class="form-control" value="{{ nivel.fechainicio | date('Y-m-d') }}" required>
+                             </div>
+                             <br>
+                             <div class="form-group col-sm-12">
+                                 <label>Fecha Fin</label>
+                                 <input id="ffin" name="ffin" type="text" class="form-control" value="{{ nivel.fechafin | date('Y-m-d')  }}">
+                             </div>
+                             <br>
+                             <div class="form-group col-sm-12">
+                                 <label>Duracion</label>
+                                 <input id="duracion" name="duracion" type="text" class="form-control" value="{{ nivel.duracion }}">
+                             </div>
+
+                         </div>
+                         <div class="box-footer">
+                             <div class="col-sm-6">
+                                 <input type="submit" class="btn btn-primary" value="Guardar" id="guardarmod">
+                                 <button type="submit" class="btn btn-danger">Cancelar</button>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+
+             </div>
+         </div>
+     </section>
+ {% endblock %}
