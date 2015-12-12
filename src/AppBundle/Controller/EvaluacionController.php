@@ -29,11 +29,10 @@ class EvaluacionController extends Controller
         {
             return $this->render('AppBundle:evaluacion:evaluacionPrincipal.html.twig', array('evaluaciones'=>null));
         }
-        $ponder = 0;
+        /*$ponder = 0;
         foreach($evaluaciones as $Objeto => $ponder) {
             echo $Objeto . " contiene ";
-            var_dump($ponder);
-        }
+        }*/
         //var_dump($ponder);
 
         //return $this->render('AppBundle:evaluacion:evalPrincipal.html.twig');

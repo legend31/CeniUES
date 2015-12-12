@@ -86,6 +86,7 @@
                                         <td>{{ entity.getNombredocente }}</td>
                                         <td>{{ entity.getDui }}</td>
                                         <td>{{ entity.getTelefono }}</td>
+                                        <input id="cam" name="cam" value="{{ entity.dui }}" hidden>
                                         <td>
                                             <div class="fc-button-group">
                                                 <span class="btn btn-default" data-toggle="modal" data-target="#detalles-modal" onclick="detallesDocentes({{ entity.dui }})">
@@ -130,20 +131,20 @@
                         <h4 class="modal-title"><i class="box-title">Detalles del Docente</i></h4>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body form-horizontal">
                         <div>
                             <div class="box-body">
 
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Carnet: </label>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <input type="text" id="carnet" name="carnet" class="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Nombres: </label>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <input type="text" id="nombres" name="nombres" class="">
                                     </div>
                                 </div>
@@ -152,7 +153,7 @@
                                 <div class="symfony-form-row">
                                     <div class="form-group row">
                                         <label class="col-sm-5 control-label">Apellidos: </label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <input type="text" id="apellidos" name="apellidos" class="">
                                         </div>
                                     </div>
@@ -161,7 +162,7 @@
                                 <div class="symfony-form-row">
                                     <div class="form-group row">
                                         <label class="col-sm-5 control-label">DUI: </label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <input type="text" id="dui" name="dui" class="">
                                         </div>
                                     </div>
@@ -170,7 +171,7 @@
                                 <div class="symfony-form-row">
                                     <div class="form-group row">
                                         <label class="col-sm-5 control-label">Direcci&oacute;n de residencia: </label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <input type="text" id="address" name="address" class="">
                                         </div>
                                     </div>
@@ -179,7 +180,7 @@
                                 <div class="symfony-form-row">
                                     <div class="form-group row">
                                         <label class="col-sm-5 control-label">Fecha de nacimiento: </label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <input type="text" id="fnacim" name="fnacim" class="">
                                         </div>
                                     </div>
@@ -188,7 +189,7 @@
                                 <div class="symfony-form-row">
                                     <div class="form-group row">
                                         <label class="col-sm-5 control-label">Tel&eacute;fono: </label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <input type="text" id="ntelef" name="ntelef" class="">
                                         </div>
                                     </div>
@@ -228,18 +229,13 @@
     <!-- Fin modal eliminar -->
 
     <!-- fIN modales -->
-{% endblock %}
-
-{% block javascript2 %}
-    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <!--<script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>-->
-    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
     <script>
+
         function detallesDocentes(dui){
             $.ajax({
                 url:'{{ path('detallesD') }}',
                 type: 'POST',
-                data: { duidocente:dui },
+                data: {duidoc: $('#cam').val()},
                 success:function(response){
                     $('#carnet').val(response.carnetdoc);
                     $('#nombres').val(response.nombre);
@@ -251,6 +247,14 @@
                 }
             })
         }
+    </script>
+{% endblock %}
+
+{% block javascript2 %}
+    <script src="{{ asset('libs/AdminLTE-2.2.0/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <!--<script src="{{ asset('libs/AdminLTE-2.2.0/bootstrap/js/bootstrap.min.js') }}"></script>-->
+    <script src="{{ asset('libs/AdminLTE-2.2.0/Validacion/validacion.js') }}"></script>
+    <script>
         $(document).on("click", ".btn",function () {
             var carD = $(this).data('id');
             $("#elim").text(carD);

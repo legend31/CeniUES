@@ -15,42 +15,47 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()->createQuery(
             'SELECT m FROM AppBundle:Matricula m WHERE m.alumnoCarnetalumno = :carnet ORDER BY m.nivelnivel ASC'
         )
-            ->setParameter('carnet',$carnet )
+            ->setParameter('carnet', $carnet)
             ->getResult();
     }
+
     public function matriculasActivas($carnet)
     {
         return $this->getEntityManager()->createQuery(
             'SELECT m FROM AppBundle:Matricula m WHERE m.alumnoCarnetalumno = :carnet AND m.esactivo = :activo'
         )
-        ->setParameter('carnet',$carnet )
-        ->setParameter('activo',1)
-        ->getSingleResult();
+            ->setParameter('carnet', $carnet)
+            ->setParameter('activo', 1)
+            ->getSingleResult();
     }
+
     public function fechaReciente($carnet)
     {
         return $this->getEntityManager()->createQuery(
             'SELECT MAX (m.fechamatricula) FROM AppBundle:Matricula m WHERE m.alumnoCarnetalumno = :carnet'
         )
-            ->setParameter('carnet',$carnet)
+            ->setParameter('carnet', $carnet)
             ->getSingleResult();
     }
+
     public function matriculasReciente($fecha)
     {
         return $this->getEntityManager()->createQuery(
             'SELECT m FROM AppBundle:Matricula m WHERE m.fechamatricula = :fecha'
         )
-            ->setParameter('fecha',$fecha )
+            ->setParameter('fecha', $fecha)
             ->getSingleResult();
     }
+
     public function alumnosmMatriculados()
     {
         return $this->getEntityManager()->createQuery(
             'SELECT m FROM AppBundle:Matricula m WHERE m.esactivo = :activo ORDER BY m.nivelnivel ASC '
         )
-            ->setParameter('activo',1 )
+            ->setParameter('activo', 1)
             ->getResult();
     }
+
     public function numeroMatriculados()
     {
         //query = $em->createQuery('SELECT COUNT (DISTINCT ad.alumnoCarnetalumn) FROM AppBundle:Matricula');
@@ -59,26 +64,30 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
         )
             ->getSingleScalarResult();
     }
+
     public function numeroActivos()
     {
         return $this->getEntityManager()->createQuery(
             'SELECT COUNT(ad.alumnoCarnetalumno)FROM AppBundle:Matricula ad WHERE ad.esactivo = :activo'
         )
-            ->setParameter('activo',1 )
+            ->setParameter('activo', 1)
             ->getSingleScalarResult();
     }
-    public function verificarMatricula($carnet,$recibo)
+
+    public function verificarMatricula($carnet, $recibo)
     {
         return $this->getEntityManager()->createQuery(
             'SELECT m FROM AppBundle:Matricula m  WHERE m.numerorecibo = :recibo OR  m.alumnoCarnetalumno = :carnet AND m.esactivo = :activo'
         )
-            ->setParameter('carnet',$carnet )
-            ->setParameter('recibo',$recibo )
-            ->setParameter('activo',1 )
+            ->setParameter('carnet', $carnet)
+            ->setParameter('recibo', $recibo)
+            ->setParameter('activo', 1)
             ->getResult();
     }
+
     //FUNCION PARA OBTENER EL LISTADO DE ALUMNO INSCRITOS EN DIF. NIVELES Y CLASES
-    public function listadoAlumnos($nivel, $horario){
+    public function listadoAlumnos($nivel, $horario)
+    {
         $em = $this->getEntityManager();
         /*return $em->createQuery(
             'SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(b.primernombrealumno," "),b.segundonombrealumno)," "),b.primerapellidoalumno)," "),b.segundoapellidoalumno)AS nombre
@@ -94,13 +103,8 @@ class MatriculaRepository extends \Doctrine\ORM\EntityRepository
              JOIN a.alumnoCarnetalumno b
              JOIN a.nivelnivel c
              JOIN AppBundle:Clase d WITH d.nivelnivel=c
-             WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel",$nivel)->setParameter("horario",$horario)->getResult();
+             WHERE c.idnivel = :nivel AND d.horario = :horario")->setParameter("nivel", $nivel)->setParameter("horario", $horario)->getResult();
     }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7bb3a148090426c4ea4759a839887aa505c83be4
     public function prueba($nivel,$horario){
         $em = $this->getEntityManager();
         return $em->createQuery(

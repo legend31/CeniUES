@@ -29,11 +29,14 @@ class Clase
     private $horario;
 
     /**
-     * @var string
+     * @var \Seccion
      *
-     * @ORM\Column(name="turno", type="string", length=45, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Seccion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Seccion_idSeccion", referencedColumnName="idSeccion")
+     * })
      */
-    private $turno;
+    private $seccion;
 
     /**
      * @var \Docente
@@ -64,8 +67,6 @@ class Clase
      * })
      */
     private $nivelnivel;
-
-
 
     /**
      * Get idclase
@@ -101,28 +102,52 @@ class Clase
         return $this->horario;
     }
 
-    /**
-     * Set turno
+    /*/**
+     * Set clase
      *
-     * @param string $turno
+     * @param string $clase
      *
      * @return Clase
      */
-    public function setTurno($turno)
+    /*public function setClase($clase)
     {
-        $this->turno = $turno;
+        $this->clase = $clase;
 
         return $this;
     }
 
     /**
-     * Get turno
+     * Get clase
      *
      * @return string
      */
-    public function getTurno()
+    /*public function getClase()
     {
-        return $this->turno;
+        return $this->clase;
+    }*/
+
+    /**
+     * Set seccion
+     *
+     * @param \AppBundle\Entity\Seccion $idSeccion
+     *
+     * @return Clase
+     */
+    public function setSeccion(\AppBundle\Entity\Seccion $seccion = null)
+    {
+        $this->seccion = $seccion;
+
+        return $this;
+    }
+
+    /**
+     * Get seccion
+     *
+     * @return \AppBundle\Entity\Seccion
+     */
+    public function getSeccion()
+    {
+        return $this->seccion;
     }
 
     /**
